@@ -33,7 +33,7 @@ struct DSCard<Content: View>: View {
             )
             .shadow(
                 color: shadowColor,
-                radius: style == .elevated ? 8 : 0,
+                radius: style == .elevated ? 2 : 0,
                 y: style == .elevated ? 2 : 0
             )
     }

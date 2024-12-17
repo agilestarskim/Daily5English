@@ -12,16 +12,18 @@ struct WordBookView: View {
                 VStack(spacing: DSSpacing.medium) {
                     // 검색 바
                     SearchBar(text: $viewModel.searchText)
-                    
+                        .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
+                        
                     // 세그먼트 컨트롤
                     Picker("보기 모드", selection: $viewModel.selectedTab) {
                         Text("학습 기록").tag(WordBookTab.history)
                         Text("북마크").tag(WordBookTab.bookmarks)
                     }
                     .pickerStyle(.segmented)
+                    .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
                     
                     // 단어 목록
-                    ScrollView {
+                    ScrollView(.vertical, showsIndicators: false) {
                         LazyVStack(spacing: DSSpacing.small) {
                             ForEach(viewModel.filteredWords) { word in
                                 WordBookCard(
@@ -34,8 +36,8 @@ struct WordBookView: View {
                             }
                         }
                     }
+                    .contentMargins(DSSpacing.Screen.horizontalPadding)
                 }
-                .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
                 .padding(.vertical, DSSpacing.Screen.verticalPadding)
             }
             .navigationTitle("나만의 단어장")
@@ -75,7 +77,7 @@ struct WordBookCard: View {
     let onBookmarkTap: () -> Void
     
     var body: some View {
-        DSCard(style: .elevated) {
+        DSCard(style: .outlined) {
             VStack(alignment: .leading, spacing: DSSpacing.small) {
                 HStack {
                     Text(word.english)
