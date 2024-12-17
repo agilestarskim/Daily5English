@@ -24,18 +24,59 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1F1084EA2D106CF0001147D0 /* Daily5English.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daily5English.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F1084EA2D106CF0001147D0 /* Production.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Production.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F1084FC2D106CF1001147D0 /* Daily5EnglishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Daily5EnglishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F1085062D106CF1001147D0 /* Daily5EnglishUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Daily5EnglishUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FC5DB1E2D11D51A005299C4 /* Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Development.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		1FC5DB122D11A902005299C4 /* Exceptions for "Daily5English" folder in "Daily5English" target */ = {
+		1FC5DB122D11A902005299C4 /* Exceptions for "Daily5English" folder in "Production" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info_plist/Production.plist,
+				Resources/Info_plist/Users/minseong/Projects/Daily5English/Daily5English/Resources/Info_plist/Development.plist,
 			);
-			target = 1F1084E92D106CF0001147D0 /* Daily5English */;
+			target = 1F1084E92D106CF0001147D0 /* Production */;
+		};
+		1FC5DB202D11D51A005299C4 /* Exceptions for "Daily5English" folder in "Development" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Core/DesignSystem/Colors.swift,
+				Core/DesignSystem/Components/DSButton.swift,
+				Core/DesignSystem/Components/DSCard.swift,
+				Core/DesignSystem/Components/DSGauge.swift,
+				Core/DesignSystem/Components/DSTextField.swift,
+				Core/DesignSystem/Spacing.swift,
+				Core/DesignSystem/Typography.swift,
+				"Core/Extensions/View+Extension.swift",
+				Core/Utils/Constants.swift,
+				Daily5EnglishApp.swift,
+				Data/DataSources/WordDataSource.swift,
+				Data/Repositories/DefaultWordRepository.swift,
+				Domain/Entities/LearningStatus.swift,
+				Domain/Entities/Word.swift,
+				Domain/Interfaces/WordRepository.swift,
+				Domain/UseCases/WordUseCase.swift,
+				Presentation/Components/WordCard.swift,
+				Presentation/Views/Home/HomeView.swift,
+				Presentation/Views/Home/HomeViewModel.swift,
+				Presentation/Views/Main/MainTabView.swift,
+				Presentation/Views/Profile/ProfileView.swift,
+				Presentation/Views/WordBook/WordBookView.swift,
+				Presentation/Views/WordBook/WordBookViewModel.swift,
+				"Preview Content/Preview Assets.xcassets",
+				"Resources/Fonts/Pretendard-Bold.otf",
+				"Resources/Fonts/Pretendard-ExtraBold.otf",
+				"Resources/Fonts/Pretendard-Light.otf",
+				"Resources/Fonts/Pretendard-Medium.otf",
+				"Resources/Fonts/Pretendard-Regular.otf",
+				"Resources/Fonts/Pretendard-SemiBold.otf",
+				Resources/Info_plist/Production.plist,
+				Resources/Info_plist/Users/minseong/Projects/Daily5English/Daily5English/Resources/Info_plist/Development.plist,
+			);
+			target = 1FC5DB172D11D51A005299C4 /* Development */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -43,7 +84,8 @@
 		1F1084EC2D106CF0001147D0 /* Daily5English */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				1FC5DB122D11A902005299C4 /* Exceptions for "Daily5English" folder in "Daily5English" target */,
+				1FC5DB122D11A902005299C4 /* Exceptions for "Daily5English" folder in "Production" target */,
+				1FC5DB202D11D51A005299C4 /* Exceptions for "Daily5English" folder in "Development" target */,
 			);
 			path = Daily5English;
 			sourceTree = "<group>";
@@ -82,6 +124,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1FC5DB192D11D51A005299C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -98,9 +147,10 @@
 		1F1084EB2D106CF0001147D0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1F1084EA2D106CF0001147D0 /* Daily5English.app */,
+				1F1084EA2D106CF0001147D0 /* Production.app */,
 				1F1084FC2D106CF1001147D0 /* Daily5EnglishTests.xctest */,
 				1F1085062D106CF1001147D0 /* Daily5EnglishUITests.xctest */,
+				1FC5DB1E2D11D51A005299C4 /* Development.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,9 +158,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1F1084E92D106CF0001147D0 /* Daily5English */ = {
+		1F1084E92D106CF0001147D0 /* Production */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1F1085102D106CF1001147D0 /* Build configuration list for PBXNativeTarget "Daily5English" */;
+			buildConfigurationList = 1F1085102D106CF1001147D0 /* Build configuration list for PBXNativeTarget "Production" */;
 			buildPhases = (
 				1F1084E62D106CF0001147D0 /* Sources */,
 				1F1084E72D106CF0001147D0 /* Frameworks */,
@@ -123,11 +173,11 @@
 			fileSystemSynchronizedGroups = (
 				1F1084EC2D106CF0001147D0 /* Daily5English */,
 			);
-			name = Daily5English;
+			name = Production;
 			packageProductDependencies = (
 			);
 			productName = Daily5English;
-			productReference = 1F1084EA2D106CF0001147D0 /* Daily5English.app */;
+			productReference = 1F1084EA2D106CF0001147D0 /* Production.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1F1084FB2D106CF1001147D0 /* Daily5EnglishTests */ = {
@@ -176,6 +226,28 @@
 			productReference = 1F1085062D106CF1001147D0 /* Daily5EnglishUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		1FC5DB172D11D51A005299C4 /* Development */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FC5DB1B2D11D51A005299C4 /* Build configuration list for PBXNativeTarget "Development" */;
+			buildPhases = (
+				1FC5DB182D11D51A005299C4 /* Sources */,
+				1FC5DB192D11D51A005299C4 /* Frameworks */,
+				1FC5DB1A2D11D51A005299C4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				1F1084EC2D106CF0001147D0 /* Daily5English */,
+			);
+			name = Development;
+			packageProductDependencies = (
+			);
+			productName = Daily5English;
+			productReference = 1FC5DB1E2D11D51A005299C4 /* Development.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -213,7 +285,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1F1084E92D106CF0001147D0 /* Daily5English */,
+				1F1084E92D106CF0001147D0 /* Production */,
+				1FC5DB172D11D51A005299C4 /* Development */,
 				1F1084FB2D106CF1001147D0 /* Daily5EnglishTests */,
 				1F1085052D106CF1001147D0 /* Daily5EnglishUITests */,
 			);
@@ -236,6 +309,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		1F1085042D106CF1001147D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FC5DB1A2D11D51A005299C4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -266,17 +346,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1FC5DB182D11D51A005299C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		1F1084FE2D106CF1001147D0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1F1084E92D106CF0001147D0 /* Daily5English */;
+			target = 1F1084E92D106CF0001147D0 /* Production */;
 			targetProxy = 1F1084FD2D106CF1001147D0 /* PBXContainerItemProxy */;
 		};
 		1F1085082D106CF1001147D0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 1F1084E92D106CF0001147D0 /* Daily5English */;
+			target = 1F1084E92D106CF0001147D0 /* Production */;
 			targetProxy = 1F1085072D106CF1001147D0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -412,7 +499,7 @@
 				DEVELOPMENT_TEAM = G3RC7ALRKZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Daily5English/Info.plist;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -443,7 +530,7 @@
 				DEVELOPMENT_TEAM = G3RC7ALRKZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Daily5English/Info.plist;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -535,6 +622,68 @@
 			};
 			name = Release;
 		};
+		1FC5DB1C2D11D51A005299C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Daily5English/Preview Content\"";
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1FC5DB1D2D11D51A005299C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Daily5English/Preview Content\"";
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -547,7 +696,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1F1085102D106CF1001147D0 /* Build configuration list for PBXNativeTarget "Daily5English" */ = {
+		1F1085102D106CF1001147D0 /* Build configuration list for PBXNativeTarget "Production" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F1085112D106CF1001147D0 /* Debug */,
@@ -570,6 +719,15 @@
 			buildConfigurations = (
 				1F1085172D106CF1001147D0 /* Debug */,
 				1F1085182D106CF1001147D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FC5DB1B2D11D51A005299C4 /* Build configuration list for PBXNativeTarget "Development" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FC5DB1C2D11D51A005299C4 /* Debug */,
+				1FC5DB1D2D11D51A005299C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
