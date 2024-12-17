@@ -35,48 +35,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info_plist/Production.plist,
-				Resources/Info_plist/Users/minseong/Projects/Daily5English/Daily5English/Resources/Info_plist/Development.plist,
 			);
 			target = 1F1084E92D106CF0001147D0 /* Production */;
-		};
-		1FC5DB202D11D51A005299C4 /* Exceptions for "Daily5English" folder in "Development" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Assets.xcassets,
-				Core/DesignSystem/Colors.swift,
-				Core/DesignSystem/Components/DSButton.swift,
-				Core/DesignSystem/Components/DSCard.swift,
-				Core/DesignSystem/Components/DSGauge.swift,
-				Core/DesignSystem/Components/DSTextField.swift,
-				Core/DesignSystem/Spacing.swift,
-				Core/DesignSystem/Typography.swift,
-				"Core/Extensions/View+Extension.swift",
-				Core/Utils/Constants.swift,
-				Daily5EnglishApp.swift,
-				Data/DataSources/WordDataSource.swift,
-				Data/Repositories/DefaultWordRepository.swift,
-				Domain/Entities/LearningStatus.swift,
-				Domain/Entities/Word.swift,
-				Domain/Interfaces/WordRepository.swift,
-				Domain/UseCases/WordUseCase.swift,
-				Presentation/Components/WordCard.swift,
-				Presentation/Views/Home/HomeView.swift,
-				Presentation/Views/Home/HomeViewModel.swift,
-				Presentation/Views/Main/MainTabView.swift,
-				Presentation/Views/Profile/ProfileView.swift,
-				Presentation/Views/WordBook/WordBookView.swift,
-				Presentation/Views/WordBook/WordBookViewModel.swift,
-				"Preview Content/Preview Assets.xcassets",
-				"Resources/Fonts/Pretendard-Bold.otf",
-				"Resources/Fonts/Pretendard-ExtraBold.otf",
-				"Resources/Fonts/Pretendard-Light.otf",
-				"Resources/Fonts/Pretendard-Medium.otf",
-				"Resources/Fonts/Pretendard-Regular.otf",
-				"Resources/Fonts/Pretendard-SemiBold.otf",
-				Resources/Info_plist/Production.plist,
-				Resources/Info_plist/Users/minseong/Projects/Daily5English/Daily5English/Resources/Info_plist/Development.plist,
-			);
-			target = 1FC5DB172D11D51A005299C4 /* Development */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -85,7 +45,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				1FC5DB122D11A902005299C4 /* Exceptions for "Daily5English" folder in "Production" target */,
-				1FC5DB202D11D51A005299C4 /* Exceptions for "Daily5English" folder in "Development" target */,
 			);
 			path = Daily5English;
 			sourceTree = "<group>";
