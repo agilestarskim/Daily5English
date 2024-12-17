@@ -53,7 +53,7 @@ struct ProfileHeaderView: View {
 // 학습 통계
 struct LearningStatsView: View {
     var body: some View {
-        DSCard {
+        DSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: DSSpacing.small) {
                 Text("학습 통계")
                     .font(DSTypography.heading3)
@@ -65,7 +65,7 @@ struct LearningStatsView: View {
                     StatItemView(title: "연속 학습", value: "7일")
                 }
             }
-            .padding()
+            .padding(DSSpacing.Component.cardPadding)
         }
     }
 }
@@ -92,7 +92,7 @@ struct StatItemView: View {
 // 학습 설정 섹션
 struct LearningSettingsSection: View {
     var body: some View {
-        DSCard {
+        DSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: DSSpacing.small) {
                 Text("학습 설정")
                     .font(DSTypography.heading3)
@@ -102,7 +102,7 @@ struct LearningSettingsSection: View {
                 SettingsRow(icon: "folder", title: "카테고리 설정", value: "전체")
                 SettingsRow(icon: "number", title: "일일 학습량", value: "10개")
             }
-            .padding()
+            .padding(DSSpacing.Component.cardPadding)
         }
     }
 }
@@ -110,7 +110,7 @@ struct LearningSettingsSection: View {
 // 알림 설정 섹션
 struct NotificationSettingsSection: View {
     var body: some View {
-        DSCard {
+        DSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: DSSpacing.small) {
                 Text("알림 설정")
                     .font(DSTypography.heading3)
@@ -119,7 +119,7 @@ struct NotificationSettingsSection: View {
                 SettingsRow(icon: "bell", title: "학습 알림", value: "ON")
                 SettingsRow(icon: "clock", title: "알림 시간", value: "오전 9:00")
             }
-            .padding()
+            .padding(DSSpacing.Component.cardPadding)
         }
     }
 }
@@ -127,7 +127,7 @@ struct NotificationSettingsSection: View {
 // 계정 설정 섹션
 struct AccountSettingsSection: View {
     var body: some View {
-        DSCard {
+        DSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: DSSpacing.small) {
                 Text("계정 관리")
                     .font(DSTypography.heading3)
@@ -142,7 +142,7 @@ struct AccountSettingsSection: View {
                         .foregroundColor(.red)
                 }
             }
-            .padding()
+            .padding(DSSpacing.Component.cardPadding)
         }
     }
 }

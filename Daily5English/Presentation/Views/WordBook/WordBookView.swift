@@ -75,7 +75,7 @@ struct WordBookCard: View {
     let onBookmarkTap: () -> Void
     
     var body: some View {
-        DSCard {
+        DSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: DSSpacing.small) {
                 HStack {
                     Text(word.english)
@@ -107,7 +107,7 @@ struct WordBookCard: View {
                         .foregroundColor(DSColors.Text.secondary)
                 }
             }
-            .padding()
+            .padding(DSSpacing.Component.cardPadding)
         }
     }
 }

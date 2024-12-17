@@ -10,32 +10,35 @@ struct HomeView: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: DSSpacing.medium) {
-                    DailyProgressView(
-                        progress: viewModel.todayProgress,
-                        totalCount: viewModel.dailyGoal
-                    )
-                    
-                    LearningCalendarView(
-                        completedDates: viewModel.completedDates
-                    )
-                    .onTapGesture {
-                        viewModel.showStatistics = true
+                    DSCard(style: .elevated) {
+                        DailyProgressView(
+                            progress: viewModel.todayProgress,
+                            totalCount: viewModel.dailyGoal
+                        )
                     }
+                    .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
+                    .padding(.vertical, DSSpacing.Screen.verticalPadding)
+                    
+                    DSCard(style: .elevated) {
+                        LearningCalendarView(
+                            completedDates: viewModel.completedDates
+                        )
+                        .onTapGesture {
+                            viewModel.showStatistics = true
+                        }
+                    }
+                    .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
+                    .padding(.vertical, DSSpacing.Screen.verticalPadding)
                     
                     Spacer()
-                }
-                .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
-                .padding(.vertical, DSSpacing.Screen.verticalPadding)
-                
-                VStack {
-                    Spacer()
+                    
                     LearningActionButton(status: viewModel.learningStatus) {
                         viewModel.startLearning()
                     }
                     .padding(.bottom, DSSpacing.large)
                 }
             }
-            .navigationTitle("홈")
+            .navigationTitle("학습 현황")
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $viewModel.showStatistics) {
                 StatisticsView()
@@ -49,20 +52,18 @@ struct DailyProgressView: View {
     let totalCount: Int
     
     var body: some View {
-        DSCard(style: .elevated) {
-            VStack(spacing: DSSpacing.small) {
-                Text("오늘의 목표 \(totalCount)개 중 \(Int(progress * Double(totalCount)))개 완료")
-                    .font(DSTypography.body1)
-                    .foregroundColor(DSColors.Text.primary)
-                
-                DSGauge(
-                    value: progress,
-                    style: .linear,
-                    size: .medium,
-                    showLabel: true,
-                    tint: DSColors.point
-                )
-            }
+        VStack(spacing: DSSpacing.small) {
+            Text("오늘의 목표 \(totalCount)개 중 \(Int(progress * Double(totalCount)))개 완료")
+                .font(DSTypography.body1)
+                .foregroundColor(DSColors.Text.primary)
+            
+            DSGauge(
+                value: progress,
+                style: .linear,
+                size: .medium,
+                showLabel: true,
+                tint: DSColors.point
+            )
         }
     }
 }
@@ -71,16 +72,14 @@ struct LearningCalendarView: View {
     let completedDates: Set<Date>
     
     var body: some View {
-        DSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: DSSpacing.small) {
-                Text("학습 캘린더")
-                    .font(DSTypography.heading3)
-                    .foregroundColor(DSColors.Text.primary)
-                
-                Text("캘린더 뷰")
-                    .font(DSTypography.body1)
-                    .foregroundColor(DSColors.Text.secondary)
-            }
+        VStack(alignment: .leading, spacing: DSSpacing.small) {
+            Text("학습 캘린더")
+                .font(DSTypography.heading3)
+                .foregroundColor(DSColors.Text.primary)
+            
+            Text("캘린더 뷰")
+                .font(DSTypography.body1)
+                .foregroundColor(DSColors.Text.secondary)
         }
     }
 }
