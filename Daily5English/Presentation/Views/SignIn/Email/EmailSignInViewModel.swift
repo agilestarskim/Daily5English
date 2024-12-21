@@ -12,7 +12,6 @@ class EmailSignInViewModel: ObservableObject {
     @Published var password = ""
     
     @Published var emailMessage = ""
-    @Published var passwordMessage = ""
     
     @Published var showError = false
     @Published var errorMessage = ""
@@ -20,15 +19,11 @@ class EmailSignInViewModel: ObservableObject {
     @Published var isValidEmail = false
     @Published var isValidPassword = false
     
-    private let authUseCase: AuthUseCase
-    
     var isFormValid: Bool {
         isValidEmail && isValidPassword
     }
     
-    init(authUseCase: AuthUseCase) {
-        self.authUseCase = authUseCase
-        
+    init() {
         // 이메일 유효성 검사
         $email
             .map { email -> Bool in
@@ -50,30 +45,8 @@ class EmailSignInViewModel: ObservableObject {
         // 비밀번호 유효성 검사
         $password
             .map { password -> Bool in
-                let passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~@$!%*#?&])[A-Za-z\\d~@$!%*#?&]{8,}$"
-                let passwordPredicate = NSPredicate(format:"SELF MATCHES %@", passwordRegex)
-                return passwordPredicate.evaluate(with: password)
+                return password.count >= 6
             }
             .assign(to: &$isValidPassword)
-        
-        $password
-            .map { password -> String in
-                if password.isEmpty {
-                    return ""
-                }
-                return self.isValidPassword ? "" : "비밀번호는 8자 이상이어야 합니다."
-            }
-            .assign(to: &$passwordMessage)
-    }
-    
-    @MainActor
-    func login() async {
-        do {
-            let session = try await authUseCase.signIn(email: email, password: password)
-            print("로그인 시도:", session.user.email ?? "", session.expiresAt)
-        } catch {
-            errorMessage = error.localizedDescription
-            showError = true
-        }
     }
 }

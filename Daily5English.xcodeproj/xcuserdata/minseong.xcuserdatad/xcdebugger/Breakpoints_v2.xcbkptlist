@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "49448477-E44D-4D44-A045-B3D1BC25E54C"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "965AEF0E-9F47-4F50-9D07-777575D4111A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Daily5English/Presentation/Views/Auth/AuthViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "signUpWithEmail(email:password:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "965AEF0E-9F47-4F50-9D07-777575D4111A - 353ca1122b7c292e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for Development.AuthViewModel.signUpWithEmail(email: Swift.String, password: Swift.String) async -&gt; ()"
+                  moduleName = "Development.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/minseong/Projects/Daily5English/Daily5English/Presentation/Views/Auth/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53">
+               </Location>
+               <Location
+                  uuid = "965AEF0E-9F47-4F50-9D07-777575D4111A - f7e8cdca40a9f20d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for Development.AuthViewModel.signUpWithEmail(email: Swift.String, password: Swift.String) async -&gt; ()"
+                  moduleName = "Development.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/minseong/Projects/Daily5English/Daily5English/Presentation/Views/Auth/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53">
+               </Location>
+               <Location
+                  uuid = "965AEF0E-9F47-4F50-9D07-777575D4111A - c97a2ba625956528"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Development.AuthViewModel.signUpWithEmail(email: Swift.String, password: Swift.String) async -&gt; ()"
+                  moduleName = "Development.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/minseong/Projects/Daily5English/Daily5English/Presentation/Views/Auth/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53">
+               </Location>
+               <Location
+                  uuid = "965AEF0E-9F47-4F50-9D07-777575D4111A - fb8cf9f03637432b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for Development.AuthViewModel.signUpWithEmail(email: Swift.String, password: Swift.String) async -&gt; ()"
+                  moduleName = "Development.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/minseong/Projects/Daily5English/Daily5English/Presentation/Views/Auth/AuthViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

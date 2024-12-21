@@ -29,7 +29,7 @@ struct Daily5EnglishApp: App {
     
     var body: some Scene {
         WindowGroup {
-            AuthView(authUsecase: authUsecase)
+            AuthView(authUseCase: authUsecase)
                 .onOpenURL { url in
                     supabaseClient.auth.handle(url)
                 }

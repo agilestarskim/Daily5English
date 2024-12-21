@@ -8,24 +8,34 @@
 import SwiftUI
 
 struct AuthView: View {
-    @StateObject private var viewModel: AuthViewModel
+    @State private var viewModel: AuthViewModel
     var authUseCase: AuthUseCase
 
-    init(authUsecase: AuthUseCase) {
-        self.authUseCase = authUsecase
-        _viewModel = StateObject(wrappedValue: AuthViewModel(authUsecase: authUsecase))
+    init(authUseCase: AuthUseCase) {
+        self.authUseCase = authUseCase
+        _viewModel = State(wrappedValue: AuthViewModel(authUseCase: authUseCase))
     }
 
     var body: some View {
+        @Bindable var bViewModel = viewModel
         Group {
-            if viewModel.isLoggedIn {
-                MainTabView()
+            if viewModel.isLoading {
+                EmptyView()
             } else {
-                LoginView(authUseCase: authUseCase)
+                if viewModel.isLoggedIn {
+                    MainView()
+                } else {
+                    LoginView()
+                }
+                
             }
         }
         .task {
             await viewModel.checkLoginStatus()
         }
+        .alert(item: $bViewModel.error) { error in
+            Alert(title: Text(error.info.title), message: Text(error.info.description))
+        }
+        .environment(viewModel)
     }
 }

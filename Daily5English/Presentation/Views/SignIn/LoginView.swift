@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    var authUseCase: AuthUseCase
-
-    init(authUseCase: AuthUseCase) {
-        self.authUseCase = authUseCase
-    }
+    @Environment(AuthViewModel.self) private var authViewModel
     
     var body: some View {
         NavigationStack {
@@ -28,7 +24,7 @@ struct LoginView: View {
                 
                 // 소셜 로그인 버튼들
                 VStack(spacing: 12) {
-                    NavigationLink(destination: EmailSignInView(authUseCase: authUseCase)) {
+                    NavigationLink(destination: EmailSignInView()) {
                         HStack {
                             Image(systemName: "envelope.fill")
                                 .foregroundColor(.white)
@@ -101,7 +97,7 @@ struct LoginView: View {
                 .padding(.horizontal, 20)
                 
                 // 이메일 로그인 링크
-                NavigationLink(destination: EmailSignUpView(authUseCase: authUseCase)) {
+                NavigationLink(destination: EmailSignUpView()) {
                     Text("이메일로 회원가입")
                         .font(.footnote)
                         .foregroundColor(.gray)

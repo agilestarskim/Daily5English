@@ -9,18 +9,13 @@ import Combine
 import Foundation
 
 class EmailSignUpViewModel: ObservableObject {
-    private let authUseCase: AuthUseCase
-
     @Published var email = ""
     @Published var password = ""
     @Published var passwordConfirm = ""
     
     @Published var emailMessage = ""
     @Published var passwordMessage = ""
-    @Published var passwordConfirmMessage = ""
-    
-    @Published var showError = false
-    @Published var errorMessage = ""
+    @Published var passwordConfirmMessage = ""    
     
     @Published var isValidEmail = false
     @Published var isValidPassword = false
@@ -30,9 +25,7 @@ class EmailSignUpViewModel: ObservableObject {
         isValidEmail && isValidPassword && isValidPasswordConfirm
     }
     
-    init(authUseCase: AuthUseCase) {
-        self.authUseCase = authUseCase
-        
+    init() {
         // 이메일 유효성 검사
         $email
             .map { email -> Bool in
@@ -89,14 +82,5 @@ class EmailSignUpViewModel: ObservableObject {
             .assign(to: &$passwordConfirmMessage)
     }
     
-    @MainActor
-    func signUp() async {
-        do {
-            let authResponse = try await authUseCase.signUp(email: email, password: password)
-            print("회원가입 성공: \(authResponse.user.email ?? "")")
-        } catch {
-            errorMessage = error.localizedDescription
-            showError = true
-        }
-    }
+    
 }

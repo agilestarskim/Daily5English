@@ -1,179 +1,126 @@
+//
+//  ProfileView.swift
+//  Production
+//
+//  Created by 김민성 on 12/22/24.
+//
+
 import SwiftUI
 
 struct ProfileView: View {
+    @Environment(AuthViewModel.self) private var authViewModel
+    @State private var showingLogoutAlert = false
+    @StateObject private var viewModel = ProfileViewModel()
+    
     var body: some View {
-        NavigationStack {
-            ZStack {
-                DSColors.background
-                    .ignoresSafeArea()
-                
-                ScrollView {
-                    VStack(spacing: DSSpacing.medium) {
-                        ProfileHeaderView()
-                        LearningStatsView()
+        NavigationView {
+            List {
+                // 1. 프로필 정보 섹션
+                Section {
+                    HStack(spacing: 16) {
+                        // 프로필 이미지
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(.gray)
+                            .clipShape(Circle())
                         
-                        VStack(spacing: DSSpacing.small) {
-                            LearningSettingsSection()
-                            NotificationSettingsSection()
-                            AccountSettingsSection()
+                        // 사용자 정보
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(viewModel.userName)
+                                .font(.headline)
+                            Text(authViewModel.currentUser?.email ?? "")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
                         }
                     }
-                    .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
-                    .padding(.vertical, DSSpacing.Screen.verticalPadding)
+                    .padding(.vertical, 8)
+                }
+                
+                // 2. 학습 통계 섹션
+                Section {
+                    HStack {
+                        StatisticView(title: "학습 단어", value: "\(viewModel.learnedWords)개")
+                        Divider()
+                        StatisticView(title: "연속 학습", value: "\(viewModel.streakDays)일")
+                        Divider()
+                        StatisticView(title: "총 학습일", value: "\(viewModel.totalLearningDays)일")
+                    }
+                    .padding(.vertical, 8)
+                } header: {
+                    Text("학습 통계")
+                }
+                
+                // 3. 학습 설정 섹션
+                Section(header: Text("학습 설정")) {
+                    NavigationLink {
+                        LearningLevelSettingView(level: $viewModel.learningLevel)
+                    } label: {
+                        SettingRow(title: "학습 난이도", value: viewModel.learningLevel.toString())
+                    }
+                    
+                    NavigationLink {
+                        CategorySettingView(category: $viewModel.category)
+                    } label: {
+                        SettingRow(title: "학습 카테고리", value: viewModel.category.toString())
+                    }
+                    
+                    NavigationLink {
+                        DailyGoalSettingView(dailyGoal: $viewModel.dailyGoal)
+                    } label: {
+                        SettingRow(title: "일일 학습량", value: "\(viewModel.dailyGoal)개")
+                    }
+                }
+                
+                // 4. 알림 설정 섹션
+                Section(header: Text("알림 설정")) {
+                    Toggle("학습 알림", isOn: $viewModel.isNotificationEnabled)
+                    
+                    if viewModel.isNotificationEnabled {
+                        DatePicker("학습 시작 시간",
+                                 selection: $viewModel.learningStartTime,
+                                 displayedComponents: .hourAndMinute)
+                        
+                        DatePicker("복습 시작 시간",
+                                 selection: $viewModel.reviewStartTime,
+                                 displayedComponents: .hourAndMinute)
+                    }
+                }
+                
+                // 5. 앱 정보 섹션
+                Section {
+                    Link(destination: URL(string: "https://example.com")!) {
+                        Text("공식 홈페이지")
+                    }
+                    
+                    NavigationLink("개인정보처리방침") {
+                        PrivacyPolicyView()
+                    }
+                    
+                    Button(role: .destructive) {
+                        showingLogoutAlert = true
+                    } label: {
+                        Text("로그아웃")
+                    }
+                    .alert("로그아웃", isPresented: $showingLogoutAlert) {
+                        Button("취소", role: .cancel) { }
+                        Button("로그아웃", role: .destructive) {
+                            Task {
+                                await authViewModel.signOut()
+                            }
+                        }
+                    } message: {
+                        Text("정말 로그아웃 하시겠습니까?")
+                    }
                 }
             }
             .navigationTitle("프로필")
-            .navigationBarTitleDisplayMode(.large)
-        }
-    }
-}
-
-struct ProfileHeaderView: View {
-    var body: some View {
-        DSCard(style: .elevated) {
-            VStack(spacing: DSSpacing.small) {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .foregroundColor(DSColors.accent)
-                
-                Text("사용자")
-                    .font(DSTypography.heading3)
-                    .foregroundColor(DSColors.Text.primary)
-                
-                Text("user@example.com")
-                    .font(DSTypography.body2)
-                    .foregroundColor(DSColors.Text.secondary)
+            .alert("로그아웃", isPresented: $viewModel.showError) {
+                Button("확인", role: .cancel) { }
+            } message: {
+                Text(viewModel.errorMessage)
             }
-            .padding(DSSpacing.Component.cardPadding)
         }
+        
     }
 }
-
-// 학습 통계
-struct LearningStatsView: View {
-    var body: some View {
-        DSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: DSSpacing.small) {
-                Text("학습 통계")
-                    .font(DSTypography.heading3)
-                    .foregroundColor(DSColors.Text.primary)
-                
-                HStack(spacing: DSSpacing.medium) {
-                    StatItemView(title: "학습 단어", value: "326개")
-                    StatItemView(title: "정답률", value: "85%")
-                    StatItemView(title: "연속 학습", value: "7일")
-                }
-            }
-            .padding(DSSpacing.Component.cardPadding)
-        }
-    }
-}
-
-// 통계 아이템
-struct StatItemView: View {
-    let title: String
-    let value: String
-    
-    var body: some View {
-        VStack(spacing: DSSpacing.xxSmall) {
-            Text(title)
-                .font(DSTypography.caption1)
-                .foregroundColor(DSColors.Text.secondary)
-            
-            Text(value)
-                .font(DSTypography.heading3)
-                .foregroundColor(DSColors.accent)
-        }
-        .frame(maxWidth: .infinity)
-    }
-}
-
-// 학습 설정 섹션
-struct LearningSettingsSection: View {
-    var body: some View {
-        DSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: DSSpacing.small) {
-                Text("학습 설정")
-                    .font(DSTypography.heading3)
-                    .foregroundColor(DSColors.Text.primary)
-                
-                SettingsRow(icon: "speedometer", title: "난이도 설정", value: "중급")
-                SettingsRow(icon: "folder", title: "카테고리 설정", value: "전체")
-                SettingsRow(icon: "number", title: "일일 학습량", value: "10개")
-            }
-            .padding(DSSpacing.Component.cardPadding)
-        }
-    }
-}
-
-// 알림 설정 섹션
-struct NotificationSettingsSection: View {
-    var body: some View {
-        DSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: DSSpacing.small) {
-                Text("알림 설정")
-                    .font(DSTypography.heading3)
-                    .foregroundColor(DSColors.Text.primary)
-                
-                SettingsRow(icon: "bell", title: "학습 알림", value: "ON")
-                SettingsRow(icon: "clock", title: "알림 시간", value: "오전 9:00")
-            }
-            .padding(DSSpacing.Component.cardPadding)
-        }
-    }
-}
-
-// 계정 설정 섹션
-struct AccountSettingsSection: View {
-    var body: some View {
-        DSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: DSSpacing.small) {
-                Text("계정 관리")
-                    .font(DSTypography.heading3)
-                    .foregroundColor(DSColors.Text.primary)
-                
-                Button(action: {}) {
-                    SettingsRow(icon: "person", title: "프로필 수정", value: "")
-                }
-                
-                Button(action: {}) {
-                    SettingsRow(icon: "arrow.right.square", title: "로그아웃", value: "")
-                        .foregroundColor(.red)
-                }
-            }
-            .padding(DSSpacing.Component.cardPadding)
-        }
-    }
-}
-
-// 설정 행 컴포넌트
-struct SettingsRow: View {
-    let icon: String
-    let title: String
-    let value: String
-    
-    var body: some View {
-        HStack {
-            Image(systemName: icon)
-                .frame(width: 24)
-                .foregroundColor(DSColors.Text.secondary)
-            
-            Text(title)
-                .font(DSTypography.body1)
-                .foregroundColor(DSColors.Text.primary)
-            
-            Spacer()
-            
-            if !value.isEmpty {
-                Text(value)
-                    .font(DSTypography.body2)
-                    .foregroundColor(DSColors.Text.secondary)
-            }
-            
-            Image(systemName: "chevron.right")
-                .font(DSTypography.caption1)
-                .foregroundColor(DSColors.Text.secondary)
-        }
-    }
-} 
