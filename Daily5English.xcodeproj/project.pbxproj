@@ -6,6 +6,23 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1FB3DE722D169CE4000AE1F3 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE712D169CE4000AE1F3 /* Auth */; };
+		1FB3DE742D169CE4000AE1F3 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE732D169CE4000AE1F3 /* Functions */; };
+		1FB3DE762D169CE4000AE1F3 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE752D169CE4000AE1F3 /* PostgREST */; };
+		1FB3DE782D169CE4000AE1F3 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE772D169CE4000AE1F3 /* Realtime */; };
+		1FB3DE7A2D169CE4000AE1F3 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE792D169CE4000AE1F3 /* Storage */; };
+		1FB3DE7C2D169CE4000AE1F3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE7B2D169CE4000AE1F3 /* Supabase */; };
+		1FB3DE7E2D169CEA000AE1F3 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE7D2D169CEA000AE1F3 /* Auth */; };
+		1FB3DE802D169CEA000AE1F3 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE7F2D169CEA000AE1F3 /* Functions */; };
+		1FB3DE822D169CEA000AE1F3 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE812D169CEA000AE1F3 /* PostgREST */; };
+		1FB3DE842D169CEA000AE1F3 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE832D169CEA000AE1F3 /* Realtime */; };
+		1FB3DE862D169CEA000AE1F3 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE852D169CEA000AE1F3 /* Storage */; };
+		1FB3DE882D169CEA000AE1F3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE872D169CEA000AE1F3 /* Supabase */; };
+		1FB3DE8A2D169F6E000AE1F3 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */; };
+		1FB3DE8D2D169F81000AE1F3 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1F1084FD2D106CF1001147D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,13 +44,24 @@
 		1F1084EA2D106CF0001147D0 /* Production.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Production.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F1084FC2D106CF1001147D0 /* Daily5EnglishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Daily5EnglishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F1085062D106CF1001147D0 /* Daily5EnglishUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Daily5EnglishUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
+		1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		1FC5DB1E2D11D51A005299C4 /* Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Development.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		1FB3DE922D16A350000AE1F3 /* Exceptions for "Daily5English" folder in "Development" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/Info_plist/Development.plist,
+				Resources/Info_plist/Production.plist,
+			);
+			target = 1FC5DB172D11D51A005299C4 /* Development */;
+		};
 		1FC5DB122D11A902005299C4 /* Exceptions for "Daily5English" folder in "Production" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Resources/Info_plist/Development.plist,
 				Resources/Info_plist/Production.plist,
 			);
 			target = 1F1084E92D106CF0001147D0 /* Production */;
@@ -45,6 +73,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				1FC5DB122D11A902005299C4 /* Exceptions for "Daily5English" folder in "Production" target */,
+				1FB3DE922D16A350000AE1F3 /* Exceptions for "Daily5English" folder in "Development" target */,
 			);
 			path = Daily5English;
 			sourceTree = "<group>";
@@ -66,6 +95,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FB3DE762D169CE4000AE1F3 /* PostgREST in Frameworks */,
+				1FB3DE742D169CE4000AE1F3 /* Functions in Frameworks */,
+				1FB3DE7C2D169CE4000AE1F3 /* Supabase in Frameworks */,
+				1FB3DE722D169CE4000AE1F3 /* Auth in Frameworks */,
+				1FB3DE7A2D169CE4000AE1F3 /* Storage in Frameworks */,
+				1FB3DE782D169CE4000AE1F3 /* Realtime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +122,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FB3DE822D169CEA000AE1F3 /* PostgREST in Frameworks */,
+				1FB3DE802D169CEA000AE1F3 /* Functions in Frameworks */,
+				1FB3DE882D169CEA000AE1F3 /* Supabase in Frameworks */,
+				1FB3DE7E2D169CEA000AE1F3 /* Auth in Frameworks */,
+				1FB3DE862D169CEA000AE1F3 /* Storage in Frameworks */,
+				1FB3DE842D169CEA000AE1F3 /* Realtime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,9 +137,12 @@
 		1F1084E12D106CF0001147D0 = {
 			isa = PBXGroup;
 			children = (
+				1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */,
+				1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */,
 				1F1084EC2D106CF0001147D0 /* Daily5English */,
 				1F1084FF2D106CF1001147D0 /* Daily5EnglishTests */,
 				1F1085092D106CF1001147D0 /* Daily5EnglishUITests */,
+				1FB3DE702D169CE4000AE1F3 /* Frameworks */,
 				1F1084EB2D106CF0001147D0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +156,13 @@
 				1FC5DB1E2D11D51A005299C4 /* Development.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1FB3DE702D169CE4000AE1F3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,6 +185,12 @@
 			);
 			name = Production;
 			packageProductDependencies = (
+				1FB3DE712D169CE4000AE1F3 /* Auth */,
+				1FB3DE732D169CE4000AE1F3 /* Functions */,
+				1FB3DE752D169CE4000AE1F3 /* PostgREST */,
+				1FB3DE772D169CE4000AE1F3 /* Realtime */,
+				1FB3DE792D169CE4000AE1F3 /* Storage */,
+				1FB3DE7B2D169CE4000AE1F3 /* Supabase */,
 			);
 			productName = Daily5English;
 			productReference = 1F1084EA2D106CF0001147D0 /* Production.app */;
@@ -202,6 +259,12 @@
 			);
 			name = Development;
 			packageProductDependencies = (
+				1FB3DE7D2D169CEA000AE1F3 /* Auth */,
+				1FB3DE7F2D169CEA000AE1F3 /* Functions */,
+				1FB3DE812D169CEA000AE1F3 /* PostgREST */,
+				1FB3DE832D169CEA000AE1F3 /* Realtime */,
+				1FB3DE852D169CEA000AE1F3 /* Storage */,
+				1FB3DE872D169CEA000AE1F3 /* Supabase */,
 			);
 			productName = Daily5English;
 			productReference = 1FC5DB1E2D11D51A005299C4 /* Development.app */;
@@ -239,6 +302,9 @@
 			);
 			mainGroup = 1F1084E12D106CF0001147D0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1F1084EB2D106CF0001147D0 /* Products */;
 			projectDirPath = "";
@@ -257,6 +323,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FB3DE8A2D169F6E000AE1F3 /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FB3DE8D2D169F81000AE1F3 /* Development.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +398,7 @@
 /* Begin XCBuildConfiguration section */
 		1F10850E2D106CF1001147D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -393,6 +462,7 @@
 		};
 		1F10850F2D106CF1001147D0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -449,6 +519,7 @@
 		};
 		1F1085112D106CF1001147D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -459,6 +530,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -470,7 +542,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English.production;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -480,6 +552,7 @@
 		};
 		1F1085122D106CF1001147D0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -490,6 +563,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -501,7 +575,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English.production;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -581,8 +655,73 @@
 			};
 			name = Release;
 		};
-		1FC5DB1C2D11D51A005299C4 /* Debug */ = {
+		1FB3DE9A2D16AB05000AE1F3 /* Development */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Development;
+		};
+		1FB3DE9B2D16AB05000AE1F3 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -592,7 +731,8 @@
 				DEVELOPMENT_TEAM = G3RC7ALRKZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -604,7 +744,275 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English.production;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Development;
+		};
+		1FB3DE9C2D16AB05000AE1F3 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Daily5English/Preview Content\"";
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어-개발";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English.development;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Development;
+		};
+		1FB3DE9D2D16AB05000AE1F3 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5EnglishTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Daily5English.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Daily5English";
+			};
+			name = Development;
+		};
+		1FB3DE9E2D16AB05000AE1F3 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5EnglishUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Daily5English;
+			};
+			name = Development;
+		};
+		1FB3DE9F2D16AB1C000AE1F3 /* Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Production;
+		};
+		1FB3DEA02D16AB1C000AE1F3 /* Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Daily5English/Preview Content\"";
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English.production;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Production;
+		};
+		1FB3DEA12D16AB1C000AE1F3 /* Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Daily5English/Preview Content\"";
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어-개발";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English.production;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Production;
+		};
+		1FB3DEA22D16AB1C000AE1F3 /* Production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5EnglishTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Daily5English.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Daily5English";
+			};
+			name = Production;
+		};
+		1FB3DEA32D16AB1C000AE1F3 /* Production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5EnglishUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Daily5English;
+			};
+			name = Production;
+		};
+		1FC5DB1C2D11D51A005299C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Daily5English/Preview Content\"";
+				DEVELOPMENT_TEAM = G3RC7ALRKZ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어-개발";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -614,6 +1022,7 @@
 		};
 		1FC5DB1D2D11D51A005299C4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -624,6 +1033,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어-개발";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -635,7 +1045,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msdev.Daily5English.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -650,6 +1060,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F10850E2D106CF1001147D0 /* Debug */,
+				1FB3DE9A2D16AB05000AE1F3 /* Development */,
+				1FB3DE9F2D16AB1C000AE1F3 /* Production */,
 				1F10850F2D106CF1001147D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -659,6 +1071,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F1085112D106CF1001147D0 /* Debug */,
+				1FB3DE9B2D16AB05000AE1F3 /* Development */,
+				1FB3DEA02D16AB1C000AE1F3 /* Production */,
 				1F1085122D106CF1001147D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -668,6 +1082,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F1085142D106CF1001147D0 /* Debug */,
+				1FB3DE9D2D16AB05000AE1F3 /* Development */,
+				1FB3DEA22D16AB1C000AE1F3 /* Production */,
 				1F1085152D106CF1001147D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -677,6 +1093,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F1085172D106CF1001147D0 /* Debug */,
+				1FB3DE9E2D16AB05000AE1F3 /* Development */,
+				1FB3DEA32D16AB1C000AE1F3 /* Production */,
 				1F1085182D106CF1001147D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -686,12 +1104,88 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FC5DB1C2D11D51A005299C4 /* Debug */,
+				1FB3DE9C2D16AB05000AE1F3 /* Development */,
+				1FB3DEA12D16AB1C000AE1F3 /* Production */,
 				1FC5DB1D2D11D51A005299C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1FB3DE712D169CE4000AE1F3 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		1FB3DE732D169CE4000AE1F3 /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		1FB3DE752D169CE4000AE1F3 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		1FB3DE772D169CE4000AE1F3 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		1FB3DE792D169CE4000AE1F3 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		1FB3DE7B2D169CE4000AE1F3 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+		1FB3DE7D2D169CEA000AE1F3 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		1FB3DE7F2D169CEA000AE1F3 /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		1FB3DE812D169CEA000AE1F3 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		1FB3DE832D169CEA000AE1F3 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		1FB3DE852D169CEA000AE1F3 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		1FB3DE872D169CEA000AE1F3 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB3DE6F2D169CD9000AE1F3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1F1084E22D106CF0001147D0 /* Project object */;
 }
