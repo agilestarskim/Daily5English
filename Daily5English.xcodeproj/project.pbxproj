@@ -19,8 +19,10 @@
 		1FB3DE842D169CEA000AE1F3 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE832D169CEA000AE1F3 /* Realtime */; };
 		1FB3DE862D169CEA000AE1F3 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE852D169CEA000AE1F3 /* Storage */; };
 		1FB3DE882D169CEA000AE1F3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB3DE872D169CEA000AE1F3 /* Supabase */; };
-		1FB3DE8A2D169F6E000AE1F3 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */; };
-		1FB3DE8D2D169F81000AE1F3 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */; };
+		1FB3DF282D16B5FE000AE1F3 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */; };
+		1FB3DF292D16B5FE000AE1F3 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */; };
+		1FB3DF2B2D16B60F000AE1F3 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */; };
+		1FB3DF2C2D16B60F000AE1F3 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +46,8 @@
 		1F1084EA2D106CF0001147D0 /* Production.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Production.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F1084FC2D106CF1001147D0 /* Daily5EnglishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Daily5EnglishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F1085062D106CF1001147D0 /* Daily5EnglishUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Daily5EnglishUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
-		1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		1FC5DB1E2D11D51A005299C4 /* Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Development.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -137,8 +139,8 @@
 		1F1084E12D106CF0001147D0 = {
 			isa = PBXGroup;
 			children = (
-				1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */,
-				1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */,
+				1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */,
+				1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */,
 				1F1084EC2D106CF0001147D0 /* Daily5English */,
 				1F1084FF2D106CF1001147D0 /* Daily5EnglishTests */,
 				1F1085092D106CF1001147D0 /* Daily5EnglishUITests */,
@@ -323,7 +325,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FB3DE8A2D169F6E000AE1F3 /* Production.xcconfig in Resources */,
+				1FB3DF292D16B5FE000AE1F3 /* Development.xcconfig in Resources */,
+				1FB3DF2C2D16B60F000AE1F3 /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,7 +348,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FB3DE8D2D169F81000AE1F3 /* Development.xcconfig in Resources */,
+				1FB3DF282D16B5FE000AE1F3 /* Development.xcconfig in Resources */,
+				1FB3DF2B2D16B60F000AE1F3 /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,7 +402,7 @@
 /* Begin XCBuildConfiguration section */
 		1F10850E2D106CF1001147D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			baseConfigurationReference = 1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -462,7 +466,7 @@
 		};
 		1F10850F2D106CF1001147D0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			baseConfigurationReference = 1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -519,8 +523,9 @@
 		};
 		1F1085112D106CF1001147D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			baseConfigurationReference = 1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
+				APP_NAME = "$(APP_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -530,7 +535,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -552,8 +557,9 @@
 		};
 		1F1085122D106CF1001147D0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			baseConfigurationReference = 1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
+				APP_NAME = "$(APP_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -563,7 +569,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -657,7 +663,7 @@
 		};
 		1FB3DE9A2D16AB05000AE1F3 /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			baseConfigurationReference = 1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -721,8 +727,9 @@
 		};
 		1FB3DE9B2D16AB05000AE1F3 /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			baseConfigurationReference = 1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
+				APP_NAME = "$(APP_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -732,7 +739,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -754,8 +761,9 @@
 		};
 		1FB3DE9C2D16AB05000AE1F3 /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			baseConfigurationReference = 1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
+				APP_NAME = "$(APP_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -765,7 +773,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어-개발";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -823,7 +831,7 @@
 		};
 		1FB3DE9F2D16AB1C000AE1F3 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			baseConfigurationReference = 1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -887,8 +895,9 @@
 		};
 		1FB3DEA02D16AB1C000AE1F3 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			baseConfigurationReference = 1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
+				APP_NAME = "$(APP_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -898,7 +907,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Production.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -920,8 +929,9 @@
 		};
 		1FB3DEA12D16AB1C000AE1F3 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			baseConfigurationReference = 1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
+				APP_NAME = "$(APP_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -931,7 +941,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어-개발";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -989,8 +999,9 @@
 		};
 		1FC5DB1C2D11D51A005299C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE8C2D169F81000AE1F3 /* Development.xcconfig */;
+			baseConfigurationReference = 1FB3DF272D16B5FE000AE1F3 /* Development.xcconfig */;
 			buildSettings = {
+				APP_NAME = "$(APP_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -1000,7 +1011,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어-개발";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1022,8 +1033,9 @@
 		};
 		1FC5DB1D2D11D51A005299C4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FB3DE892D169F6E000AE1F3 /* Production.xcconfig */;
+			baseConfigurationReference = 1FB3DF2A2D16B60F000AE1F3 /* Production.xcconfig */;
 			buildSettings = {
+				APP_NAME = "$(APP_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -1033,7 +1045,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Daily5English/Resources/Info_plist/Development.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "하루5분영어-개발";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_NAME)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
