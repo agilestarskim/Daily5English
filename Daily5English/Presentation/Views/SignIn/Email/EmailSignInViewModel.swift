@@ -13,9 +13,6 @@ class EmailSignInViewModel: ObservableObject {
     
     @Published var emailMessage = ""
     
-    @Published var showError = false
-    @Published var errorMessage = ""
-    
     @Published var isValidEmail = false
     @Published var isValidPassword = false
     

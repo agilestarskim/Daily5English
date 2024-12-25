@@ -19,7 +19,13 @@ class AuthRepository {
     
     // 이메일 회원가입
     func signUpWithEmail(email: String, password: String) async throws -> AuthResponse {
-        return try await client.auth.signUp(email: email,password: password)
+        return try await client.auth.signUp(
+            email: email,
+            password: password,
+            data: [
+                "is_premium": .bool(false),                
+            ]
+        )
     }
 
     // 이메일 로그인

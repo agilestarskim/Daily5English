@@ -1,7 +1,7 @@
 import Foundation
 
 struct User {
-    let id: UUID
+    let id: String
     let email: String
     // 추가적인 유저 정보
 }

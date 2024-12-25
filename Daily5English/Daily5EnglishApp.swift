@@ -9,9 +9,18 @@ import SwiftUI
 import Supabase
 @main
 struct Daily5EnglishApp: App {
+    @State private var authManager: AuthManager
+    @State private var userSettingManager: UserSettingsManager
+    
     let supabaseClient: SupabaseClient
+    
     let authRepository: AuthRepository
-    let authUsecase: AuthUseCase
+    let authUseCase: AuthUseCase
+    
+    let userSettingsDataSource: UserSettingsDataSource
+    let userSettingsRepository: UserSettingsRepository
+    let userSettingsUseCase: UserSettingsUseCase
+    
     
     init() {
         supabaseClient = {
@@ -21,18 +30,27 @@ struct Daily5EnglishApp: App {
             return SupabaseClient(supabaseURL: url, supabaseKey: apiKey)
         }()
             
-        // AuthRepository와 LoginUseCase 초기화
+        
         authRepository = AuthRepository(client: supabaseClient)
-        authUsecase = AuthUseCase(authRepository: authRepository)
+        authUseCase = AuthUseCase(authRepository: authRepository)
+        
+        userSettingsDataSource = SupabaseUserSettingsDataSource(client: supabaseClient)
+        userSettingsRepository = UserSettingsRepositoryImpl(dataSource: userSettingsDataSource)
+        userSettingsUseCase = UserSettingsUseCase(repository: userSettingsRepository)
+        
+        _authManager = State(wrappedValue: AuthManager(useCase: authUseCase))
+        _userSettingManager = State(wrappedValue: UserSettingsManager(useCase: userSettingsUseCase))
     }
     
     
     var body: some Scene {
         WindowGroup {
-            AuthView(authUseCase: authUsecase)
+            AuthView()
                 .onOpenURL { url in
                     supabaseClient.auth.handle(url)
                 }
+                .environment(authManager)
+                .environment(userSettingManager)
         }
     }
 }

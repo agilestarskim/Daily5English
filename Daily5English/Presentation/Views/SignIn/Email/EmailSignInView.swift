@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EmailSignInView: View {
-    @Environment(AuthViewModel.self) private var authViewModel
+    @Environment(AuthManager.self) private var authManager
     @StateObject private var viewModel = EmailSignInViewModel()
     
     var body: some View {
@@ -58,7 +58,7 @@ struct EmailSignInView: View {
             // 로그인 버튼
             Button(action: {
                 Task {
-                    await authViewModel.signInWithEmail(email: viewModel.email, password: viewModel.password)
+                    await authManager.signInWithEmail(email: viewModel.email, password: viewModel.password)
                 }
             }) {
                 Text("로그인")
@@ -83,15 +83,7 @@ struct EmailSignInView: View {
             }
             .font(.footnote)
             .padding(.top, 8)
-            
-            
         }
         .padding()
-        .alert("로그인 오류", isPresented: $viewModel.showError) {
-            Button("확인", role: .cancel) { }
-        } message: {
-            Text(viewModel.errorMessage)
-        }
-
     }
 }

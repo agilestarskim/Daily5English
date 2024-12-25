@@ -1,5 +1,5 @@
 //
-//  AuthViewModel.swift
+//  AuthManager.swift
 //  Production
 //
 //  Created by 김민성 on 12/21/24.
@@ -10,21 +10,22 @@ import SwiftUI
 import Supabase
 
 @MainActor
-@Observable final class AuthViewModel {
+@Observable
+final class AuthManager {
     var isLoading: Bool = true
     var isLoggedIn: Bool = false
     var error: AuthError? = nil
     var currentUser: User? = nil
+    var isFirstLaunch: Bool = UserDefaults.standard.bool(forKey: "hasCompletedOnboarding") == false
     
     private let authUseCase: AuthUseCase
 
-    init(authUseCase: AuthUseCase) {
-        self.authUseCase = authUseCase
+    init(useCase: AuthUseCase) {
+        self.authUseCase = useCase
     }
 
     func checkLoginStatus() async {
         isLoading = true
-        error = nil
         
         do {
             let session = try await authUseCase.checkCurrentSession()
@@ -38,6 +39,7 @@ import Supabase
                 print("이메일 정보: ", session.user.email ?? "")
                 print("토큰 만료: ",  Date(timeIntervalSinceNow: session.expiresAt).formatted())
                 print("이메일 인증날짜: " ,  session.user.emailConfirmedAt?.formatted() ?? "")
+                print("메타데이터:", session.user.userMetadata)
                 print("--------------------------------------")
             }
             #endif            
@@ -60,6 +62,7 @@ import Supabase
                 print("--------------------------------------")
             }
             #endif
+            self.error = AuthError(id: "1000")
             await checkLoginStatus()
         } catch {
             self.error = AuthError(id: "0002")
@@ -103,8 +106,13 @@ import Supabase
         guard let email = session.user.email else { return }
         
         currentUser = User(
-            id: session.user.id,
+            id: session.user.id.uuidString,
             email: email
         )
+    }
+    
+    func completeOnboarding() {
+//        UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
+        isFirstLaunch = false
     }
 }

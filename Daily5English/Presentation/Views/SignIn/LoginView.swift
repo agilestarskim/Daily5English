@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    @Environment(AuthViewModel.self) private var authViewModel
-    
+struct LoginView: View {    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {

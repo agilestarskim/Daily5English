@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @Environment(AuthViewModel.self) private var authViewModel
+    @Environment(AuthManager.self) private var authManager
+    @Environment(UserSettingsManager.self) private var userSettingsManager
+    
     @State private var showingLogoutAlert = false
-    @StateObject private var viewModel = ProfileViewModel()
+    @StateObject private var viewModel =  ProfileViewModel()
     
     var body: some View {
+        @Bindable var bUserSettingsManager = userSettingsManager
+        
         NavigationView {
             List {
                 // 1. 프로필 정보 섹션
@@ -29,7 +33,7 @@ struct ProfileView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(viewModel.userName)
                                 .font(.headline)
-                            Text(authViewModel.currentUser?.email ?? "")
+                            Text(authManager.currentUser?.email ?? "")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
@@ -52,24 +56,47 @@ struct ProfileView: View {
                 }
                 
                 // 3. 학습 설정 섹션
-                Section(header: Text("학습 설정")) {
+                Section {
                     NavigationLink {
-                        LearningLevelSettingView(level: $viewModel.learningLevel)
+                        LearningLevelSettingView(level: $bUserSettingsManager.learningLevel)
+                            .onChange(of: userSettingsManager.learningLevel) {
+                                let userId = authManager.currentUser?.id
+                                
+                                Task {
+                                    await userSettingsManager.saveUserSettings(userId: userId)
+                                }
+                            }
                     } label: {
-                        SettingRow(title: "학습 난이도", value: viewModel.learningLevel.toString())
+                        SettingRow(title: "학습 난이도", value: userSettingsManager.learningLevel.toString())
                     }
                     
                     NavigationLink {
-                        CategorySettingView(category: $viewModel.category)
+                        CategorySettingView(category: $bUserSettingsManager.category)
+                            .onChange(of: userSettingsManager.category) {
+                                let userId = authManager.currentUser?.id
+                                
+                                Task {
+                                    await userSettingsManager.saveUserSettings(userId: userId)
+                                }
+                            }
                     } label: {
-                        SettingRow(title: "학습 카테고리", value: viewModel.category.toString())
+                        SettingRow(title: "학습 카테고리", value: userSettingsManager.category.toString())
                     }
                     
                     NavigationLink {
-                        DailyGoalSettingView(dailyGoal: $viewModel.dailyGoal)
+                        DailyGoalSettingView(dailyGoal: $bUserSettingsManager.dailyGoal)
+                            .onChange(of: userSettingsManager.dailyGoal) {
+                                let userId = authManager.currentUser?.id
+                                
+                                Task {
+                                    await userSettingsManager.saveUserSettings(userId: userId)
+                                }
+                            }
                     } label: {
-                        SettingRow(title: "일일 학습량", value: "\(viewModel.dailyGoal)개")
+                        SettingRow(title: "일일 학습량", value: "\(userSettingsManager.dailyGoal)개")
                     }
+                } header: {
+                    Text("학습 설정")
                 }
                 
                 // 4. 알림 설정 섹션
@@ -106,7 +133,7 @@ struct ProfileView: View {
                         Button("취소", role: .cancel) { }
                         Button("로그아웃", role: .destructive) {
                             Task {
-                                await authViewModel.signOut()
+                                await authManager.signOut()
                             }
                         }
                     } message: {
@@ -115,12 +142,16 @@ struct ProfileView: View {
                 }
             }
             .navigationTitle("프로필")
-            .alert("로그아웃", isPresented: $viewModel.showError) {
+            .task {
+                if let userId = authManager.currentUser?.id {
+                    await userSettingsManager.loadUserSettings(userId: userId)
+                }
+            }
+            .alert("오류", isPresented: $viewModel.showError) {
                 Button("확인", role: .cancel) { }
             } message: {
                 Text(viewModel.errorMessage)
             }
         }
-        
     }
 }
