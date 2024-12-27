@@ -147,6 +147,11 @@ struct ProfileView: View {
                     await userSettingsManager.loadUserSettings(userId: userId)
                 }
             }
+            .refreshable {
+                if let userId = authManager.currentUser?.id {
+                    await userSettingsManager.refreshUserSettings(userId: userId)
+                }
+            }
             .alert("오류", isPresented: $viewModel.showError) {
                 Button("확인", role: .cancel) { }
             } message: {

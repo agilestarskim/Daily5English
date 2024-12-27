@@ -1,27 +1,27 @@
-import Foundation
-import Combine
+import SwiftUI
 
+@MainActor
 class HomeViewModel: ObservableObject {
-    @Published var todayProgress: Double = 0.3 // 더미 데이터
-    @Published var dailyGoal: Int = 10
-    @Published var completedDates: Set<Date> = [Date()] // 오늘 날짜만 더미로 추가
+    @Published var todayProgress: Double = 0.0
+    @Published var completedCount: Int = 0
+    @Published var completedDates: Set<Date> = []
+    @Published var currentStreak: Int = 0
     @Published var learningStatus: LearningStatus = .notStarted
-    @Published var showStatistics: Bool = false
+    @Published var isLearningViewPresented: Bool = false
     
-    // MARK: - Private Properties
     private let calendar = Calendar.current
     
-    // MARK: - Public Methods
+    func loadTodayProgress() async {
+        // TODO: 서버에서 오늘의 학습 현황을 가져오는 로직 구현
+        // 임시 데이터
+        self.todayProgress = 0.3
+        self.completedCount = 3
+        self.completedDates = [Date()]
+        self.currentStreak = 5
+    }
+    
     func startLearning() {
-        // UI 테스트용 더미 상태 변경
+        isLearningViewPresented = true
         learningStatus = .inProgress
     }
-    
-    func refreshData() {
-        // 더미 데이터 유지
-    }
-    
-    func isDateCompleted(_ date: Date) -> Bool {
-        completedDates.contains { calendar.isDate($0, inSameDayAs: date) }
-    }
-} 
+}

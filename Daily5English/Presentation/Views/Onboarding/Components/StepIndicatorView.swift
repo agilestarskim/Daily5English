@@ -2,15 +2,46 @@ import SwiftUI
 
 struct StepIndicatorView: View {
     let currentStep: OnboardingStep
+    private let totalSteps = OnboardingStep.allCases.count
     
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach(OnboardingStep.allCases, id: \.self) { step in
-                Circle()
-                    .fill(step.rawValue <= currentStep.rawValue ? DSColors.accent : DSColors.Text.secondary)
-                    .frame(width: 8, height: 8)
+        VStack(spacing: DSSpacing.small) {
+            // 현재 단계 텍스트
+            Text("\(currentStep.rawValue + 1)/\(totalSteps)")
+                .font(.caption)
+                .foregroundColor(DSColors.Text.secondary)
+            
+            // 게이지 바
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    // 배경 게이지
+                    Capsule()
+                        .fill(DSColors.surface)
+                        .frame(height: 4)
+                    
+                    // 진행 게이지
+                    Capsule()
+                        .fill(DSColors.accent)
+                        .frame(
+                            width: geometry.size.width * CGFloat(currentStep.rawValue + 1) / CGFloat(totalSteps),
+                            height: 4
+                        )
+                }
             }
+            .frame(height: 4)
+            .animation(.smooth, value: currentStep)
         }
-        .padding(.top, DSSpacing.large)
+        .padding(.horizontal, DSSpacing.medium)
     }
+}
+
+#Preview {
+    VStack(spacing: 20) {
+        StepIndicatorView(currentStep: .guide1)
+        StepIndicatorView(currentStep: .guide2)
+        StepIndicatorView(currentStep: .category)
+        StepIndicatorView(currentStep: .dailyGoal)
+        StepIndicatorView(currentStep: .level)
+    }
+    .padding()
 } 

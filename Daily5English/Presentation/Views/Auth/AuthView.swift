@@ -17,7 +17,7 @@ struct AuthView: View {
                 EmptyView()
             } else {
                 if authManager.isLoggedIn {
-                    if authManager.isFirstLaunch {
+                    if !authManager.isFirstLaunch {
                         OnboardingView()
                     } else {
                         MainView()

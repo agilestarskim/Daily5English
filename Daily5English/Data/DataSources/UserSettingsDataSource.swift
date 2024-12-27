@@ -14,22 +14,21 @@ class SupabaseUserSettingsDataSource: UserSettingsDataSource {
     }
     
     func saveUserSettings(_ settings: UserSettingsDTO) async throws {
-        try await client
+        let _: PostgrestResponse<[UserSettingsDTO]> = try await client
             .from("user_settings")
             .upsert(settings)
             .execute()
     }
     
     func getUserSettings(userId: String) async throws -> UserSettingsDTO? {
-        let response = try await client
+        let response: PostgrestResponse<UserSettingsDTO> = try await client
             .from("user_settings")
             .select()
             .eq("user_id", value: userId)
             .limit(1)
+            .single()
             .execute()
         
-        let data: SupabaseResponse<UserSettingsDTO> = try SupabaseUtils.decode(response.data)
-
-        return data.data.first
+        return try SupabaseUtils.decode(response)
     }
 } 
