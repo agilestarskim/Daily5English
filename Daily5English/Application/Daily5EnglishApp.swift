@@ -9,37 +9,37 @@ import SwiftUI
 import Supabase
 @main
 struct Daily5EnglishApp: App {
-    @State private var authManager: AuthManager
-    @State private var userSettingManager: UserSettingsManager
+    
+    @State private var authenticationService: AuthenticationService
+    @State private var learningSettingsService: LearningSettingsService
     
     let supabaseClient: SupabaseClient
     
-    let authRepository: AuthRepository
-    let authUseCase: AuthUseCase
+    let authenticationRepository: AuthenticationRepositoryProtocol
+    let authenticationUseCase: AuthenticationUseCaseProtocol
     
-    let userSettingsDataSource: UserSettingsDataSource
-    let userSettingsRepository: UserSettingsRepository
-    let userSettingsUseCase: UserSettingsUseCase
-    
+    let learningSettingsRepository: LearningSettingsRepositoryProtocol
+    let learningSettingsUseCase: LearningSettingsUseCaseProtocol
     
     init() {
+        //New
         supabaseClient = {
             guard let url = URL(string: Config.supabaseURL ?? ""), let apiKey = Config.supabaseAPIKey else {
                 fatalError("Supabase URL or API Key is missing in the Info.plist")
             }
             return SupabaseClient(supabaseURL: url, supabaseKey: apiKey)
         }()
-            
         
-        authRepository = AuthRepository(client: supabaseClient)
-        authUseCase = AuthUseCase(authRepository: authRepository)
+        authenticationRepository = AuthenticationRepository(supabase: supabaseClient)
+        authenticationUseCase = AuthenticationUseCase(repository: authenticationRepository)
+        let authenticationService = AuthenticationService(authenticationUseCase: authenticationUseCase)
+        _authenticationService = State(wrappedValue: authenticationService)
         
-        userSettingsDataSource = SupabaseUserSettingsDataSource(client: supabaseClient)
-        userSettingsRepository = UserSettingsRepositoryImpl(dataSource: userSettingsDataSource)
-        userSettingsUseCase = UserSettingsUseCase(repository: userSettingsRepository)
         
-        _authManager = State(wrappedValue: AuthManager(useCase: authUseCase))
-        _userSettingManager = State(wrappedValue: UserSettingsManager(useCase: userSettingsUseCase))
+        learningSettingsRepository = LearningSettingsRepository(supabase: supabaseClient)
+        learningSettingsUseCase = LearningSettingsUseCase(repository: learningSettingsRepository)
+        let learningSettingsService = LearningSettingsService(learningSettingsUseCase: learningSettingsUseCase)
+        _learningSettingsService = State(wrappedValue: learningSettingsService)
     }
     
     
@@ -49,8 +49,8 @@ struct Daily5EnglishApp: App {
                 .onOpenURL { url in
                     supabaseClient.auth.handle(url)
                 }
-                .environment(authManager)
-                .environment(userSettingManager)
+                .environment(authenticationService)
+                .environment(learningSettingsService)
         }
     }
 }

@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct CategorySettingView: View {
-    @Binding var category: LearningCategory
+    @Binding var category: LearningSettings.LearningCategory
     
     var body: some View {
         List {
-            ForEach([LearningCategory.daily, .business], id: \.self) { category in
+            ForEach([LearningSettings.LearningCategory.daily, .business], id: \.self) { category in
                 Button {
                     self.category = category
                 } label: {
                     HStack {
-                        Text(category.toString())
+                        Text(category.rawValue)
                         Spacer()
                         if self.category == category {
                             Image(systemName: "checkmark")

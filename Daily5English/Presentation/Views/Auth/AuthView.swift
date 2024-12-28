@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct AuthView: View {
-    @Environment(AuthManager.self) private var authManager
+    @Environment(AuthenticationService.self) private var authService
 
     var body: some View {
-        @Bindable var bAuthManager = authManager
+        @Bindable var bAuthService = authService
+        
         Group {
-            if authManager.isLoading {
+            if authService.isLoading {
                 EmptyView()
             } else {
-                if authManager.isLoggedIn {
-                    if !authManager.isFirstLaunch {
+                if authService.isLoggedIn {
+                    if authService.isFirstLaunch {
                         OnboardingView()
                     } else {
                         MainView()
@@ -28,9 +29,9 @@ struct AuthView: View {
             }
         }
         .task {
-            await authManager.checkLoginStatus()
+            await authService.checkLoginStatus()
         }
-        .alert(item: $bAuthManager.error) { error in
+        .alert(item: $bAuthService.error) { error in
             Alert(
                 title: Text(error.info.title),
                 message: Text(error.info.description)

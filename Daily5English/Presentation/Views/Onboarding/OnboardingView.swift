@@ -1,13 +1,13 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @Environment(AuthManager.self) private var authManager
-    @Environment(UserSettingsManager.self) private var userSettingsManager
+    @Environment(AuthenticationService.self) private var authService
+    @Environment(LearningSettingsService.self) private var learningSettingsService
     
     @StateObject private var viewModel = OnboardingViewModel()
     
     var body: some View {
-        @Bindable var bUserSettingsManager = userSettingsManager
+        @Bindable var bLearningSettingsService = learningSettingsService
         VStack(spacing: DSSpacing.large) {
             StepIndicatorView(currentStep: viewModel.currentStep)
                 .padding(.top, DSSpacing.medium)
@@ -54,10 +54,7 @@ struct OnboardingView: View {
                 onPrevious: viewModel.moveToPreviousStep,
                 onNext: {
                     if viewModel.currentStep == .level {
-                        Task {
-                            await userSettingsManager.saveUserSettings(userId: authManager.currentUser?.id)
-                        }
-                        authManager.completeOnboarding()
+                        
                     } else {
                         viewModel.moveToNextStep()
                     }

@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct LearningLevelSettingView: View {
-    @Binding var level: LearningLevel
+    @Binding var level: LearningSettings.Difficulty
         
     var body: some View {
         List {
-            ForEach([LearningLevel.beginner, .intermediate, .advanced], id: \.self) { level in
+            ForEach([LearningSettings.Difficulty.beginner, .intermediate, .advanced], id: \.self) { level in
                 Button {
                     self.level = level
                 } label: {
                     HStack {
-                        Text(level.toString())
+                        Text(level.rawValue)
                         Spacer()
                         if self.level == level {
                             Image(systemName: "checkmark")

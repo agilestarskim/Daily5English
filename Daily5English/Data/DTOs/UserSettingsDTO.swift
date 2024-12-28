@@ -1,6 +1,6 @@
 import Foundation
 
-struct UserSettingsDTO: Codable {
+struct LearningSettingsDTO: Codable {
     let userId: String
     let difficultyLevel: String
     let dailyWordCount: Int
@@ -13,12 +13,37 @@ struct UserSettingsDTO: Codable {
         case categoryPreference = "category_preference"
     }
     
-    func toDomain() -> UserSettings {
-        return UserSettings(
+    func toDomain() -> LearningSettings {
+        
+        var difficulty: LearningSettings.Difficulty
+        
+        switch self.difficultyLevel.lowercased() {
+        case "easy":
+            difficulty = .beginner
+        case "medium":
+            difficulty = .intermediate
+        case "hard":
+            difficulty = .advanced
+        default:
+            difficulty = .intermediate
+        }
+        
+        var category: LearningSettings.LearningCategory
+        
+        switch self.categoryPreference.lowercased() {
+        case "daily":
+            category = .daily
+        case "business":
+            category = .business
+        default :
+            category = .daily
+        }
+        
+        return LearningSettings(
             userId: userId,
-            difficultyLevel: LearningLevel(string: self.difficultyLevel.lowercased()),
+            difficulty: difficulty,
             dailyWordCount: dailyWordCount,
-            categoryPreference: LearningCategory(string: categoryPreference.lowercased())
+            category: category
         )
     }
 } 

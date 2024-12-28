@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(UserSettingsManager.self) private var userSettingsManager
     @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
@@ -17,7 +16,7 @@ struct HomeView: View {
                             DailyProgressView(
                                 progress: viewModel.todayProgress,
                                 completedCount: viewModel.completedCount,
-                                totalCount: userSettingsManager.dailyGoal
+                                totalCount: 3
                             )
                         }
                         

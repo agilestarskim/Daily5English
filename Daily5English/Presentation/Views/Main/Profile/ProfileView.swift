@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @Environment(AuthManager.self) private var authManager
-    @Environment(UserSettingsManager.self) private var userSettingsManager
+    @Environment(AuthenticationService.self) private var authService
+    @Environment(LearningSettingsService.self) private var learningSettingsService
     
     @State private var showingLogoutAlert = false
     @StateObject private var viewModel =  ProfileViewModel()
     
     var body: some View {
-        @Bindable var bUserSettingsManager = userSettingsManager
+        @Bindable var bLearningSettingsService = learningSettingsService
         
         NavigationView {
             List {
@@ -31,9 +31,9 @@ struct ProfileView: View {
                         
                         // 사용자 정보
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(viewModel.userName)
+                            Text(authService.currentUser?.nickname ?? "")
                                 .font(.headline)
-                            Text(authManager.currentUser?.email ?? "")
+                            Text(authService.currentUser?.email ?? "")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
@@ -58,42 +58,37 @@ struct ProfileView: View {
                 // 3. 학습 설정 섹션
                 Section {
                     NavigationLink {
-                        LearningLevelSettingView(level: $bUserSettingsManager.learningLevel)
-                            .onChange(of: userSettingsManager.learningLevel) {
-                                let userId = authManager.currentUser?.id
-                                
-                                Task {
-                                    await userSettingsManager.saveUserSettings(userId: userId)
-                                }
-                            }
+                        LearningLevelSettingView(
+                            level: $bLearningSettingsService.difficulty
+                        )
+                        
                     } label: {
-                        SettingRow(title: "학습 난이도", value: userSettingsManager.learningLevel.toString())
+                        SettingRow(
+                            title: "학습 난이도",
+                            value: learningSettingsService.difficulty.rawValue
+                        )
                     }
                     
                     NavigationLink {
-                        CategorySettingView(category: $bUserSettingsManager.category)
-                            .onChange(of: userSettingsManager.category) {
-                                let userId = authManager.currentUser?.id
-                                
-                                Task {
-                                    await userSettingsManager.saveUserSettings(userId: userId)
-                                }
-                            }
+                        CategorySettingView(
+                            category: $bLearningSettingsService.category
+                        )
+                            
                     } label: {
-                        SettingRow(title: "학습 카테고리", value: userSettingsManager.category.toString())
+                        SettingRow(
+                            title: "학습 카테고리",
+                            value: learningSettingsService.category.rawValue
+                        )
                     }
-                    
+//                    
                     NavigationLink {
-                        DailyGoalSettingView(dailyGoal: $bUserSettingsManager.dailyGoal)
-                            .onChange(of: userSettingsManager.dailyGoal) {
-                                let userId = authManager.currentUser?.id
-                                
-                                Task {
-                                    await userSettingsManager.saveUserSettings(userId: userId)
-                                }
-                            }
+                        DailyGoalSettingView(dailyGoal: $bLearningSettingsService.dailyWordCount)
+                            
                     } label: {
-                        SettingRow(title: "일일 학습량", value: "\(userSettingsManager.dailyGoal)개")
+                        SettingRow(
+                            title: "일일 학습량",
+                            value: "\(learningSettingsService.dailyWordCount)개"
+                        )
                     }
                 } header: {
                     Text("학습 설정")
@@ -133,7 +128,7 @@ struct ProfileView: View {
                         Button("취소", role: .cancel) { }
                         Button("로그아웃", role: .destructive) {
                             Task {
-                                await authManager.signOut()
+                                await authService.signOut()
                             }
                         }
                     } message: {
@@ -143,13 +138,13 @@ struct ProfileView: View {
             }
             .navigationTitle("프로필")
             .task {
-                if let userId = authManager.currentUser?.id {
-                    await userSettingsManager.loadUserSettings(userId: userId)
+                if let userId = authService.currentUser?.id {
+                    await learningSettingsService.fetchLearningSettings(userId: userId)
                 }
             }
             .refreshable {
-                if let userId = authManager.currentUser?.id {
-                    await userSettingsManager.refreshUserSettings(userId: userId)
+                if let userId = authService.currentUser?.id {
+//                    await userSettingsManager.refreshUserSettings(userId: userId)
                 }
             }
             .alert("오류", isPresented: $viewModel.showError) {

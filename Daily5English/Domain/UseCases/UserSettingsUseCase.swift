@@ -1,4 +1,9 @@
-
+//
+//  AuthenticationUseCase.swift
+//  Production
+//
+//  Created by 김민성 on 12/28/24.
+//
 final class UserSettingsUseCase {
     private let repository: UserSettingsRepository
     

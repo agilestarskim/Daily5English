@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EmailSignUpView: View {
-    @Environment(AuthManager.self) private var authManager
+    @Environment(AuthenticationService.self) private var authService
     @StateObject private var viewModel = EmailSignUpViewModel()
         
     var body: some View {
@@ -69,7 +69,10 @@ struct EmailSignUpView: View {
             // 회원가입 버튼
             Button(action: {
                 Task {
-                    await authManager.signUpWithEmail(email: viewModel.email, password: viewModel.password)
+                    let email = viewModel.email
+                    let password = viewModel.password
+                    
+                    await authService.signUpWithEmail(email: email, password: password)
                 }
             }) {
                 Text("회원가입")
