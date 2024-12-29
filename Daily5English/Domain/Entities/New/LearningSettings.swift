@@ -22,6 +22,5 @@ struct LearningSettings: Codable {
     enum LearningCategory: String, Codable {
         case daily
         case business
-        case all
     }
 }

@@ -3,7 +3,8 @@
 import SwiftUI
 
 struct CategoryStepView: View {
-    @Binding var selectedCategory: LearningCategory
+    typealias Category = LearningSettings.LearningCategory
+    @Binding var selectedCategory: Category
     
     var body: some View {
         VStack(spacing: DSSpacing.large) {
@@ -20,13 +21,13 @@ struct CategoryStepView: View {
             }
             
             VStack(spacing: DSSpacing.medium) {
-                ForEach([LearningCategory.daily, .business], id: \.self) { category in
+                ForEach([Category.daily, .business], id: \.self) { category in
                     Button {
                         selectedCategory = category
                     } label: {
                         HStack {
                             VStack(alignment: .leading) {
-                                Text(category.toString())
+                                Text(category.rawValue)
                                     .font(.headline)
                                 Text(category == .daily ? "일상 회화, 여행 영어" : "비즈니스 이메일, 회의")
                                     .font(.subheadline)

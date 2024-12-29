@@ -46,4 +46,33 @@ struct LearningSettingsDTO: Codable {
             category: category
         )
     }
-} 
+    
+    static func toDTO(_ settings: LearningSettings) -> LearningSettingsDTO {
+        var difficulty: String
+        
+        switch settings.difficulty {
+        case .beginner:
+            difficulty = "EASY"
+        case .intermediate:
+            difficulty = "MEDIUM"
+        case .advanced:
+            difficulty = "HARD"
+        }
+        
+        var category: String
+        
+        switch settings.category {
+        case .daily:
+            category = "DAILY"
+        case .business:
+            category = "BUSINESS"
+        }
+        
+        return LearningSettingsDTO(
+            userId: settings.userId,
+            difficultyLevel: difficulty,
+            dailyWordCount: settings.dailyWordCount,
+            categoryPreference: category
+        )
+    }
+}

@@ -3,7 +3,8 @@
 import SwiftUI
 
 struct LevelStepView: View {
-    @Binding var selectedLevel: LearningLevel
+    typealias Difficulty = LearningSettings.Difficulty
+    @Binding var selectedLevel: Difficulty
     
     var body: some View {
         VStack(spacing: DSSpacing.large) {
@@ -20,13 +21,13 @@ struct LevelStepView: View {
             }
             
             VStack(spacing: DSSpacing.medium) {
-                ForEach([LearningLevel.beginner, .intermediate, .advanced], id: \.self) { level in
+                ForEach([Difficulty.beginner, .intermediate, .advanced], id: \.self) { level in
                     Button {
                         selectedLevel = level
                     } label: {
                         HStack {
                             VStack(alignment: .leading) {
-                                Text(level.toString())
+                                Text(level.rawValue)
                                     .font(.headline)
                                 Text(levelDescription(for: level))
                                     .font(.subheadline)
@@ -50,7 +51,7 @@ struct LevelStepView: View {
         }
     }
     
-    private func levelDescription(for level: LearningLevel) -> String {
+    private func levelDescription(for level: Difficulty) -> String {
         switch level {
         case .beginner: return "기초 단어, 간단한 문장"
         case .intermediate: return "일상 회화, 비즈니스 영어"

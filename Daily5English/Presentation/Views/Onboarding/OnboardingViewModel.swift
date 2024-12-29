@@ -1,6 +1,10 @@
 import SwiftUI
 
 class OnboardingViewModel: ObservableObject {
+    @Published var category: LearningSettings.LearningCategory = .daily
+    @Published var difficulty: LearningSettings.Difficulty = .intermediate
+    @Published var dailyWordCount: Int = 5
+    
     @Published var currentStep = OnboardingStep.guide1
     
     func moveToNextStep() {
@@ -14,4 +18,15 @@ class OnboardingViewModel: ObservableObject {
             currentStep = previous
         }
     }
-} 
+    
+    func returnLearningSettings(userId: String?) -> LearningSettings? {
+        guard let userId else { return nil }
+        
+        return LearningSettings(
+            userId: userId,
+            difficulty: difficulty,
+            dailyWordCount: dailyWordCount,
+            category: category
+        )
+    }
+}

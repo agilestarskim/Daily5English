@@ -10,11 +10,12 @@ import SwiftUI
 @MainActor
 @Observable
 final class AuthenticationService {
-    var isLoading: Bool = true
-    var isLoggedIn: Bool = false
+    private(set) var isLoading: Bool = true
+    private(set) var isLoggedIn: Bool = false
+    private(set) var currentUser: User? = nil
+    private(set) var isFirstLaunch: Bool = true
+    
     var error: AuthError? = nil
-    var currentUser: User? = nil
-    var isFirstLaunch: Bool = false
     
     private let authenticationUseCase: AuthenticationUseCaseProtocol
     
@@ -98,5 +99,9 @@ final class AuthenticationService {
         } catch {
             self.error = AuthError(id: "0004")
         }
+    }
+    
+    func completeOnboarding() {
+        self.isFirstLaunch = false
     }
 }

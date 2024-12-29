@@ -30,15 +30,15 @@ struct OnboardingView: View {
                 .padding(.horizontal, DSSpacing.medium)
                 .tag(OnboardingStep.guide2)
                 
-                CategoryStepView(selectedCategory: $bUserSettingsManager.category)
+                CategoryStepView(selectedCategory: $viewModel.category)
                     .padding(.horizontal, DSSpacing.medium)
                     .tag(OnboardingStep.category)
                 
-                DailyGoalStepView(selectedGoal: $bUserSettingsManager.dailyGoal)
+                DailyGoalStepView(selectedGoal: $viewModel.dailyWordCount)
                     .padding(.horizontal, DSSpacing.medium)
                     .tag(OnboardingStep.dailyGoal)
                 
-                LevelStepView(selectedLevel: $bUserSettingsManager.learningLevel)
+                LevelStepView(selectedLevel: $viewModel.difficulty)
                     .padding(.horizontal, DSSpacing.medium)
                     .tag(OnboardingStep.level)
             }
@@ -54,7 +54,14 @@ struct OnboardingView: View {
                 onPrevious: viewModel.moveToPreviousStep,
                 onNext: {
                     if viewModel.currentStep == .level {
+                        let userId = authService.currentUser?.id
+                        let settings = viewModel.returnLearningSettings(userId: userId)
                         
+                        Task {
+                            await learningSettingsService.saveSettings(settings)
+                        }
+                        
+                        authService.completeOnboarding()
                     } else {
                         viewModel.moveToNextStep()
                     }

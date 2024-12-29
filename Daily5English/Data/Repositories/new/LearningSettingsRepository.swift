@@ -17,6 +17,8 @@ final class LearningSettingsRepository: LearningSettingsRepositoryProtocol {
     }
     
     func update(settings: LearningSettings) async throws {
+        let settings = LearningSettingsDTO.toDTO(settings)
+        
         try await supabase
             .from("user_settings")
             .upsert(settings)

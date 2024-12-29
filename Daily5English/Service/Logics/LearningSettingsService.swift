@@ -14,7 +14,7 @@ final class LearningSettingsService {
     var dailyWordCount: Int = 9
     var category: LearningSettings.LearningCategory = .business
     
-    var error: UserSettingsError?
+    var error: LearningSettingsError?
     
     private let learningSettingsUseCase: LearningSettingsUseCaseProtocol
     
@@ -25,7 +25,7 @@ final class LearningSettingsService {
     func fetchLearningSettings(userId: String) async {
         do {
             guard let settings = try await learningSettingsUseCase.fetch(userId: userId) else {
-                self.error = UserSettingsError(id: "0000")
+                self.error = LearningSettingsError(id: "0000")
                 return
             }
             
@@ -34,7 +34,17 @@ final class LearningSettingsService {
             self.category = settings.category
             
         } catch {
-            self.error = UserSettingsError(id: "0000")
+            self.error = LearningSettingsError(id: "0000")
+        }
+    }
+    
+    func saveSettings(_ settings: LearningSettings?) async {
+        guard let settings else { return } //TODO: 에러처리
+        
+        do {
+            try await learningSettingsUseCase.update(settings: settings)
+        } catch {
+            self.error = LearningSettingsError(id: "0000")
         }
     }
 }
