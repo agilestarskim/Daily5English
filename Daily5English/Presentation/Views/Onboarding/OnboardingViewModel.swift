@@ -1,31 +1,40 @@
 import SwiftUI
 
 class OnboardingViewModel: ObservableObject {
-    @Published var category: LearningSettings.LearningCategory = .daily
-    @Published var difficulty: LearningSettings.Difficulty = .intermediate
-    @Published var dailyWordCount: Int = 5
     
-    @Published var currentStep = OnboardingStep.guide1
+    enum Step: Int, CaseIterable {
+        case guide1 = 0
+        case guide2 = 1
+        case category = 2
+        case count = 3
+        case level = 4
+    }
+    
+    @Published var category: Category = .daily
+    @Published var level: Level = .intermediate
+    @Published var count: Int = 5
+    
+    @Published var currentStep = Step.guide1
     
     func moveToNextStep() {
-        if let next = OnboardingStep(rawValue: currentStep.rawValue + 1) {
+        if let next = Step(rawValue: currentStep.rawValue + 1) {
             currentStep = next
         }
     }
     
     func moveToPreviousStep() {
-        if let previous = OnboardingStep(rawValue: currentStep.rawValue - 1) {
+        if let previous = Step(rawValue: currentStep.rawValue - 1) {
             currentStep = previous
         }
     }
     
-    func returnLearningSettings(userId: String?) -> LearningSettings? {
+    func returnLearningSetting(userId: String?) -> LearningSetting? {
         guard let userId else { return nil }
         
-        return LearningSettings(
+        return LearningSetting(
             userId: userId,
-            difficulty: difficulty,
-            dailyWordCount: dailyWordCount,
+            level: level,
+            count: count,
             category: category
         )
     }

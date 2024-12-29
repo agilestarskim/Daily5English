@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct CategoryStepView: View {
-    typealias Category = LearningSettings.LearningCategory
+    typealias Category = LearningSetting.Category
     @Binding var selectedCategory: Category
     
     var body: some View {
@@ -27,7 +27,7 @@ struct CategoryStepView: View {
                     } label: {
                         HStack {
                             VStack(alignment: .leading) {
-                                Text(category.rawValue)
+                                Text(category.text)
                                     .font(.headline)
                                 Text(category == .daily ? "일상 회화, 여행 영어" : "비즈니스 이메일, 회의")
                                     .font(.subheadline)

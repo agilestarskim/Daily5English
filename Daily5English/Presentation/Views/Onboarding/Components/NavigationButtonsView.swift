@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct NavigationButtonsView: View {
-    let currentStep: OnboardingStep
+    let currentStep: OnboardingViewModel.Step
     let onPrevious: () -> Void
     let onNext: () -> Void
     

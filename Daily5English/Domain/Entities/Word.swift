@@ -4,8 +4,8 @@ struct Word: Codable, Identifiable {
     let id: String
     let english: String
     let korean: String
-    let difficulty: LearningSettings.Difficulty
-    let category: LearningSettings.LearningCategory
+    let level: Level
+    let category: Category
     let examples: [Example]
     let partOfSpeech: PartOfSpeech
     

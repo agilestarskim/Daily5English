@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct StepIndicatorView: View {
-    let currentStep: OnboardingStep
-    private let totalSteps = OnboardingStep.allCases.count
+    typealias Step = OnboardingViewModel.Step
+    
+    let currentStep: Step
+    private let totalSteps = Step.allCases.count
     
     var body: some View {
         VStack(spacing: DSSpacing.small) {
@@ -40,7 +42,7 @@ struct StepIndicatorView: View {
         StepIndicatorView(currentStep: .guide1)
         StepIndicatorView(currentStep: .guide2)
         StepIndicatorView(currentStep: .category)
-        StepIndicatorView(currentStep: .dailyGoal)
+        StepIndicatorView(currentStep: .count)
         StepIndicatorView(currentStep: .level)
     }
     .padding()

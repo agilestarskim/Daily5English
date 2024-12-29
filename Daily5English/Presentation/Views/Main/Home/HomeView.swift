@@ -44,11 +44,11 @@ struct HomeView: View {
                         .blur(radius: 20)
                         .frame(height: 80)
                         .overlay {
-                            LearningActionButton(status: viewModel.learningStatus) {
-                                viewModel.startLearning()
-                            }
-                            .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
-                            .padding(.vertical, DSSpacing.medium)
+//                            LearningActionButton(status: viewModel.learningStatus) {
+//                                viewModel.startLearning()
+//                            }
+//                            .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
+//                            .padding(.vertical, DSSpacing.medium)
                         }
                 }
             }
@@ -202,20 +202,22 @@ struct BannerAdView: View {
 
 // 학습 시작 버튼
 struct LearningActionButton: View {
-    let status: LearningStatus
-    let action: () -> Void
-    
-    var buttonTitle: String {
-        switch status {
-        case .notStarted: return "학습 시작하기"
-        case .inProgress: return "학습 이어하기"
-        case .completed: return "복습하기"
-        }
-    }
+//    let status: LearningStatus
+//    let action: () -> Void
+//    
+//    var buttonTitle: String {
+//        switch status {
+//        case .notStarted: return "학습 시작하기"
+//        case .inProgress: return "학습 이어하기"
+//        case .completed: return "복습하기"
+//        }
+//    }
     
     var body: some View {
-        Button(action: action) {
-            Text(buttonTitle)
+        Button {
+            
+        } label: {
+            Text("시작하기")
                 .font(DSTypography.button)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)

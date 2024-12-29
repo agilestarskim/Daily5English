@@ -1,13 +1,15 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    typealias Step = OnboardingViewModel.Step
     @Environment(AuthenticationService.self) private var authService
-    @Environment(LearningSettingsService.self) private var learningSettingsService
+    @Environment(LearningSettingService.self) private var learningSettingService
     
     @StateObject private var viewModel = OnboardingViewModel()
     
     var body: some View {
-        @Bindable var bLearningSettingsService = learningSettingsService
+        @Bindable var bLearningSettingService = learningSettingService
+        
         VStack(spacing: DSSpacing.large) {
             StepIndicatorView(currentStep: viewModel.currentStep)
                 .padding(.top, DSSpacing.medium)
@@ -20,7 +22,7 @@ struct OnboardingView: View {
                     description: "하루 5분으로 시작하는\n영어 단어 학습"
                 )
                 .padding(.horizontal, DSSpacing.medium)
-                .tag(OnboardingStep.guide1)
+                .tag(Step.guide1)
                 
                 GuideStepView(
                     imageName: "onboarding_guide_2",
@@ -28,19 +30,19 @@ struct OnboardingView: View {
                     description: "학습한 단어를 복습하고\n단어장에서 관리해보세요"
                 )
                 .padding(.horizontal, DSSpacing.medium)
-                .tag(OnboardingStep.guide2)
+                .tag(Step.guide2)
                 
                 CategoryStepView(selectedCategory: $viewModel.category)
                     .padding(.horizontal, DSSpacing.medium)
-                    .tag(OnboardingStep.category)
+                    .tag(Step.category)
                 
-                DailyGoalStepView(selectedGoal: $viewModel.dailyWordCount)
+                DailyGoalStepView(selectedGoal: $viewModel.count)
                     .padding(.horizontal, DSSpacing.medium)
-                    .tag(OnboardingStep.dailyGoal)
+                    .tag(Step.count)
                 
-                LevelStepView(selectedLevel: $viewModel.difficulty)
+                LevelStepView(selectedLevel: $viewModel.level)
                     .padding(.horizontal, DSSpacing.medium)
-                    .tag(OnboardingStep.level)
+                    .tag(Step.level)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .scrollDisabled(true)
@@ -55,10 +57,10 @@ struct OnboardingView: View {
                 onNext: {
                     if viewModel.currentStep == .level {
                         let userId = authService.currentUser?.id
-                        let settings = viewModel.returnLearningSettings(userId: userId)
+                        let setting = viewModel.returnLearningSetting(userId: userId)
                         
                         Task {
-                            await learningSettingsService.saveSettings(settings)
+                            await learningSettingService.saveSetting(setting)
                         }
                         
                         authService.completeOnboarding()

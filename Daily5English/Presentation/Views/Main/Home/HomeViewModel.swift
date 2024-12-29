@@ -6,7 +6,6 @@ class HomeViewModel: ObservableObject {
     @Published var completedCount: Int = 0
     @Published var completedDates: Set<Date> = []
     @Published var currentStreak: Int = 0
-    @Published var learningStatus: LearningStatus = .notStarted
     @Published var isLearningViewPresented: Bool = false
     
     private let calendar = Calendar.current
@@ -22,6 +21,5 @@ class HomeViewModel: ObservableObject {
     
     func startLearning() {
         isLearningViewPresented = true
-        learningStatus = .inProgress
     }
 }

@@ -1,5 +1,5 @@
 //
-//  LearningSettingsError.swift
+//  LearningSettingError.swift
 //  Production
 //
 //  Created by 김민성 on 12/25/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LearningSettingsError: Identifiable {
+struct LearningSettingError: Identifiable {
     var id: String
     
     var info: (title:String, description: String) {

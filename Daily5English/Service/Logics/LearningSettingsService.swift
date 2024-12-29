@@ -8,43 +8,43 @@
 import Foundation
 
 @Observable
-final class LearningSettingsService {
+final class LearningSettingService {
     
-    var difficulty: LearningSettings.Difficulty = .intermediate
-    var dailyWordCount: Int = 9
-    var category: LearningSettings.LearningCategory = .business
+    var level: Level = .intermediate
+    var count: Int = 9
+    var category: Category = .business
     
-    var error: LearningSettingsError?
+    var error: LearningSettingError?
     
-    private let learningSettingsUseCase: LearningSettingsUseCaseProtocol
+    private let learningSettingUseCase: LearningSettingUseCaseProtocol
     
-    init(learningSettingsUseCase: LearningSettingsUseCaseProtocol) {
-        self.learningSettingsUseCase = learningSettingsUseCase
+    init(learningSettingUseCase: LearningSettingUseCaseProtocol) {
+        self.learningSettingUseCase = learningSettingUseCase
     }
     
-    func fetchLearningSettings(userId: String) async {
+    func fetchLearningSetting(userId: String) async {
         do {
-            guard let settings = try await learningSettingsUseCase.fetch(userId: userId) else {
-                self.error = LearningSettingsError(id: "0000")
+            guard let setting = try await learningSettingUseCase.fetch(userId: userId) else {
+                self.error = LearningSettingError(id: "0000")
                 return
             }
             
-            self.difficulty = settings.difficulty
-            self.dailyWordCount = settings.dailyWordCount
-            self.category = settings.category
+            self.level = setting.level
+            self.count = setting.count
+            self.category = setting.category
             
         } catch {
-            self.error = LearningSettingsError(id: "0000")
+            self.error = LearningSettingError(id: "0000")
         }
     }
     
-    func saveSettings(_ settings: LearningSettings?) async {
-        guard let settings else { return } //TODO: 에러처리
+    func saveSetting(_ setting: LearningSetting?) async {
+        guard let setting else { return } //TODO: 에러처리
         
         do {
-            try await learningSettingsUseCase.update(settings: settings)
+            try await learningSettingUseCase.update(setting: setting)
         } catch {
-            self.error = LearningSettingsError(id: "0000")
+            self.error = LearningSettingError(id: "0000")
         }
     }
 }

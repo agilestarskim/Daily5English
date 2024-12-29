@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct LearningLevelSettingView: View {
-    @Binding var level: LearningSettings.Difficulty
+    @Binding var level: Level
         
     var body: some View {
         List {
-            ForEach([LearningSettings.Difficulty.beginner, .intermediate, .advanced], id: \.self) { level in
+            ForEach([Level.beginner, .intermediate, .advanced], id: \.self) { level in
                 Button {
                     self.level = level
                 } label: {

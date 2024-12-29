@@ -1,5 +1,5 @@
 //
-//  NotificationSettingsUseCaseProtocol.swift
+//  NotificationSettingUseCaseProtocol.swift
 //  Production
 //
 //  Created by 김민성 on 12/27/24.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol NotificationSettingsUseCase {
+protocol NotificationsettingUseCase {
     /// 알림 업데이트
-    func updateNotificationSettings(newSettings: NotificationSettings) async throws
+    func updateNotificationsetting(newsetting: NotificationSetting) async throws
     
     /// 알림 가져오기
-    func fetchNotificationSettings() async throws -> NotificationSettings
+    func fetchNotificationsetting() async throws -> NotificationSetting
 }

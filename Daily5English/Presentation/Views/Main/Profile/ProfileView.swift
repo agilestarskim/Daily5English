@@ -9,13 +9,13 @@ import SwiftUI
 
 struct ProfileView: View {
     @Environment(AuthenticationService.self) private var authService
-    @Environment(LearningSettingsService.self) private var learningSettingsService
+    @Environment(LearningSettingService.self) private var learningSettingService
     
     @State private var showingLogoutAlert = false
     @StateObject private var viewModel =  ProfileViewModel()
     
     var body: some View {
-        @Bindable var bLearningSettingsService = learningSettingsService
+        @Bindable var bLearningSettingService = learningSettingService
         
         NavigationView {
             List {
@@ -59,35 +59,35 @@ struct ProfileView: View {
                 Section {
                     NavigationLink {
                         LearningLevelSettingView(
-                            level: $bLearningSettingsService.difficulty
+                            level: $bLearningSettingService.level
                         )
                         
                     } label: {
                         SettingRow(
                             title: "학습 난이도",
-                            value: learningSettingsService.difficulty.rawValue
+                            value: learningSettingService.level.text
                         )
                     }
                     
                     NavigationLink {
                         CategorySettingView(
-                            category: $bLearningSettingsService.category
+                            category: $bLearningSettingService.category
                         )
                             
                     } label: {
                         SettingRow(
                             title: "학습 카테고리",
-                            value: learningSettingsService.category.rawValue
+                            value: learningSettingService.category.text
                         )
                     }
 //                    
                     NavigationLink {
-                        DailyGoalSettingView(dailyGoal: $bLearningSettingsService.dailyWordCount)
+                        DailyGoalSettingView(dailyGoal: $bLearningSettingService.count)
                             
                     } label: {
                         SettingRow(
                             title: "일일 학습량",
-                            value: "\(learningSettingsService.dailyWordCount)개"
+                            value: "\(learningSettingService.count)개"
                         )
                     }
                 } header: {
@@ -139,12 +139,7 @@ struct ProfileView: View {
             .navigationTitle("프로필")
             .task {
                 if let userId = authService.currentUser?.id {
-                    await learningSettingsService.fetchLearningSettings(userId: userId)
-                }
-            }
-            .refreshable {
-                if let userId = authService.currentUser?.id {
-//                    await userSettingsManager.refreshUserSettings(userId: userId)
+                    await learningSettingService.fetchLearningSetting(userId: userId)
                 }
             }
             .alert("오류", isPresented: $viewModel.showError) {

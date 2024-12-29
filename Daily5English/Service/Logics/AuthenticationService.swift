@@ -36,9 +36,9 @@ final class AuthenticationService {
             if let user = self.currentUser {
                 print("------------세션 정보 로딩 성공------------")
                 print("이메일 정보: ", user.email)
-                print("마지막 로그인",  user.lastSignInAt)
-                print("닉네임", user.nickname)
-                print("프리미엄 여부", user.isPremium)
+                print("마지막 로그인",  user.lastSignInAt ?? "")
+                print("닉네임", user.nickname ?? "")
+                print("프리미엄 여부", user.isPremium ?? "")
                 print("--------------------------------------")
             }
             #endif

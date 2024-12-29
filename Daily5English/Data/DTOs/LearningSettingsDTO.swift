@@ -1,6 +1,6 @@
 import Foundation
 
-struct LearningSettingsDTO: Codable {
+struct LearningSettingDTO: Codable {
     let userId: String
     let difficultyLevel: String
     let dailyWordCount: Int
@@ -13,9 +13,9 @@ struct LearningSettingsDTO: Codable {
         case categoryPreference = "category_preference"
     }
     
-    func toDomain() -> LearningSettings {
+    func toDomain() -> LearningSetting {
         
-        var difficulty: LearningSettings.Difficulty
+        var difficulty: Level
         
         switch self.difficultyLevel.lowercased() {
         case "easy":
@@ -28,7 +28,7 @@ struct LearningSettingsDTO: Codable {
             difficulty = .intermediate
         }
         
-        var category: LearningSettings.LearningCategory
+        var category: Category
         
         switch self.categoryPreference.lowercased() {
         case "daily":
@@ -39,18 +39,18 @@ struct LearningSettingsDTO: Codable {
             category = .daily
         }
         
-        return LearningSettings(
+        return LearningSetting(
             userId: userId,
-            difficulty: difficulty,
-            dailyWordCount: dailyWordCount,
+            level: difficulty,
+            count: dailyWordCount,
             category: category
         )
     }
     
-    static func toDTO(_ settings: LearningSettings) -> LearningSettingsDTO {
+    static func toDTO(_ setting: LearningSetting) -> LearningSettingDTO {
         var difficulty: String
         
-        switch settings.difficulty {
+        switch setting.level {
         case .beginner:
             difficulty = "EASY"
         case .intermediate:
@@ -61,17 +61,17 @@ struct LearningSettingsDTO: Codable {
         
         var category: String
         
-        switch settings.category {
+        switch setting.category {
         case .daily:
             category = "DAILY"
         case .business:
             category = "BUSINESS"
         }
         
-        return LearningSettingsDTO(
-            userId: settings.userId,
+        return LearningSettingDTO(
+            userId: setting.userId,
             difficultyLevel: difficulty,
-            dailyWordCount: settings.dailyWordCount,
+            dailyWordCount: setting.count,
             categoryPreference: category
         )
     }
