@@ -33,7 +33,6 @@ final class AuthenticationRepository: AuthenticationRepositoryProtocol {
         )
         
         return authResponse.user.toDomain()
-        
     }
     
     func signInWithEmail(email: String, password: String) async throws -> User {
