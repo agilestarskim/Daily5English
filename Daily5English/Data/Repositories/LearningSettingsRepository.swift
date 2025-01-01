@@ -26,16 +26,15 @@ final class LearningSettingRepository: LearningSettingRepositoryProtocol {
     }
     
     func fetch(userId: String) async throws -> LearningSetting? {        
-        let response: PostgrestResponse<LearningSettingDTO> = try await supabase
+        let settingDTO: LearningSettingDTO = try await supabase
             .from("user_settings")
             .select()
             .eq("user_id", value: userId)
             .limit(1)
             .single()
             .execute()
+            .value
         
-        let learningSettingDTO: LearningSettingDTO? = try SupabaseUtils.decode(response)
-        
-        return learningSettingDTO?.toDomain()
+        return settingDTO.toDomain()
     }
 }

@@ -6,7 +6,7 @@ struct Word: Codable, Identifiable {
     let korean: String
     let level: Level
     let category: Category
-    let examples: [Example]
+    let example: Example
     let partOfSpeech: PartOfSpeech
     
     struct Example: Codable {
@@ -15,13 +15,13 @@ struct Word: Codable, Identifiable {
     }
     
     enum PartOfSpeech: String, Codable {
-        case noun
-        case verb
-        case adjective
-        case adverb
-        case preposition
-        case conjunction
-        case pronoun
-        case interjection
+        case noun = "NOUN"
+        case verb = "VERB"
+        case adjective = "ADJECTIVE"
+        case adverb = "ADVERB"
+        case preposition = "PREPOSITION"
+        case conjunction = "CONJUNCTION"
+        case pronoun = "PRONOUN"
+        case interjection = "INTERJECTION"
     }
 }

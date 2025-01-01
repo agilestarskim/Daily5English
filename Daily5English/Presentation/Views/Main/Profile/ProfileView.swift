@@ -59,7 +59,7 @@ struct ProfileView: View {
                 Section {
                     NavigationLink {
                         LearningLevelSettingView(
-                            level: $bLearningSettingService.level
+                            level: $bLearningSettingService.setting.level
                         )
                         
                     } label: {
@@ -71,7 +71,7 @@ struct ProfileView: View {
                     
                     NavigationLink {
                         CategorySettingView(
-                            category: $bLearningSettingService.category
+                            category: $bLearningSettingService.setting.category
                         )
                             
                     } label: {
@@ -82,7 +82,7 @@ struct ProfileView: View {
                     }
 //                    
                     NavigationLink {
-                        DailyGoalSettingView(dailyGoal: $bLearningSettingService.count)
+                        DailyGoalSettingView(dailyGoal: $bLearningSettingService.setting.count)
                             
                     } label: {
                         SettingRow(

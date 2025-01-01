@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class LearningSettingUseCase: LearningSettingUseCaseProtocol {
+final class LearningSettingUseCase {
     
     private let repository: LearningSettingRepositoryProtocol
     

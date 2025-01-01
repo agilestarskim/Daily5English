@@ -13,13 +13,13 @@ final class AuthenticationService {
     private(set) var isLoading: Bool = true
     private(set) var isLoggedIn: Bool = false
     private(set) var currentUser: User? = nil
-    private(set) var isFirstLaunch: Bool = true
+    private(set) var isFirstLaunch: Bool = false
     
     var error: AuthError? = nil
     
-    private let authenticationUseCase: AuthenticationUseCaseProtocol
+    private let authenticationUseCase: AuthenticationUseCase
     
-    init(authenticationUseCase: AuthenticationUseCaseProtocol) {
+    init(authenticationUseCase: AuthenticationUseCase) {
         self.authenticationUseCase = authenticationUseCase
     }
     
@@ -35,7 +35,7 @@ final class AuthenticationService {
             #if DEV
             if let user = self.currentUser {
                 print("------------세션 정보 로딩 성공------------")
-                print("이메일 정보: ", user.email)
+                print("이메일 정보: ", user.email ?? "")
                 print("마지막 로그인",  user.lastSignInAt ?? "")
                 print("닉네임", user.nickname ?? "")
                 print("프리미엄 여부", user.isPremium ?? "")

@@ -41,4 +41,11 @@ struct LearningSetting: Codable {
             }
         }
     }
+    
+    static let defalt: LearningSetting = .init(
+        userId: "",
+        level: .intermediate,
+        count: 5,
+        category: .daily
+    )
 }

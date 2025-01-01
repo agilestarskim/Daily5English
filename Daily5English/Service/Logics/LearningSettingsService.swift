@@ -10,28 +10,37 @@ import Foundation
 @Observable
 final class LearningSettingService {
     
-    var level: Level = .intermediate
-    var count: Int = 9
-    var category: Category = .business
+    var setting: LearningSetting = LearningSetting.defalt
+    
+    var level: Level {
+        self.setting.level
+    }
+    
+    var count: Int {
+        self.setting.count
+    }
+    
+    var category: Category {
+        self.setting.category
+    }
     
     var error: LearningSettingError?
     
-    private let learningSettingUseCase: LearningSettingUseCaseProtocol
+    private let learningSettingUseCase: LearningSettingUseCase
     
-    init(learningSettingUseCase: LearningSettingUseCaseProtocol) {
+    init(learningSettingUseCase: LearningSettingUseCase) {
         self.learningSettingUseCase = learningSettingUseCase
     }
     
     func fetchLearningSetting(userId: String) async {
         do {
+            
             guard let setting = try await learningSettingUseCase.fetch(userId: userId) else {
                 self.error = LearningSettingError(id: "0000")
                 return
             }
             
-            self.level = setting.level
-            self.count = setting.count
-            self.category = setting.category
+            self.setting = setting
             
         } catch {
             self.error = LearningSettingError(id: "0000")

@@ -27,21 +27,6 @@ struct Daily5EnglishApp: App {
             return SupabaseClient(supabaseURL: url, supabaseKey: apiKey)
         }()
         
-        // SwiftData 컨테이너 설정
-        let modelContainer: ModelContainer = {
-            let schema = Schema([
-                LocalLearningSession.self,
-                LocalQuizSession.self
-            ])
-            let modelConfiguration = ModelConfiguration(schema: schema)
-            
-            do {
-                return try ModelContainer(for: schema, configurations: [modelConfiguration])
-            } catch {
-                fatalError("Could not create ModelContainer: \(error)")
-            }
-        }()
-        
         // Authentication 설정
         let authRepo = AuthenticationRepository(supabase: supabase)
         let authUseCase = AuthenticationUseCase(repository: authRepo)
@@ -55,17 +40,13 @@ struct Daily5EnglishApp: App {
         _learningSettingService = State(wrappedValue: learningSettingService)
         
         // Learning Service 설정
-        let learningRepo = LearningRepository(
-            supabase: supabase,
-            modelContext: modelContainer.mainContext
-        )
+        let learningRepo = LearningRepository(supabase: supabase)
         let learningSessionUseCase = LearningSessionUseCase(repository: learningRepo)
         let quizSessionUseCase = QuizSessionUseCase(repository: learningRepo)
         
         let learningService = LearningService(
             learningSessionUseCase: learningSessionUseCase,
-            quizSessionUseCase: quizSessionUseCase,
-            userId: authService.currentUser?.id ?? ""
+            quizSessionUseCase: quizSessionUseCase
         )
         _learningService = State(wrappedValue: learningService)
     }
@@ -80,6 +61,5 @@ struct Daily5EnglishApp: App {
                 .environment(learningSettingService)
                 .environment(learningService)
         }
-        .modelContainer(for: [LocalLearningSession.self, LocalQuizSession.self])
     }
 }
