@@ -12,7 +12,7 @@ struct DailyGoalSettingView: View {
     
     var body: some View {
         List {
-            ForEach(1...10, id: \.self) { number in
+            ForEach(3...10, id: \.self) { number in
                 Button {
                     dailyGoal = number
                 } label: {

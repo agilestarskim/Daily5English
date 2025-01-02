@@ -41,13 +41,8 @@ struct Daily5EnglishApp: App {
         
         // Learning Service 설정
         let learningRepo = LearningRepository(supabase: supabase)
-        let learningSessionUseCase = LearningSessionUseCase(repository: learningRepo)
-        let quizSessionUseCase = QuizSessionUseCase(repository: learningRepo)
-        
-        let learningService = LearningService(
-            learningSessionUseCase: learningSessionUseCase,
-            quizSessionUseCase: quizSessionUseCase
-        )
+        let learningUseCase = LearningUseCase(repository: learningRepo)
+        let learningService = LearningService(learningUseCase: learningUseCase)
         _learningService = State(wrappedValue: learningService)
     }
     

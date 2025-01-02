@@ -17,7 +17,7 @@ struct LearningLevelSettingView: View {
                     self.level = level
                 } label: {
                     HStack {
-                        Text(level.rawValue)
+                        Text(level.text)
                         Spacer()
                         if self.level == level {
                             Image(systemName: "checkmark")

@@ -38,7 +38,7 @@ final class AuthenticationService {
                 print("이메일 정보: ", user.email ?? "")
                 print("마지막 로그인",  user.lastSignInAt ?? "")
                 print("닉네임", user.nickname ?? "")
-                print("프리미엄 여부", user.isPremium ?? "")
+                print("프리미엄 여부", user.isPremium)
                 print("--------------------------------------")
             }
             #endif

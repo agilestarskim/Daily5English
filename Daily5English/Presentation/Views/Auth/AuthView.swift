@@ -21,7 +21,7 @@ struct AuthView: View {
                     if authService.isFirstLaunch {
                         OnboardingView()
                     } else {
-                        MainView()
+                        MainTabView()
                     }
                 } else {
                     LoginView()

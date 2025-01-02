@@ -2,10 +2,11 @@ import SwiftUI
 
 
 struct HomeView: View {
-    @Environment(LearningService.self) private var learningService
-    @State private var showLearningSession = false
+    @Environment(LearningService.self) private var learning
+    @State private var viewModel = LearningContainerViewModel()
     
     var body: some View {
+        @Bindable var bViewModel = viewModel
         NavigationStack {
             VStack(spacing: 20) {
                 // 학습 현황 카드
@@ -15,7 +16,7 @@ struct HomeView: View {
                 
                 // 학습 시작 버튼
                 Button(action: {
-                    showLearningSession = true
+                    viewModel.isPresented = true
                 }) {
                     Text("오늘의 학습 시작하기")
                         .font(.headline)
@@ -28,8 +29,9 @@ struct HomeView: View {
                 .padding(.horizontal)
             }
             .padding()
-            .fullScreenCover(isPresented: $showLearningSession) {
-                LearningSessionView()
+            .fullScreenCover(isPresented: $bViewModel.isPresented) {
+                LearningContainerView()
+                    .environment(viewModel)
             }
         }
     }
