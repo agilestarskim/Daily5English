@@ -30,8 +30,11 @@ struct LearningContainerView: View {
                     LearningResultView(restart: {
                         let words = learningSessionViewModel.words
                         let quizzes = learning.createQuizzes(from: words)
-                        quizSessionViewModel.restart(with: quizzes)
-                        viewModel.goToQuiz()
+                        
+                        learningSessionViewModel.reset()
+                        quizSessionViewModel.reset(with: quizzes)
+                        
+                        viewModel.goToLearning()
                     })
                     .environment(learningResultViewModel)
                 }

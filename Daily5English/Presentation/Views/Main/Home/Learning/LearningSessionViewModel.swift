@@ -46,4 +46,8 @@ final class LearningSessionViewModel {
         guard !isFirstWord else { return }
         wordIndex -= 1
     }
-} 
+    
+    func reset() {
+        wordIndex = 0
+    }
+}

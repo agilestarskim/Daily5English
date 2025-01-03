@@ -72,7 +72,7 @@ final class QuizSessionViewModel {
         }
     }
     
-    func restart(with newQuizzes: [Quiz]) {
+    func reset(with newQuizzes: [Quiz]) {
         self.quizzes = newQuizzes
         self.quizIndex = 0
         self.selectedAnswers = []
