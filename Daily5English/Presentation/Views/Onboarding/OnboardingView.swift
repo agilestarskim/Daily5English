@@ -60,10 +60,10 @@ struct OnboardingView: View {
                         let setting = viewModel.returnLearningSetting(userId: userId)
                         
                         Task {
-                            await learningSettingService.saveSetting(setting)
+                            await learningSettingService.update(setting)
+                            authService.completeOnboarding()
                         }
                         
-                        authService.completeOnboarding()
                     } else {
                         viewModel.moveToNextStep()
                     }

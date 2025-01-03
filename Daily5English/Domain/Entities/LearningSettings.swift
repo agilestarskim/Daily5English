@@ -16,7 +16,7 @@ struct LearningSetting: Codable {
     var count: Int
     var category: Category
     
-    enum Level: String, Codable {
+    enum Level: String, Codable, CaseIterable {
         case beginner
         case intermediate
         case advanced
@@ -30,7 +30,7 @@ struct LearningSetting: Codable {
         }
     }
     
-    enum Category: String, Codable {
+    enum Category: String, Codable, CaseIterable {
         case daily
         case business
         

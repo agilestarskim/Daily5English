@@ -12,6 +12,8 @@ final class LearningSettingService {
     
     var setting: LearningSetting = LearningSetting.defalt
     
+    private(set) var userId: String? = nil
+    
     var level: Level {
         self.setting.level
     }
@@ -32,9 +34,18 @@ final class LearningSettingService {
         self.learningSettingUseCase = learningSettingUseCase
     }
     
-    func fetchLearningSetting(userId: String) async {
+    //로그인 성공시 꼭 호출해야함.
+    func setUserId(_ userId: String) {
+        self.userId = userId
+    }
+    
+    func fetchLearningSetting() async {
+        guard let userId else {
+            self.error = LearningSettingError(id: "0000")
+            return
+        }
+        
         do {
-            
             guard let setting = try await learningSettingUseCase.fetch(userId: userId) else {
                 self.error = LearningSettingError(id: "0000")
                 return
@@ -47,12 +58,13 @@ final class LearningSettingService {
         }
     }
     
-    func saveSetting(_ setting: LearningSetting?) async {
+    func update(_ setting: LearningSetting?) async {
         guard let setting else { return } //TODO: 에러처리
         
         do {
             try await learningSettingUseCase.update(setting: setting)
         } catch {
+            print(error)
             self.error = LearningSettingError(id: "0000")
         }
     }

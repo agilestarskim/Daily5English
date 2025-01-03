@@ -2,7 +2,10 @@ import SwiftUI
 
 
 struct HomeView: View {
+    @Environment(AuthenticationService.self) private var auth
     @Environment(LearningService.self) private var learning
+    @Environment(LearningSettingService.self) private var learningSettingService
+    
     @State private var viewModel = LearningContainerViewModel()
     @State private var hasStudiedToday: Bool = false
     
@@ -50,6 +53,7 @@ struct LearningTipCard: View {
                     .foregroundColor(.yellow)
                 Text("오늘의 학습 팁")
                     .font(.headline)
+                Spacer()
             }
             
             Text(tip.content)
@@ -58,7 +62,7 @@ struct LearningTipCard: View {
             
             if let source = tip.source {
                 Text(source)
-                    .font(.caption)
+                    .font(.caption2)
                     .foregroundColor(.secondary)
             }
         }
@@ -71,7 +75,11 @@ struct LearningTipCard: View {
 // 2. 학습 현황 블록 컴포넌트
 struct LearningStatusBlocks: View {
     var body: some View {
-        HStack(spacing: 12) {
+        LazyVGrid(columns: [
+            GridItem(.flexible(), spacing: 12),
+            GridItem(.flexible(), spacing: 12)
+        ], spacing: 12) {
+            // 1. 오늘 목표
             StatusBlock(
                 title: "오늘 목표",
                 value: "5",
@@ -79,6 +87,15 @@ struct LearningStatusBlocks: View {
                 icon: "target"
             )
             
+            // 2. 총 학습 단어
+            StatusBlock(
+                title: "총 학습",
+                value: "152",
+                unit: "단어",
+                icon: "book.fill"
+            )
+            
+            // 3. 연속 학습
             StatusBlock(
                 title: "연속 학습",
                 value: "7",
@@ -86,11 +103,12 @@ struct LearningStatusBlocks: View {
                 icon: "flame.fill"
             )
             
+            // 4. 총 학습일
             StatusBlock(
-                title: "총 학습",
-                value: "152",
-                unit: "단어",
-                icon: "book.fill"
+                title: "총 학습일",
+                value: "32",
+                unit: "일",
+                icon: "calendar"
             )
         }
     }
@@ -132,9 +150,6 @@ struct StatusBlock: View {
 struct LearningCalendarView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("학습 기록")
-                .font(.headline)
-            
             ContributionGridView()
         }
         .padding()
