@@ -75,4 +75,12 @@ final class LearningUseCase {
             )
         }
     }
+    
+    func fetchStatistics(userId: String) async throws -> LearningStatistics {
+        return try await repository.fetchLearningStatistics(userId: userId)
+    }
+    
+    func saveStatistics(userId: String, wordsCount: Int) async throws {
+        try await repository.updateLearningCompletion(userId: userId, wordsCount: wordsCount)
+    }
 }

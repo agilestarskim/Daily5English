@@ -25,7 +25,7 @@ final class LearningSettingRepository: LearningSettingRepositoryProtocol {
             .execute()
     }
     
-    func fetch(userId: String) async throws -> LearningSetting? {        
+    func fetch(userId: String) async throws -> LearningSetting {        
         let settingDTO: LearningSettingDTO = try await supabase
             .from("user_settings")
             .select()

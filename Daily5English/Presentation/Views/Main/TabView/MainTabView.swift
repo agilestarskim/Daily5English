@@ -3,7 +3,7 @@ import SwiftUI
 struct MainTabView: View {
     @Environment(AuthenticationService.self) private var auth
     @Environment(LearningService.self) private var learning
-    @Environment(LearningSettingService.self) private var learningSetting
+    @Environment(LearningSettingService.self) private var setting
     
     var body: some View {
         TabView {
@@ -24,10 +24,13 @@ struct MainTabView: View {
         }
         .task {
             if let userId = auth.currentUser?.id {
-                learningSetting.setUserId(userId)
+                setting.setUserId(userId)
+                learning.setUserId(userId)
                 
                 // 사용자 setting값을 서버에서 가져옴
-                await learningSetting.fetchLearningSetting()
+                await setting.fetchLearningSetting()
+                // 사용자 학습 통계를 서버에서 가져옴
+                await learning.fetchStatistics()
             }
         }
     }

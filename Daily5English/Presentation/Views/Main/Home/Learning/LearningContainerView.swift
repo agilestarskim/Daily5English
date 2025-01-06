@@ -9,7 +9,6 @@ struct LearningContainerView: View {
     @State private var learningSessionViewModel = LearningSessionViewModel()
     @State private var quizSessionViewModel = QuizSessionViewModel()
     @State private var learningResultViewModel = LearningResultViewModel()
-    @Namespace private var animation
     
     var body: some View {
         NavigationStack {
@@ -42,6 +41,15 @@ struct LearningContainerView: View {
             .onChange(of: viewModel.currentStep) {
                 if viewModel.currentStep == .result {
                     learningResultViewModel.initialize(quizSessionViewModel: quizSessionViewModel)
+                    
+                    if learningResultViewModel.correctRate == 100 {
+                        let wordsCount = learningSessionViewModel.totalWordCount
+                        
+                        Task {
+                            await learning.saveStatistics(wordsCount: wordsCount)
+                            await learning.fetchStatistics()
+                        }
+                    }
                 }
             }
             .toolbar {

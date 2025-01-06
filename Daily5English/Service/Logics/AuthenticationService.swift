@@ -13,7 +13,7 @@ final class AuthenticationService {
     private(set) var isLoading: Bool = true
     private(set) var isLoggedIn: Bool = false
     private(set) var currentUser: User? = nil
-    private(set) var isFirstLaunch: Bool = true
+    private(set) var isFirstLaunch: Bool = false
     
     var error: AuthError? = nil
     

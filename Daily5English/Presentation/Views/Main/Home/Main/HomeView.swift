@@ -4,7 +4,7 @@ import SwiftUI
 struct HomeView: View {
     @Environment(AuthenticationService.self) private var auth
     @Environment(LearningService.self) private var learning
-    @Environment(LearningSettingService.self) private var learningSettingService
+    @Environment(LearningSettingService.self) private var setting
     
     @State private var viewModel = LearningContainerViewModel()
     @State private var hasStudiedToday: Bool = false
@@ -22,7 +22,12 @@ struct HomeView: View {
                         LearningStatusMessage(hasStudied: hasStudiedToday)
                         
                         // 3. 학습 현황 블록
-                        LearningStatusBlocks()
+                        LearningStatusBlocks(
+                            count: setting.count,
+                            totalCount: learning.stat.totalWordsCount,
+                            streak: learning.stat.streakDays,
+                            totalDays: learning.stat.totalLearningDays
+                        )
                         
                         // 4. 학습 캘린더
                         LearningCalendarView()
@@ -74,6 +79,12 @@ struct LearningTipCard: View {
 
 // 2. 학습 현황 블록 컴포넌트
 struct LearningStatusBlocks: View {
+    
+    let count: Int
+    let totalCount: Int
+    let streak: Int
+    let totalDays: Int
+    
     var body: some View {
         LazyVGrid(columns: [
             GridItem(.flexible(), spacing: 12),
@@ -82,7 +93,7 @@ struct LearningStatusBlocks: View {
             // 1. 오늘 목표
             StatusBlock(
                 title: "오늘 목표",
-                value: "5",
+                value: String(count),
                 unit: "단어",
                 icon: "target"
             )
@@ -90,7 +101,7 @@ struct LearningStatusBlocks: View {
             // 2. 총 학습 단어
             StatusBlock(
                 title: "총 학습",
-                value: "152",
+                value: String(totalCount),
                 unit: "단어",
                 icon: "book.fill"
             )
@@ -98,7 +109,7 @@ struct LearningStatusBlocks: View {
             // 3. 연속 학습
             StatusBlock(
                 title: "연속 학습",
-                value: "7",
+                value: String(streak),
                 unit: "일",
                 icon: "flame.fill"
             )
@@ -106,7 +117,7 @@ struct LearningStatusBlocks: View {
             // 4. 총 학습일
             StatusBlock(
                 title: "총 학습일",
-                value: "32",
+                value: String(totalDays),
                 unit: "일",
                 icon: "calendar"
             )

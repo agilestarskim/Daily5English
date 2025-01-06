@@ -10,7 +10,7 @@ import Foundation
 @Observable
 final class LearningSettingService {
     
-    var setting: LearningSetting = LearningSetting.defalt
+    var setting: LearningSetting = LearningSetting.defaults
     
     private(set) var userId: String? = nil
     
@@ -46,11 +46,7 @@ final class LearningSettingService {
         }
         
         do {
-            guard let setting = try await learningSettingUseCase.fetch(userId: userId) else {
-                self.error = LearningSettingError(id: "0000")
-                return
-            }
-            
+            let setting = try await learningSettingUseCase.fetch(userId: userId)
             self.setting = setting
             
         } catch {

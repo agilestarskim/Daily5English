@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct LearningSettingsView: View {
-    @Environment(LearningSettingService.self) private var learningSettingService
+    @Environment(LearningSettingService.self) private var setting
     @Environment(\.dismiss) private var dismiss
     @State private var isLoading = false
-    @State private var localSetting: LearningSetting = .defalt
+    @State private var localSetting: LearningSetting = .defaults
     
     var body: some View {
         NavigationStack {
@@ -94,7 +94,7 @@ struct LearningSettingsView: View {
             }
         }
         .onAppear {
-            self.localSetting = learningSettingService.setting
+            self.localSetting = setting.setting
         }
     }
     
@@ -102,8 +102,8 @@ struct LearningSettingsView: View {
         isLoading = true
         
         Task {
-            await learningSettingService.update(localSetting)
-            await learningSettingService.fetchLearningSetting()
+            await setting.update(localSetting)
+            await setting.fetchLearningSetting()
             isLoading = false
             dismiss()
         }

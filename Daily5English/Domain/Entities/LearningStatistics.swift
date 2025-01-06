@@ -7,11 +7,18 @@
 
 import Foundation
 
-struct LearningStatistics: Codable {
+struct LearningStatistics: Codable, Identifiable {
+    let id: String
     let userId: String
-    let date: Date
-    var totalWordsLearned: Int
-    var learningTime: TimeInterval
-    var streakDays: Int
-    var completedSessions: Int
+    let totalWordsCount: Int
+    let streakDays: Int
+    let totalLearningDays: Int
+    
+    static let defaults: LearningStatistics = .init(
+        id: "",
+        userId: "",
+        totalWordsCount: 0,
+        streakDays: 0,
+        totalLearningDays: 0
+    )
 }

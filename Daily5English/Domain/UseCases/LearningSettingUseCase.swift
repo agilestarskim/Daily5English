@@ -19,7 +19,7 @@ final class LearningSettingUseCase {
         try await repository.update(setting: setting)
     }
     
-    func fetch(userId: String) async throws -> LearningSetting? {
+    func fetch(userId: String) async throws -> LearningSetting {
         return try await repository.fetch(userId: userId)
     }
 }

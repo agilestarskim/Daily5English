@@ -42,7 +42,7 @@ struct LearningSetting: Codable {
         }
     }
     
-    static let defalt: LearningSetting = .init(
+    static let defaults: LearningSetting = .init(
         userId: "",
         level: .intermediate,
         count: 5,
