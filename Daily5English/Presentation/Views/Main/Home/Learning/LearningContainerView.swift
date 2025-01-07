@@ -3,6 +3,7 @@ import SwiftUI
 struct LearningContainerView: View {
     @Environment(LearningService.self) private var learning
     @Environment(LearningSettingService.self) private var setting
+    @Environment(HomeDataService.self) private var homeData
     
     @Environment(LearningContainerViewModel.self) private var viewModel
     
@@ -46,8 +47,8 @@ struct LearningContainerView: View {
                         let wordsCount = learningSessionViewModel.totalWordCount
                         
                         Task {
-                            await learning.saveStatistics(wordsCount: wordsCount)
-                            await learning.fetchStatistics()
+                            await homeData.saveStatistics(wordsCount: wordsCount)
+                            await homeData.fetchStatistics()
                         }
                     }
                 }

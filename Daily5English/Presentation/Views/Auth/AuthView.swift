@@ -15,7 +15,7 @@ struct AuthView: View {
         
         Group {
             if authService.isLoading {
-                EmptyView()
+                ProgressView()
             } else {
                 if authService.isLoggedIn {
                     if authService.isFirstLaunch {

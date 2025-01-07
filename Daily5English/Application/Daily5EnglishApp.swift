@@ -14,6 +14,7 @@ struct Daily5EnglishApp: App {
     @State private var authenticationService: AuthenticationService
     @State private var learningSettingService: LearningSettingService
     @State private var learningService: LearningService
+    @State private var homeDataService: HomeDataService
     
     let supabase: SupabaseClient
     
@@ -44,6 +45,12 @@ struct Daily5EnglishApp: App {
         let learningUseCase = LearningUseCase(repository: learningRepo)
         let learningService = LearningService(learningUseCase: learningUseCase)
         _learningService = State(wrappedValue: learningService)
+        
+        // homeData Service 설정 (UseCase 없이 서비스에서 리포지토리로 바로 접근)
+        let homeDataRepo = HomeDataRepository(supabase: supabase)
+        let homeDataService = HomeDataService(repository: homeDataRepo)
+        _homeDataService = State(wrappedValue: homeDataService)
+        
     }
     
     var body: some Scene {
@@ -55,6 +62,7 @@ struct Daily5EnglishApp: App {
                 .environment(authenticationService)
                 .environment(learningSettingService)
                 .environment(learningService)
+                .environment(homeDataService)
         }
     }
 }

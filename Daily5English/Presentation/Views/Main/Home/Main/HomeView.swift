@@ -5,6 +5,7 @@ struct HomeView: View {
     @Environment(AuthenticationService.self) private var auth
     @Environment(LearningService.self) private var learning
     @Environment(LearningSettingService.self) private var setting
+    @Environment(HomeDataService.self) private var homeData
     
     @State private var viewModel = LearningContainerViewModel()
     @State private var hasStudiedToday: Bool = false
@@ -16,7 +17,10 @@ struct HomeView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         // 1. 학습 팁 카드
-                        LearningTipCard()
+                        LearningTipCard(
+                            message: homeData.tip.message,
+                            source: homeData.tip.source
+                        )
                         
                         // 2. 학습 상태 메시지
                         LearningStatusMessage(hasStudied: hasStudiedToday)
@@ -24,9 +28,9 @@ struct HomeView: View {
                         // 3. 학습 현황 블록
                         LearningStatusBlocks(
                             count: setting.count,
-                            totalCount: learning.stat.totalWordsCount,
-                            streak: learning.stat.streakDays,
-                            totalDays: learning.stat.totalLearningDays
+                            totalCount: homeData.stat.totalWordsCount,
+                            streak: homeData.stat.streakDays,
+                            totalDays: homeData.stat.totalLearningDays
                         )
                         
                         // 4. 학습 캘린더
@@ -43,13 +47,18 @@ struct HomeView: View {
                 LearningContainerView()
                     .environment(viewModel)
             }
+            .onAppear {
+                homeData.refreshTip()
+            }
         }
     }
 }
 
 // 1. 학습 팁 카드 컴포넌트
 struct LearningTipCard: View {
-    @State private var tip: LearningTip = LearningTip.random
+    
+    let message: String
+    let source: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -61,15 +70,15 @@ struct LearningTipCard: View {
                 Spacer()
             }
             
-            Text(tip.content)
+            Text(message)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             
-            if let source = tip.source {
-                Text(source)
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-            }
+            
+            Text(source)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+            
         }
         .padding()
         .background(.ultraThinMaterial)

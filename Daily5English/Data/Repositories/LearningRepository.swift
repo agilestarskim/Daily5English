@@ -28,30 +28,4 @@ final class LearningRepository: LearningRepositoryProtocol {
         
         return words
     }
-    
-    func updateLearningCompletion(userId: String, wordsCount: Int) async throws {
-        let result = try await supabase
-            .rpc(
-                "update_learning_completion",
-                params: [
-                    "_user_id": AnyJSON.string(userId),
-                    "_words_count": AnyJSON.integer(wordsCount)
-                ]
-            )
-            .execute()
-        
-        print(result.response.allHeaderFields)
-    }
-    
-    func fetchLearningStatistics(userId: String) async throws -> LearningStatistics {
-        let learningStatistics: LearningStatisticsDTO = try await supabase
-            .from("learning_statistics")
-            .select()
-            .eq("user_id", value: userId)
-            .single()
-            .execute()
-            .value
-            
-        return learningStatistics.toDomain()
-    }
 }
