@@ -18,6 +18,8 @@ final class HomeDataService {
     private let repository: HomeDataRepository
     private let userDefaults = UserDefaults.standard
     
+    var learningDates: [Date] = []
+    
     init(repository: HomeDataRepository) {
         self.repository = repository
     }
@@ -77,5 +79,26 @@ final class HomeDataService {
     
     func completeToday() {
         userDefaults.set(Date().timeIntervalSince1970, forKey: "lastCompletedDate")
+    }
+    
+    @MainActor
+    func fetchLearningDates() async {
+        guard let userId else { return }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let year = calendar.component(.year, from: now)
+        let month = calendar.component(.month, from: now)
+        
+        do {
+            self.learningDates = try await repository.fetchLearningDates(
+                userId: userId,
+                year: year,
+                month: month
+            )
+            print("Fetched learning dates: \(learningDates.count)")
+        } catch {
+            print("Failed to fetch learning dates: \(error)")
+        }
     }
 }

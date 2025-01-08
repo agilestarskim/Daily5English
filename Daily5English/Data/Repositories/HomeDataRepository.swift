@@ -48,4 +48,22 @@ final class HomeDataRepository {
         
         return LearningTips.map{ $0.toDomain() }
     }
+    
+    func fetchLearningDates(userId: String, year: Int, month: Int) async throws -> [Date] {
+        let startOfMonth = Calendar.current.date(from: DateComponents(year: year, month: month))!
+        let endOfMonth = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)!
+        
+        let records: [LearningDateDTO] = try await supabase
+            .from("learning_records")
+            .select("learned_date")
+            .eq("user_id", value: userId)
+            .gte("learned_date", value: startOfMonth.ISO8601Format())
+            .lte("learned_date", value: endOfMonth.ISO8601Format())
+            .execute()
+            .value
+            
+        return records.compactMap { 
+            ISO8601DateFormatter().date(from: $0.learnedDate + "T00:00:00Z")
+        }
+    }
 }

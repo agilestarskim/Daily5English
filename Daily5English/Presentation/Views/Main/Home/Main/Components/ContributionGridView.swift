@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ContributionGridView: View {
+    @Environment(HomeDataService.self) private var homeData
+    
     let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let calendar = Calendar.current
     private var currentMonth: String {
@@ -18,6 +20,10 @@ struct ContributionGridView: View {
         return range.compactMap { day in
             calendar.date(byAdding: .day, value: day - 1, to: firstDay)
         }
+    }
+    
+    private func hasLearned(on date: Date) -> Bool {
+        homeData.learningDates.contains { calendar.isDate($0, inSameDayAs: date) }
     }
     
     var body: some View {
@@ -49,8 +55,9 @@ struct ContributionGridView: View {
             LazyVGrid(columns: columns, spacing: 4) {
                 ForEach(daysInMonth, id: \.self) { date in
                     let day = calendar.component(.day, from: date)
+                    let hasLearned = hasLearned(on: date)
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(contributionColor(for: Int.random(in: 0...5)))
+                        .fill(contributionColor(for: hasLearned ? 4 : 0))
                         .aspectRatio(1, contentMode: .fit)
                         .overlay(
                             ZStack {
@@ -59,7 +66,7 @@ struct ContributionGridView: View {
                                 
                                 Text("\(day)")
                                     .font(.caption2)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(hasLearned ? DSColors.Text.onColor : .secondary)
                             }
                         )
                 }

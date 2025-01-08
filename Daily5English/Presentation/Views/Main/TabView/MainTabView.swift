@@ -34,6 +34,8 @@ struct MainTabView: View {
                 await homeData.fetchStatistics()
                 // 학습 팁을 서버에서 가져옴
                 await homeData.fetchTips()
+                // 학습 기록 달력을 서버에서 가져옴
+                await homeData.fetchLearningDates()
             }
         }
     }
