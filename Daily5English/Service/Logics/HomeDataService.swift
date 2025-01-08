@@ -16,6 +16,7 @@ final class HomeDataService {
     private var userId: String? = nil
     private var tips: [LearningTip] = []
     private let repository: HomeDataRepository
+    private let userDefaults = UserDefaults.standard
     
     init(repository: HomeDataRepository) {
         self.repository = repository
@@ -65,5 +66,16 @@ final class HomeDataService {
             print("Fail to save statistics: \(error.localizedDescription)")
         }
     }
-
+    
+    // MARK: - Learning Status
+    var hasCompletedTodayLearning: Bool {
+        let lastCompletedDate = userDefaults.double(forKey: "lastCompletedDate")
+        let today = Calendar.current.startOfDay(for: Date())
+        let lastCompleted = Date(timeIntervalSince1970: lastCompletedDate)
+        return Calendar.current.isDate(today, inSameDayAs: lastCompleted)
+    }
+    
+    func completeToday() {
+        userDefaults.set(Date().timeIntervalSince1970, forKey: "lastCompletedDate")
+    }
 }

@@ -40,9 +40,7 @@ struct QuizSessionView: View {
                 ForEach(viewModel.currentQuiz.options, id: \.self) { option in
                     Button {
                         viewModel.selectedOption = option
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            viewModel.showFeedback = true
-                        }
+                        viewModel.showFeedback = true
                     } label: {
                         HStack {
                             Text(option)
@@ -82,9 +80,7 @@ struct QuizSessionView: View {
             // 다음 버튼 - 항상 표시
             Button {
                 if viewModel.selectAnswer() {
-                    withAnimation(.easeOut(duration: 0.3)) {
-                        learningContainerViewModel.goToResult()
-                    }
+                    learningContainerViewModel.goToResult()
                 }
             } label: {
                 Text(viewModel.isLastQuiz ? "결과 보기" : "다음 문제")

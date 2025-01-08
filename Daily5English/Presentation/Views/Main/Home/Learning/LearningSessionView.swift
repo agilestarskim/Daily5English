@@ -25,7 +25,15 @@ struct LearningSessionView: View {
                 // 단어 카드
                 TabView(selection: .init(
                     get: { viewModel.wordIndex },
-                    set: { _ in }
+                    set: { newIndex in
+                        withAnimation {
+                            if newIndex > viewModel.wordIndex {
+                                _ = viewModel.moveToNextWord()
+                            } else if newIndex < viewModel.wordIndex {
+                                viewModel.moveToPreviousWord()
+                            }
+                        }
+                    }
                 )) {
                     ForEach(Array(viewModel.words.enumerated()), id: \.element.id) { index, word in
                         WordCard(word: word)
@@ -35,7 +43,6 @@ struct LearningSessionView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .frame(height: 400)
-                .allowsHitTesting(false)
                 
                 Spacer()
                 

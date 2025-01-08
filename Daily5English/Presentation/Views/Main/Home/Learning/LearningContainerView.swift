@@ -47,6 +47,7 @@ struct LearningContainerView: View {
                         let wordsCount = learningSessionViewModel.totalWordCount
                         
                         Task {
+                            homeData.completeToday()
                             await homeData.saveStatistics(wordsCount: wordsCount)
                             await homeData.fetchStatistics()
                         }

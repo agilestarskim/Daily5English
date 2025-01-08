@@ -23,7 +23,7 @@ struct HomeView: View {
                         )
                         
                         // 2. 학습 상태 메시지
-                        LearningStatusMessage(hasStudied: hasStudiedToday)
+                        LearningStatusMessage(hasStudied: homeData.hasCompletedTodayLearning)
                         
                         // 3. 학습 현황 블록
                         LearningStatusBlocks(

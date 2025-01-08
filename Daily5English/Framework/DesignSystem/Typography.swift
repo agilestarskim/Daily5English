@@ -32,14 +32,3 @@ enum DSTypography {
     static let numberLarge = Font.custom("Pretendard-Light", size: 24)
     static let quote = Font.custom("Pretendard-Light", size: 16)
 }
-
-extension DSTypography {
-    static func printLoadedFonts() {
-        for family in UIFont.familyNames.sorted() {
-            print("Family: \(family)")
-            for font in UIFont.fontNames(forFamilyName: family).sorted() {
-                print("- \(font)")
-            }
-        }
-    }
-} 

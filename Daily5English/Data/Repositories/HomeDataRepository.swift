@@ -16,7 +16,7 @@ final class HomeDataRepository {
     }
     
     func updateLearningStatistics(userId: String, wordsCount: Int) async throws {
-        let result = try await supabase
+        try await supabase
             .rpc(
                 "update_learning_completion",
                 params: [
@@ -25,8 +25,6 @@ final class HomeDataRepository {
                 ]
             )
             .execute()
-        
-        print(result.response.allHeaderFields)
     }
     
     func fetchLearningStatistics(userId: String) async throws -> LearningStatistics {

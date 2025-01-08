@@ -60,7 +60,6 @@ final class LearningSettingService {
         do {
             try await learningSettingUseCase.update(setting: setting)
         } catch {
-            print(error)
             self.error = LearningSettingError(id: "0000")
         }
     }
