@@ -1,7 +1,7 @@
 import Foundation
 
 struct Word: Codable, Identifiable {
-    let id: String
+    let id: Int
     let english: String
     let korean: String
     let level: Level

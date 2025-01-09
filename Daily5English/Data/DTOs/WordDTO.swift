@@ -55,7 +55,7 @@ struct WordDTO: Codable {
         }
         
         return Word(
-            id: String(id),
+            id: id,
             english: english,
             korean: korean,
             level: level,

@@ -15,6 +15,7 @@ struct Daily5EnglishApp: App {
     @State private var learningSettingService: LearningSettingService
     @State private var learningService: LearningService
     @State private var homeDataService: HomeDataService
+    @State private var wordBookService: WordBookService
     
     let supabase: SupabaseClient
     
@@ -51,6 +52,10 @@ struct Daily5EnglishApp: App {
         let homeDataService = HomeDataService(repository: homeDataRepo)
         _homeDataService = State(wrappedValue: homeDataService)
         
+        // WordBook Service 설정
+        let wordBookRepo = WordBookRepository(supabase: supabase)
+        let wordBookService = WordBookService(repository: wordBookRepo)
+        _wordBookService = State(wrappedValue: wordBookService)
     }
     
     var body: some Scene {
@@ -63,6 +68,7 @@ struct Daily5EnglishApp: App {
                 .environment(learningSettingService)
                 .environment(learningService)
                 .environment(homeDataService)
+                .environment(wordBookService)
         }
     }
 }

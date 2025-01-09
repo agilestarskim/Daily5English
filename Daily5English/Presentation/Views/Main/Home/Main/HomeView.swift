@@ -95,16 +95,13 @@ struct LearningStatusBlocks: View {
     let totalDays: Int
     
     var body: some View {
-        LazyVGrid(columns: [
-            GridItem(.flexible(), spacing: 12),
-            GridItem(.flexible(), spacing: 12)
-        ], spacing: 12) {
-            // 1. 오늘 목표
+        HStack(spacing: 6) {
             StatusBlock(
                 title: "오늘 목표",
                 value: String(count),
                 unit: "단어",
-                icon: "target"
+                icon: "target",
+                color: .accent
             )
             
             // 2. 총 학습 단어
@@ -112,7 +109,8 @@ struct LearningStatusBlocks: View {
                 title: "총 학습",
                 value: String(totalCount),
                 unit: "단어",
-                icon: "book.fill"
+                icon: "book.fill",
+                color: .success
             )
             
             // 3. 연속 학습
@@ -120,7 +118,8 @@ struct LearningStatusBlocks: View {
                 title: "연속 학습",
                 value: String(streak),
                 unit: "일",
-                icon: "flame.fill"
+                icon: "flame.fill",
+                color: .error
             )
             
             // 4. 총 학습일
@@ -128,7 +127,8 @@ struct LearningStatusBlocks: View {
                 title: "총 학습일",
                 value: String(totalDays),
                 unit: "일",
-                icon: "calendar"
+                icon: "calendar",
+                color: .warning
             )
         }
     }
@@ -139,12 +139,13 @@ struct StatusBlock: View {
     let value: String
     let unit: String
     let icon: String
+    let color: Color
     
     var body: some View {
         VStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.title3)
-                .foregroundColor(DSColors.accent)
+                .foregroundColor(color)
             
             Text(title)
                 .font(.caption)

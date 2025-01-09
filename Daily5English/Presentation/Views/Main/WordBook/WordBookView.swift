@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct WordBookView: View {
+    @Environment(WordBookService.self) private var wordBook
     @StateObject private var viewModel = WordBookViewModel()
+
     
     var body: some View {
         NavigationStack {
@@ -9,122 +11,174 @@ struct WordBookView: View {
                 DSColors.background
                     .ignoresSafeArea()
                 
-                VStack(spacing: DSSpacing.medium) {
-                    // 검색 바
-                    SearchBar(text: $viewModel.searchText)
-                        .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: DSSpacing.medium) {
+                        // 검색 바
+                        SearchBar(text: $viewModel.searchText)
                         
-                    // 세그먼트 컨트롤
-                    Picker("보기 모드", selection: $viewModel.selectedTab) {
-                        Text("학습 기록").tag(WordBookTab.history)
-                        Text("북마크").tag(WordBookTab.bookmarks)
-                    }
-                    .pickerStyle(.segmented)
-                    .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
-                    
-                    // 단어 목록
-                    ScrollView(.vertical, showsIndicators: false) {
-                        LazyVStack(spacing: DSSpacing.small) {
-                            ForEach(viewModel.filteredWords) { word in
+                        // 세그먼트 컨트롤
+                        Picker("보기 모드", selection: $viewModel.selectedTab) {
+                            Text("학습 기록").tag(WordBookTab.history)
+                            Text("북마크").tag(WordBookTab.bookmarks)
+                        }
+                        .pickerStyle(.segmented)
+                        
+                        // 단어 통계
+                        WordStatistics(
+                            totalWords: wordBook.words.count,
+                            bookmarkedWords: 5
+                        )
+                        
+                        // 단어 목록
+                        LazyVStack(spacing: DSSpacing.xSmall) {
+                            ForEach(wordBook.words) { learnWord in
                                 WordBookCard(
-                                    word: word,
-                                    isBookmarked: viewModel.isBookmarked(word),
+                                    learnedWord: learnWord,
+                                    isBookmarked: true,
                                     onBookmarkTap: {
-                                        viewModel.toggleBookmark(word)
+                                        
                                     }
                                 )
                             }
                         }
                     }
-                    .contentMargins(DSSpacing.Screen.horizontalPadding)
+                    .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
                 }
-                .padding(.vertical, DSSpacing.Screen.verticalPadding)
             }
-            .navigationTitle("나만의 단어장")
-            .navigationBarTitleDisplayMode(.large)
+        }
+        .task {
+            await wordBook.fetchLearnedWords()
         }
     }
 }
 
-// SearchBar 수정
+// 검색바 컴포넌트
 struct SearchBar: View {
     @Binding var text: String
     
     var body: some View {
-        DSCard(style: .elevated) {
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(DSColors.Text.secondary)
-                
-                TextField("단어 검색", text: $text)
-                    .font(DSTypography.body1)
-                
-                if !text.isEmpty {
-                    Button(action: { text = "" }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(DSColors.Text.secondary)
-                    }
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(DSColors.Text.secondary)
+            
+            TextField("단어 검색", text: $text)
+                .textFieldStyle(.plain)
+                .font(DSTypography.body1)
+            
+            if !text.isEmpty {
+                Button(action: { text = "" }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(DSColors.Text.secondary)
                 }
             }
         }
+        .padding(DSSpacing.small)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+}
+
+// 단어 통계 컴포넌트
+struct WordStatistics: View {
+    let totalWords: Int
+    let bookmarkedWords: Int
+    
+    var body: some View {
+        HStack(spacing: DSSpacing.small) {
+            StatBlock(
+                title: "전체 단어",
+                count: totalWords,
+                icon: "book.fill",
+                color: DSColors.success
+            )
+            
+            StatBlock(
+                title: "북마크",
+                count: bookmarkedWords,
+                icon: "bookmark.fill",
+                color: DSColors.accent
+            )
+        }
+    }
+}
+
+struct StatBlock: View {
+    let title: String
+    let count: Int
+    let icon: String
+    let color: Color
+    
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundColor(color)
+            
+            VStack(alignment: .leading) {
+                Text(title)
+                    .font(DSTypography.caption1)
+                    .foregroundColor(DSColors.Text.secondary)
+                
+                Text("\(count)")
+                    .font(DSTypography.heading3)
+                    .foregroundColor(DSColors.Text.primary)
+            }
+            Spacer()
+        }
+        .padding(DSSpacing.small)
+        .frame(maxWidth: .infinity)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
 // 단어 카드 컴포넌트
 struct WordBookCard: View {
-    let word: WordItem
+    let learnedWord: LearnedWord
     let isBookmarked: Bool
     let onBookmarkTap: () -> Void
     
     var body: some View {
-        DSCard(style: .outlined) {
-            VStack(alignment: .leading, spacing: DSSpacing.small) {
-                HStack {
-                    Text(word.english)
-                        .font(DSTypography.heading3)
+        HStack(alignment: .center, spacing: DSSpacing.small) {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .firstTextBaseline, spacing: DSSpacing.xSmall) {
+                    Text(learnedWord.word.english)
+                        .font(DSTypography.body1.bold())
                         .foregroundColor(DSColors.Text.primary)
                     
-                    Spacer()
-                    
-                    Button(action: onBookmarkTap) {
-                        Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                            .foregroundColor(DSColors.accent)
-                    }
-                }
-                
-                Text(word.korean)
-                    .font(DSTypography.body1)
-                    .foregroundColor(DSColors.Text.secondary)
-                
-                if let example = word.example {
-                    Text(example)
+                    Text(learnedWord.word.korean)
                         .font(DSTypography.body2)
                         .foregroundColor(DSColors.Text.secondary)
-                        .padding(.top, DSSpacing.xxSmall)
                 }
                 
-                if let date = word.lastStudied {
-                    Text("학습일: \(date.formatted(date: .abbreviated, time: .omitted))")
-                        .font(DSTypography.caption1)
+                
+                Text(learnedWord.word.example.english)
+                    .font(DSTypography.caption1)
+                    .foregroundColor(DSColors.Text.secondary)
+                    .lineLimit(1)
+                
+                
+                if let date = learnedWord.lastReviewedAt {
+                    Text(date.formatted(date: .abbreviated, time: .omitted))
+                        .font(DSTypography.caption2)
                         .foregroundColor(DSColors.Text.secondary)
                 }
             }
-            .padding(DSSpacing.Component.cardPadding)
+            
+            Spacer()
+            
+            Button(action: onBookmarkTap) {
+                Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                    .foregroundColor(isBookmarked ? DSColors.accent : DSColors.Text.secondary)
+            }
         }
+        .padding(DSSpacing.small)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
-}
-
-// 데이터 모델
-struct WordItem: Identifiable {
-    let id: UUID
-    let english: String
-    let korean: String
-    let example: String?
-    let lastStudied: Date?
 }
 
 // 탭 열거형
 enum WordBookTab {
     case history
     case bookmarks
-} 
+}

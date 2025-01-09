@@ -5,6 +5,7 @@ struct MainTabView: View {
     @Environment(LearningService.self) private var learning
     @Environment(LearningSettingService.self) private var setting
     @Environment(HomeDataService.self) private var homeData
+    @Environment(WordBookService.self) private var wordBook
     
     var body: some View {
         TabView {
@@ -27,6 +28,8 @@ struct MainTabView: View {
             if let userId = auth.currentUser?.id {
                 setting.setUserId(userId)
                 homeData.setUserId(userId)
+                learning.setUserId(userId)
+                wordBook.setUserId(userId)
                 
                 // 사용자 setting값을 서버에서 가져옴
                 await setting.fetchLearningSetting()

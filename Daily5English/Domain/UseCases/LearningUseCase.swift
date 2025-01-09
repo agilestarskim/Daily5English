@@ -75,4 +75,9 @@ final class LearningUseCase {
             )
         }
     }
+    
+    func saveLearnedWords(userId: String, words: [Word]) async throws {
+        let wordIds = words.map { $0.id }
+        try await repository.saveLearnedWords(userId: userId, wordIds: wordIds)
+    }
 }

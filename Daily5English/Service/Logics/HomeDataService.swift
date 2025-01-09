@@ -48,7 +48,6 @@ final class HomeDataService {
         
         do {        
             self.stat = try await repository.fetchLearningStatistics(userId: userId)
-            print("fetched")
             
         } catch {
             print(error.localizedDescription)
@@ -96,7 +95,6 @@ final class HomeDataService {
                 year: year,
                 month: month
             )
-            print("Fetched learning dates: \(learningDates.count)")
         } catch {
             print("Failed to fetch learning dates: \(error)")
         }
