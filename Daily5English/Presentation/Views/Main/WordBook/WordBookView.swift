@@ -25,13 +25,13 @@ struct WordBookView: View {
                         
                         // 단어 통계
                         WordStatistics(
-                            totalWords: wordBook.words.count,
+                            totalWords: wordBook.wordsCount,
                             bookmarkedWords: 5
                         )
                         
                         // 단어 목록
                         LazyVStack(spacing: DSSpacing.xSmall) {
-                            ForEach(wordBook.words) { learnWord in
+                            ForEach(wordBook.words, id: \.id) { learnWord in
                                 WordBookCard(
                                     learnedWord: learnWord,
                                     isBookmarked: true,
@@ -39,15 +39,28 @@ struct WordBookView: View {
                                         
                                     }
                                 )
+                                .onAppear {
+                                    // 마지막 아이템이 나타나면 다음 페이지 로드
+                                    if learnWord.id == wordBook.words.last?.id {
+                                        Task {
+                                            await wordBook.fetchLearnedWords()
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if wordBook.isLoading {
+                                ProgressView()
+                                    .padding()
                             }
                         }
                     }
                     .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
                 }
+                .refreshable {
+                    await wordBook.refresh()
+                }
             }
-        }
-        .task {
-            await wordBook.fetchLearnedWords()
         }
     }
 }

@@ -7,22 +7,30 @@ struct MainTabView: View {
     @Environment(HomeDataService.self) private var homeData
     @Environment(WordBookService.self) private var wordBook
     
+    @State private var isLoading: Bool = true
+    
     var body: some View {
-        TabView {
-            WordBookView()
-                .tabItem {
-                    Label("단어장", systemImage: "book.fill")
+        Group {
+            if isLoading {
+                ProgressView()
+            } else {
+                TabView {
+                    WordBookView()
+                        .tabItem {
+                            Label("단어장", systemImage: "book.fill")
+                        }
+                    
+                    HomeView()
+                        .tabItem {
+                            Label("홈", systemImage: "house.fill")
+                        }
+                    
+                    ProfileView()
+                        .tabItem {
+                            Label("프로필", systemImage: "person.fill")
+                        }
                 }
-            
-            HomeView()
-                .tabItem {
-                    Label("홈", systemImage: "house.fill")
-                }
-            
-            ProfileView()
-                .tabItem {
-                    Label("프로필", systemImage: "person.fill")
-                }
+            }
         }
         .task {
             if let userId = auth.currentUser?.id {
@@ -39,6 +47,11 @@ struct MainTabView: View {
                 await homeData.fetchTips()
                 // 학습 기록 달력을 서버에서 가져옴
                 await homeData.fetchLearningDates()
+                // 단어장 단어 서버에서 가져옴
+                await wordBook.refresh()
+                await wordBook.fetchCount()
+                
+                isLoading = false
             }
         }
     }

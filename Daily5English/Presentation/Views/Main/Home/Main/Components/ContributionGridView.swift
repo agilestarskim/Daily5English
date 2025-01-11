@@ -12,14 +12,23 @@ struct ContributionGridView: View {
     }
     
     // 이번 달의 날짜들을 가져오는 함수
-    private var daysInMonth: [Date] {
+    private var daysInMonth: [Date?] {
         let now = Date()
         let range = calendar.range(of: .day, in: .month, for: now)!
         let firstDay = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
         
-        return range.compactMap { day in
+        // 첫째 날의 요일을 구합니다 (1은 일요일, 2는 월요일, ...)
+        let firstWeekday = calendar.component(.weekday, from: firstDay)
+        
+        // 첫째 날 이전의 빈 셀을 위한 nil 배열
+        let prefixDays = Array(repeating: nil as Date?, count: firstWeekday - 1)
+        
+        // 실제 날짜 배열
+        let dates = range.compactMap { day -> Date? in
             calendar.date(byAdding: .day, value: day - 1, to: firstDay)
         }
+        
+        return prefixDays + dates
     }
     
     private func hasLearned(on date: Date) -> Bool {
@@ -53,22 +62,29 @@ struct ContributionGridView: View {
             }
             
             LazyVGrid(columns: columns, spacing: 4) {
-                ForEach(daysInMonth, id: \.self) { date in
-                    let day = calendar.component(.day, from: date)
-                    let hasLearned = hasLearned(on: date)
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(contributionColor(for: hasLearned ? 4 : 0))
-                        .aspectRatio(1, contentMode: .fit)
-                        .overlay(
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 4)
-                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 0.5)
-                                
-                                Text("\(day)")
-                                    .font(.caption2)
-                                    .foregroundColor(hasLearned ? DSColors.Text.onColor : .secondary)
-                            }
-                        )
+                ForEach(Array(daysInMonth.enumerated()), id: \.offset) { _, date in
+                    if let date = date {
+                        let day = calendar.component(.day, from: date)
+                        let hasLearned = hasLearned(on: date)
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(contributionColor(for: hasLearned ? 4 : 0))
+                            .aspectRatio(1, contentMode: .fit)
+                            .overlay(
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .stroke(Color.secondary.opacity(0.2), lineWidth: 0.5)
+                                    
+                                    Text("\(day)")
+                                        .font(.caption2)
+                                        .foregroundColor(hasLearned ? DSColors.Text.onColor : .secondary)
+                                }
+                            )
+                    } else {
+                        // 빈 셀
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.clear)
+                            .aspectRatio(1, contentMode: .fit)
+                    }
                 }
             }
         }

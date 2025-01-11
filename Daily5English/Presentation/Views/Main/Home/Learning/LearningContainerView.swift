@@ -52,6 +52,7 @@ struct LearningContainerView: View {
                             homeData.completeToday()
                             await homeData.saveStatistics(wordsCount: wordsCount)
                             await homeData.fetchStatistics()
+                            await homeData.fetchLearningDates()
                         }
                     }
                 }
