@@ -1,10 +1,10 @@
 import SwiftUI
+import TipKit
 
 struct WordBookView: View {
     @Environment(WordBookService.self) private var wordBook
     @StateObject private var viewModel = WordBookViewModel()
 
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -14,39 +14,28 @@ struct WordBookView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: DSSpacing.medium) {
                         // 검색 바
-                        SearchBar(text: $viewModel.searchText)
-                        
-                        // 세그먼트 컨트롤
-                        Picker("보기 모드", selection: $viewModel.selectedTab) {
-                            Text("학습 기록").tag(WordBookTab.history)
-                            Text("북마크").tag(WordBookTab.bookmarks)
-                        }
-                        .pickerStyle(.segmented)
-                        
-                        // 단어 통계
-                        WordStatistics(
-                            totalWords: wordBook.wordsCount,
-                            bookmarkedWords: 5
+                        SearchBar(
+                            text: $viewModel.searchText,
+                            count: wordBook.wordsCount
                         )
+                        
+                        // 팁을 보여주는 조건
+                        if !viewModel.hasSeenTip {
+                            TipView {
+                                withAnimation(.bouncy) {
+                                    viewModel.hasSeenTip = true
+                                }
+                            }
+                            .transition(.scale)
+                        }
                         
                         // 단어 목록
                         LazyVStack(spacing: DSSpacing.xSmall) {
-                            ForEach(wordBook.words, id: \.id) { learnWord in
+                            // 모든 단어를 필터링하여 표시
+                            ForEach(viewModel.filterWords(wordBook.words), id: \.id) { learnWord in
                                 WordBookCard(
-                                    learnedWord: learnWord,
-                                    isBookmarked: true,
-                                    onBookmarkTap: {
-                                        
-                                    }
+                                    learnedWord: learnWord
                                 )
-                                .onAppear {
-                                    // 마지막 아이템이 나타나면 다음 페이지 로드
-                                    if learnWord.id == wordBook.words.last?.id {
-                                        Task {
-                                            await wordBook.fetchLearnedWords()
-                                        }
-                                    }
-                                }
                             }
                             
                             if wordBook.isLoading {
@@ -68,13 +57,16 @@ struct WordBookView: View {
 // 검색바 컴포넌트
 struct SearchBar: View {
     @Binding var text: String
+    let count: Int
     
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(DSColors.Text.secondary)
             
-            TextField("단어 검색", text: $text)
+            TextField("단어 검색 (\(count))", text: $text)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
                 .textFieldStyle(.plain)
                 .font(DSTypography.body1)
             
@@ -88,30 +80,6 @@ struct SearchBar: View {
         .padding(DSSpacing.small)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 10))
-    }
-}
-
-// 단어 통계 컴포넌트
-struct WordStatistics: View {
-    let totalWords: Int
-    let bookmarkedWords: Int
-    
-    var body: some View {
-        HStack(spacing: DSSpacing.small) {
-            StatBlock(
-                title: "전체 단어",
-                count: totalWords,
-                icon: "book.fill",
-                color: DSColors.success
-            )
-            
-            StatBlock(
-                title: "북마크",
-                count: bookmarkedWords,
-                icon: "bookmark.fill",
-                color: DSColors.accent
-            )
-        }
     }
 }
 
@@ -147,12 +115,11 @@ struct StatBlock: View {
 // 단어 카드 컴포넌트
 struct WordBookCard: View {
     let learnedWord: LearnedWord
-    let isBookmarked: Bool
-    let onBookmarkTap: () -> Void
+    // 북마크 관련 코드 제거
     
     var body: some View {
         HStack(alignment: .center, spacing: DSSpacing.small) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 HStack(alignment: .firstTextBaseline, spacing: DSSpacing.xSmall) {
                     Text(learnedWord.word.english)
                         .font(DSTypography.body1.bold())
@@ -169,6 +136,11 @@ struct WordBookCard: View {
                     .foregroundColor(DSColors.Text.secondary)
                     .lineLimit(1)
                 
+                Text(learnedWord.word.example.korean)
+                    .font(DSTypography.caption1)
+                    .foregroundColor(DSColors.Text.secondary)
+                    .lineLimit(1)
+                
                 
                 if let date = learnedWord.lastReviewedAt {
                     Text(date.formatted(date: .abbreviated, time: .omitted))
@@ -178,11 +150,6 @@ struct WordBookCard: View {
             }
             
             Spacer()
-            
-            Button(action: onBookmarkTap) {
-                Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
-                    .foregroundColor(isBookmarked ? DSColors.accent : DSColors.Text.secondary)
-            }
         }
         .padding(DSSpacing.small)
         .background(.ultraThinMaterial)
@@ -190,8 +157,30 @@ struct WordBookCard: View {
     }
 }
 
-// 탭 열거형
-enum WordBookTab {
-    case history
-    case bookmarks
+// 팁 뷰 컴포넌트
+struct TipView: View {
+    let tapClose: () -> Void
+
+    var body: some View {
+        VStack {
+            HStack {
+                Image(systemName: "lightbulb.fill")
+                    .foregroundColor(DSColors.warning)
+                
+                Text("지금까지 학습한 단어들이 저장됩니다. 틈날 때마다 복습을 통해 평생 기억하세요")
+                    .font(DSTypography.body2)
+                    .foregroundColor(DSColors.Text.secondary)
+                
+                Spacer()
+                
+                Button(action: tapClose) {
+                    Image(systemName: "xmark")
+                        .foregroundColor(DSColors.Text.secondary)
+                }
+            }
+            .padding(DSSpacing.small)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+    }
 }

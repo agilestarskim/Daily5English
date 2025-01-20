@@ -46,14 +46,14 @@ struct LearningSettingsView: View {
                             
                             VStack {
                                 Picker("", selection: $localSetting.count) {
-                                    ForEach(3...10, id: \.self) { number in
+                                    ForEach(3...7, id: \.self) { number in
                                         Text("\(number)단어")
                                             .tag(number)
                                     }
                                 }
                                 .pickerStyle(.wheel)
                                 
-                                Text("하루 3~10단어를 학습할 수 있어요")
+                                Text("하루 3~7단어를 학습할 수 있어요")
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }

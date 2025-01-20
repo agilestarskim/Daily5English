@@ -13,9 +13,7 @@ final class WordBookService {
     private var userId: String? = nil
     private(set) var words: [LearnedWord] = []
     private(set) var wordsCount: Int = 0
-    private(set) var currentPage: Int = 0
     private(set) var isLoading: Bool = false
-    private(set) var hasMoreData: Bool = true
     
     var error: Error?
     
@@ -28,19 +26,15 @@ final class WordBookService {
     }
     
     @MainActor
-    func fetchLearnedWords() async {
-        guard let userId, !isLoading, hasMoreData else { return }
+    func fetchAllWords() async {
+        guard let userId, !isLoading else { return }
         
         isLoading = true
         
         do {
-            let newWords = try await repository.fetchLearnedWords(userId: userId, page: currentPage)
-            let uniqueNewWords = newWords.filter { newWord in
-                !words.contains { $0.id == newWord.id }
-            }
-            self.words.append(contentsOf: uniqueNewWords)
-            self.currentPage += 1
-            self.hasMoreData = newWords.count == 20
+            // 모든 단어를 한꺼번에 로드
+            self.words = try await repository.fetchLearnedWords(userId: userId)
+            self.wordsCount = self.words.count
         } catch {
             self.error = error
         }
@@ -50,19 +44,7 @@ final class WordBookService {
     
     @MainActor
     func refresh() async {
-        self.words = []
-        self.currentPage = 0
-        self.hasMoreData = true
-        await fetchLearnedWords()
-    }
-    
-    func fetchCount() async {
-        guard let userId else { return }
-        
-        do {
-            self.wordsCount = try await repository.fetchCount(userId: userId)
-        } catch {
-            return
-        }
+        words.removeAll()
+        await fetchAllWords()
     }
 }

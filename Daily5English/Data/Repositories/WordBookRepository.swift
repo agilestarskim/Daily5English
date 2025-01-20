@@ -10,14 +10,12 @@ import Supabase
 
 final class WordBookRepository {
     private let supabase: SupabaseClient
-    private let pageSize: Int = 20
     
     init(supabase: SupabaseClient) {
         self.supabase = supabase
     }
     
-    func fetchLearnedWords(userId: String, page: Int) async throws -> [LearnedWord] {
-        let from = page * pageSize
+    func fetchLearnedWords(userId: String) async throws -> [LearnedWord] {
         
         let learnedWordDTO: [LearnedWordDTO] = try await supabase
             .from("learned_words")
@@ -38,23 +36,11 @@ final class WordBookRepository {
                 )
             """)
             .eq("user_id", value: userId)
-            .range(from: from, to: from + pageSize - 1)
             .order("learned_at", ascending: false)
             .execute()
             .value
         
         return learnedWordDTO.map { $0.toDomain() }
-    }
-    
-    func fetchCount(userId: String) async throws -> Int {
-        let count = try await supabase
-          .from("learned_words")
-          .select("*", head: true, count: .exact)
-          .eq("user_id", value: userId)
-          .execute()
-          .count
-        
-        return count ?? 0
     }
 }
 

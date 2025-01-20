@@ -49,7 +49,6 @@ struct MainTabView: View {
                 await homeData.fetchLearningDates()
                 // 단어장 단어 서버에서 가져옴
                 await wordBook.refresh()
-                await wordBook.fetchCount()
                 
                 isLoading = false
             }

@@ -41,7 +41,8 @@ struct HomeView: View {
                 
                 // 5. 학습 시작 버튼 (스크롤뷰 밖)
                 StartLearningButton(isPresented: $bViewModel.isPresented)
-                    .padding()
+                    .padding(.horizontal)
+                    .padding(.bottom)
             }
             .fullScreenCover(isPresented: $bViewModel.isPresented) {
                 LearningContainerView()
