@@ -23,7 +23,7 @@ struct HomeView: View {
                         )
                         
                         // 2. 학습 상태 메시지
-                        LearningStatusMessage(hasStudied: homeData.hasCompletedTodayLearning)
+                        LearningStatusMessage(hasStudied: learning.hasLearnToday)
                         
                         // 3. 학습 현황 블록
                         LearningStatusBlocks(
@@ -40,9 +40,12 @@ struct HomeView: View {
                 }
                 
                 // 5. 학습 시작 버튼 (스크롤뷰 밖)
-                StartLearningButton(isPresented: $bViewModel.isPresented)
-                    .padding(.horizontal)
-                    .padding(.bottom)
+                StartLearningButton(
+                    isPresented: $bViewModel.isPresented,
+                    hasStudiedToday: learning.hasLearnToday
+                )
+                .padding(.horizontal)
+                .padding(.bottom)
             }
             .fullScreenCover(isPresented: $bViewModel.isPresented) {
                 LearningContainerView()
@@ -183,12 +186,13 @@ struct LearningCalendarView: View {
 // 시작 버튼 컴포넌트
 struct StartLearningButton: View {
     @Binding var isPresented: Bool
+    let hasStudiedToday: Bool
     
     var body: some View {
         Button(action: {
             isPresented = true
         }) {
-            Text("오늘의 학습 시작하기")
+            Text(hasStudiedToday ? "복습하기" : "오늘의 학습 시작하기")
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()

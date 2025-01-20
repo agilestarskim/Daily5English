@@ -6,6 +6,7 @@ struct LearningStatisticsDTO: Codable, Hashable {
     let totalWordsCount: Int
     let streakDays: Int
     let totalLearningDays: Int
+    let lastLearningDate: String
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -13,6 +14,7 @@ struct LearningStatisticsDTO: Codable, Hashable {
         case totalWordsCount = "total_words_count"
         case streakDays = "streak_days"
         case totalLearningDays = "total_learning_days"
+        case lastLearningDate = "last_learning_date"
     }
     
     func toDomain() -> LearningStatistics {
@@ -21,7 +23,8 @@ struct LearningStatisticsDTO: Codable, Hashable {
             userId: userId,
             totalWordsCount: totalWordsCount,
             streakDays: streakDays,
-            totalLearningDays: totalLearningDays
+            totalLearningDays: totalLearningDays,
+            lastLearningDate: lastLearningDate
         )
     }
 } 

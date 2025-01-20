@@ -4,6 +4,7 @@ struct LearningContainerView: View {
     @Environment(LearningService.self) private var learning
     @Environment(LearningSettingService.self) private var setting
     @Environment(HomeDataService.self) private var homeData
+    @Environment(WordBookService.self) private var wordBook
     
     @Environment(LearningContainerViewModel.self) private var viewModel
     
@@ -49,10 +50,11 @@ struct LearningContainerView: View {
                         
                         Task {
                             await learning.saveLearnedWords(words: words)
-                            homeData.completeToday()
+                            await learning.fetchHasLearnToday()
                             await homeData.saveStatistics(wordsCount: wordsCount)
                             await homeData.fetchStatistics()
                             await homeData.fetchLearningDates()
+                            await wordBook.refresh()
                         }
                     }
                 }

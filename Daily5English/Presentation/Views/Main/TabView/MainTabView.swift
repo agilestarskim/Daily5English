@@ -39,6 +39,8 @@ struct MainTabView: View {
                 learning.setUserId(userId)
                 wordBook.setUserId(userId)
                 
+                // 오늘 학습 여부를 서버에서 가져옴
+                await learning.fetchHasLearnToday()
                 // 사용자 setting값을 서버에서 가져옴
                 await setting.fetchLearningSetting()
                 // 사용자 학습 통계를 서버에서 가져옴

@@ -41,9 +41,14 @@ struct Daily5EnglishApp: App {
         let learningSettingService = LearningSettingService(learningSettingUseCase: learningSettingUseCase)
         _learningSettingService = State(wrappedValue: learningSettingService)
         
+        // WordBook Service 설정
+        let wordBookRepo = WordBookRepository(supabase: supabase)
+        let wordBookService = WordBookService(repository: wordBookRepo)
+        _wordBookService = State(wrappedValue: wordBookService)
+        
         // Learning Service 설정
         let learningRepo = LearningRepository(supabase: supabase)
-        let learningUseCase = LearningUseCase(repository: learningRepo)
+        let learningUseCase = LearningUseCase(repository: learningRepo, wordBookRepository: wordBookRepo)
         let learningService = LearningService(learningUseCase: learningUseCase)
         _learningService = State(wrappedValue: learningService)
         
@@ -52,10 +57,7 @@ struct Daily5EnglishApp: App {
         let homeDataService = HomeDataService(repository: homeDataRepo)
         _homeDataService = State(wrappedValue: homeDataService)
         
-        // WordBook Service 설정
-        let wordBookRepo = WordBookRepository(supabase: supabase)
-        let wordBookService = WordBookService(repository: wordBookRepo)
-        _wordBookService = State(wrappedValue: wordBookService)
+        
     }
     
     var body: some Scene {

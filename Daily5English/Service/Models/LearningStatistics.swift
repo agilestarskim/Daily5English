@@ -13,12 +13,14 @@ struct LearningStatistics: Codable, Identifiable {
     let totalWordsCount: Int
     let streakDays: Int
     let totalLearningDays: Int
+    let lastLearningDate: String
     
     static let defaults: LearningStatistics = .init(
         id: "",
         userId: "",
         totalWordsCount: 0,
         streakDays: 0,
-        totalLearningDays: 0
+        totalLearningDays: 0,
+        lastLearningDate: ""
     )
 }

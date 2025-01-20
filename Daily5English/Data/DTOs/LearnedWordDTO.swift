@@ -23,7 +23,6 @@ struct LearnedWordDTO: Codable {
         let lastReviewed = lastReviewedAt.flatMap { dateFormatter.date(from: $0) }
         
         return LearnedWord(
-            wordId: wordId,
             word: word.toDomain(),
             learnedAt: learned ?? Date(),
             lastReviewedAt: lastReviewed,

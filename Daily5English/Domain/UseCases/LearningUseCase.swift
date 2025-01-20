@@ -3,17 +3,38 @@ import Foundation
 final class LearningUseCase {
     
     private let repository: LearningRepository
+    private let wordBookRepository: WordBookRepository
     
-    init(repository: LearningRepository) {
+    init(repository: LearningRepository, wordBookRepository: WordBookRepository) {
         self.repository = repository
+        self.wordBookRepository = wordBookRepository
     }
     
-    func isLearningCompleted(userId: String) async throws -> Bool {
-        return false
+    func hasLearnedToday(userId: String) async throws -> Bool {
+        return try await repository.hasCompletedToday(userId: userId)
     }
     
-    func fetchWords(setting: LearningSetting) async throws -> [Word] {
-        return try await repository.fetchRandomWords(setting: setting)
+    func fetchWords(setting: LearningSetting
+    ) async throws -> [Word] {
+        if try await repository.hasCompletedToday(userId: setting.userId) {
+            // 오늘 학습을 완료했다면 UserDefaults에서 단어 로드
+            return repository.loadWordsFromUserDefaults()
+        } else {
+            // 오늘 학습을 하지 않았다면 새로운 단어를 가져오고 UserDefaults에 저장
+            let learnedWords = try await wordBookRepository.fetchLearnedWords(userId: setting.userId)
+            let learnedWordIds = learnedWords.map { $0.id }
+            
+            let words = try await repository.fetchRandomWords(
+                setting: setting,
+                learnedWordIds: learnedWordIds
+            )
+            
+            // 기존 단어들을 지우고 새로운 단어 저장
+            repository.clearWordsInUserDefaults()
+            repository.saveWordsToUserDefaults(words: words)
+            
+            return words
+        }
     }
     
     func fetchQuizzes(words: [Word]) -> [Quiz] {

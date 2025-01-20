@@ -7,14 +7,14 @@
 import Foundation
 
 struct LearnedWord: Codable, Identifiable {
-    let id: String
+    let id: Int
     let word: Word
     let learnedAt: Date
     let lastReviewedAt: Date?
     let reviewedCount: Int
     
-    init(wordId: Int, word: Word, learnedAt: Date, lastReviewedAt: Date?, reviewedCount: Int) {
-        self.id = "\(wordId)-\(learnedAt.timeIntervalSince1970)"
+    init(word: Word, learnedAt: Date, lastReviewedAt: Date?, reviewedCount: Int) {
+        self.id = word.id
         self.word = word
         self.learnedAt = learnedAt
         self.lastReviewedAt = lastReviewedAt
