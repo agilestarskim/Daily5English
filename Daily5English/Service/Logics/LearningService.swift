@@ -34,6 +34,7 @@ final class LearningService {
             return try await learningUseCase.fetchWords(setting: setting)
         } catch {
             self.error = LearningError.networkError
+            print(error.localizedDescription)
             return []
         }
     }

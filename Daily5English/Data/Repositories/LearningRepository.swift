@@ -4,14 +4,11 @@ import SwiftData
 
 final class LearningRepository: LearningRepositoryProtocol {
     private let supabase: SupabaseClient
-    private let userDefaults = UserDefaults.standard
-    private let learnedWordsKey = "learnedWordsKey"
     
     init(supabase: SupabaseClient) {
         self.supabase = supabase
     }
     
-    // MARK: - Server Operations
     func hasCompletedToday(userId: String) async throws -> Bool {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -59,13 +56,16 @@ final class LearningRepository: LearningRepositoryProtocol {
     }
     
     func saveLearnedWords(userId: String, wordIds: [Int]) async throws {
-        let now = ISO8601DateFormatter().string(from: Date())
+        let now = DateFormatter()
+        now.dateFormat = "yyyy-MM-dd"
+        let nowString = now.string(from: Date())
+        
         let records = wordIds.map { wordId in
             [
                 "user_id": AnyJSON.string(userId),
                 "word_id": AnyJSON.integer(wordId),
-                "learned_at": AnyJSON.string(now),
-                "last_reviewed_at": AnyJSON.string(now),
+                "learned_at": AnyJSON.string(nowString),
+                "last_reviewed_at": AnyJSON.string(nowString),
                 "reviewed_count": AnyJSON.integer(0)
             ]
         }
@@ -76,24 +76,36 @@ final class LearningRepository: LearningRepositoryProtocol {
             .execute()
     }
     
-    // 오늘 학습한 단어를 UserDefaults에 저장
-    func saveWordsToUserDefaults(words: [Word]) {
-        let wordData = words.map { try? JSONEncoder().encode($0) }
-        userDefaults.set(wordData, forKey: learnedWordsKey)
+    // 서버에서 오늘 학습한 단어를 가져오기
+    func fetchLearnedWords(userId: String) async throws -> [Word] {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let todayString = dateFormatter.string(from: Date())
+        
+        let learnedWordDTO: [LearnedWordDTO] = try await supabase
+            .from("learned_words")
+            .select("""
+                word_id,
+                reviewed_count,
+                learned_at,
+                last_reviewed_at,
+                words (
+                    id,
+                    english,
+                    korean,
+                    part_of_speech,
+                    example_sentence,
+                    example_sentence_korean,
+                    difficulty_level,
+                    category
+                )
+            """)
+            .eq("user_id", value: userId)
+            .eq("learned_at", value: todayString)
+            .order("learned_at", ascending: false)
+            .execute()
+            .value
+        
+        return learnedWordDTO.map { $0.toDomain().word }
     }
-    
-    // UserDefaults에서 오늘 학습한 단어를 로드
-    func loadWordsFromUserDefaults() -> [Word] {
-        guard let wordDataArray = userDefaults.array(forKey: learnedWordsKey) as? [Data] else {
-            return []
-        }
-        return wordDataArray.compactMap { try? JSONDecoder().decode(Word.self, from: $0) }
-    }
-    
-    // UserDefaults에서 저장된 단어를 초기화
-    func clearWordsInUserDefaults() {
-        userDefaults.removeObject(forKey: learnedWordsKey)
-    }
-    
-    
 }

@@ -17,21 +17,18 @@ final class LearningUseCase {
     func fetchWords(setting: LearningSetting
     ) async throws -> [Word] {
         if try await repository.hasCompletedToday(userId: setting.userId) {
-            // 오늘 학습을 완료했다면 UserDefaults에서 단어 로드
-            return repository.loadWordsFromUserDefaults()
+            // 오늘 학습을 완료했다면 서버에서 단어 로드
+            return try await repository.fetchLearnedWords(userId: setting.userId)
         } else {
-            // 오늘 학습을 하지 않았다면 새로운 단어를 가져오고 UserDefaults에 저장
+            // 오늘 학습을 하지 않았다면 새로운 단어를 가져오고 서버에 저장
             let learnedWords = try await wordBookRepository.fetchLearnedWords(userId: setting.userId)
             let learnedWordIds = learnedWords.map { $0.id }
             
+            // 새로운 단어를 가져오려면 이미 배운 단어를 제외하기 위해 가져와야함.
             let words = try await repository.fetchRandomWords(
                 setting: setting,
                 learnedWordIds: learnedWordIds
             )
-            
-            // 기존 단어들을 지우고 새로운 단어 저장
-            repository.clearWordsInUserDefaults()
-            repository.saveWordsToUserDefaults(words: words)
             
             return words
         }

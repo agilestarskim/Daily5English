@@ -16,8 +16,8 @@ struct LearnedWordDTO: Codable {
     }
     
     func toDomain() -> LearnedWord {
-        let dateFormatter = ISO8601DateFormatter()
-        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let learned = dateFormatter.date(from: learnedAt)
         let lastReviewed = lastReviewedAt.flatMap { dateFormatter.date(from: $0) }

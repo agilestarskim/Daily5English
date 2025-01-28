@@ -42,18 +42,21 @@ struct LearningContainerView: View {
             }
             .onChange(of: viewModel.currentStep) {
                 if viewModel.currentStep == .result {
+                    
+                    // 퀴즈세션의 상태를 이용해 결과를 보여줘야하므로 ResultVM으로 상태 주입
                     learningResultViewModel.initialize(quizSessionViewModel: quizSessionViewModel)
                     
-                    if learningResultViewModel.correctRate == 100 {
+                    // 백점이면서 오늘 처음 학습이라면
+                    if learningResultViewModel.correctRate == 100 && !learning.hasLearnToday {
                         let wordsCount = learningSessionViewModel.totalWordCount
                         let words = learningSessionViewModel.words
                         
                         Task {
                             await learning.saveLearnedWords(words: words)
-                            await learning.fetchHasLearnToday()
                             await homeData.saveStatistics(wordsCount: wordsCount)
                             await homeData.fetchStatistics()
                             await homeData.fetchLearningDates()
+                            await learning.fetchHasLearnToday()
                             await wordBook.refresh()
                         }
                     }
