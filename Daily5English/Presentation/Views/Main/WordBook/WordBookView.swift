@@ -4,13 +4,13 @@ import TipKit
 struct WordBookView: View {
     @Environment(WordBookService.self) private var wordBook
     @StateObject private var viewModel = WordBookViewModel()
+    
+    @State private var learningContainerviewModel = LearningContainerViewModel()
 
     var body: some View {
+        @Bindable var bLearningContainerviewModel = learningContainerviewModel
         NavigationStack {
-            ZStack {
-                DSColors.background
-                    .ignoresSafeArea()
-                
+            VStack {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: DSSpacing.medium) {
                         // 검색 바
@@ -49,6 +49,27 @@ struct WordBookView: View {
                 .refreshable {
                     await wordBook.refresh()
                 }
+                
+                // 복습하기 버튼
+                Button(action: {
+                    learningContainerviewModel.isPresented = true
+                }) {
+                    Text("복습하기")
+                        .font(DSTypography.body1.bold())
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(DSColors.accent)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
+                .padding(.bottom, DSSpacing.medium)
+            }
+            .background(DSColors.background.ignoresSafeArea())
+            .fullScreenCover(isPresented: $bLearningContainerviewModel.isPresented) {
+                let words = wordBook.words.shuffled().prefix(5).map(\.word)
+                LearningContainerView(words: words)
+                    .environment(learningContainerviewModel)
             }
         }
     }

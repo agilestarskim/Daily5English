@@ -8,7 +8,6 @@ struct HomeView: View {
     @Environment(HomeDataService.self) private var homeData
     
     @State private var viewModel = LearningContainerViewModel()
-    @State private var hasStudiedToday: Bool = false
     
     var body: some View {
         @Bindable var bViewModel = viewModel
@@ -47,6 +46,7 @@ struct HomeView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
             }
+            .background(DSColors.background.ignoresSafeArea())
             .fullScreenCover(isPresented: $bViewModel.isPresented) {
                 LearningContainerView()
                     .environment(viewModel)

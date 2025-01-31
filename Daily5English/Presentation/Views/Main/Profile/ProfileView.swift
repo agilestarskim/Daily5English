@@ -154,6 +154,7 @@ struct ProfileView: View {
                 }
                 .padding()
             }
+            .background(DSColors.background.ignoresSafeArea())
             .alert("로그아웃", isPresented: $showingLogoutAlert) {
                 Button("취소", role: .cancel) { }
                 Button("로그아웃", role: .destructive) {

@@ -43,8 +43,8 @@ final class LearningRepository: LearningRepositoryProtocol {
         let wordDTOs: [WordDTO] = try await supabase
             .from("words")
             .select()
-            .eq("category", value: settingDTO.categoryPreference)
-            .eq("difficulty_level", value: settingDTO.difficultyLevel)
+//            .eq("category", value: settingDTO.categoryPreference)
+//            .eq("difficulty_level", value: settingDTO.difficultyLevel)
             .not("id", operator: .in, value: "(\(learnedWordIdsAsString.joined(separator: ",")))")
             .limit(settingDTO.dailyWordCount)
             .execute()

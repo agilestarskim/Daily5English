@@ -12,6 +12,13 @@ struct LearningContainerView: View {
     @State private var quizSessionViewModel = QuizSessionViewModel()
     @State private var learningResultViewModel = LearningResultViewModel()
     
+    private var initialWords: [Word]?
+    
+    // 초기화 메서드에서 단어 리스트를 받아 저장
+    init(words: [Word]? = nil) {
+        self.initialWords = words
+    }
+    
     var body: some View {
         NavigationStack {
             Group {
@@ -46,8 +53,8 @@ struct LearningContainerView: View {
                     // 퀴즈세션의 상태를 이용해 결과를 보여줘야하므로 ResultVM으로 상태 주입
                     learningResultViewModel.initialize(quizSessionViewModel: quizSessionViewModel)
                     
-                    // 백점이면서 오늘 처음 학습이라면
-                    if learningResultViewModel.correctRate == 100 && !learning.hasLearnToday {
+                    // 백점이면서 오늘 처음 학습이면서 단어장에서 오픈한게 아니라면
+                    if learningResultViewModel.correctRate == 100 && !learning.hasLearnToday && initialWords == nil {
                         let wordsCount = learningSessionViewModel.totalWordCount
                         let words = learningSessionViewModel.words
                         
@@ -73,16 +80,23 @@ struct LearningContainerView: View {
             }
         }
         .task {
-            // 서비스에서 words와 quizzes를 생성한다.
-            let words = await learning.fetchWords(setting: setting.setting)
-            let quizzes = learning.createQuizzes(from: words)
-            
-            // 각 뷰모델에 주입한다.
-            learningSessionViewModel.setWords(words)
-            quizSessionViewModel.setQuizzses(quizzes)
-            
-            // 학습을 시작한다.
-            viewModel.goToLearning()
+            // 외부에서 단어가 주입된 경우
+            if let words = initialWords {
+                print(words)
+                learningSessionViewModel.setWords(words)
+                let quizzes = learning.createQuizzes(from: words)
+                quizSessionViewModel.setQuizzses(quizzes)
+                viewModel.goToLearning()
+            } else if learningSessionViewModel.words.isEmpty {
+                // 외부에서 단어가 주입되지 않은 경우에만 새로운 단어를 가져옴
+                let words = await learning.fetchWords(setting: setting.setting)
+                let quizzes = learning.createQuizzes(from: words)
+                
+                learningSessionViewModel.setWords(words)
+                quizSessionViewModel.setQuizzses(quizzes)
+                
+                viewModel.goToLearning()
+            }
         }
     }
 }

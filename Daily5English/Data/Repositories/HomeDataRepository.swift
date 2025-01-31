@@ -53,12 +53,15 @@ final class HomeDataRepository {
         let startOfMonth = Calendar.current.date(from: DateComponents(year: year, month: month))!
         let endOfMonth = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)!
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
         let records: [LearningDateDTO] = try await supabase
             .from("learning_records")
             .select("learned_date")
             .eq("user_id", value: userId)
-            .gte("learned_date", value: startOfMonth.ISO8601Format())
-            .lte("learned_date", value: endOfMonth.ISO8601Format())
+            .gte("learned_date", value: dateFormatter.string(from: startOfMonth))
+            .lte("learned_date", value: dateFormatter.string(from: endOfMonth))
             .execute()
             .value
             
