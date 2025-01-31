@@ -13,42 +13,32 @@ struct ProfileView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     @State private var showingLogoutAlert = false
+    @State private var showSettingsAlert = false
     @StateObject private var viewModel = ProfileViewModel()
+    
+    @State private var notificationSettings = NotificationSettings.defaultSettings
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
                     // 프로필 섹션
-                    NavigationLink {
-                        Text("프로필 수정")
-                    } label: {
-                        HStack(spacing: 16) {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 48, height: 48)
-                                .foregroundColor(DSColors.Text.secondary)
-                                .background(Circle().fill(.white))
-                                .clipShape(Circle())
-                            
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(authService.currentUser?.nickname ?? "")
-                                    .font(DSTypography.body1Bold)
-                                    .foregroundColor(DSColors.Text.primary)
-                                Text(authService.currentUser?.email ?? "")
-                                    .font(DSTypography.caption1)
-                                    .foregroundColor(DSColors.Text.secondary)
-                            }
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(DSColors.Text.secondary)
+                    HStack {
+                        Text(authService.currentUser?.email ?? "")
+                            .font(DSTypography.body1Bold)
+                            .foregroundColor(DSColors.Text.primary)
+                        
+                        Spacer()
+                        
+                        if authService.currentUser?.isPremium == false {
+                            BadgeView(text: "PRO", color: .yellow, icon: "trophy.fill")
+                        } else {
+                            BadgeView(text: "PRO", color: .gray, icon: "trophy.fill", isDisabled: true)
                         }
-                        .padding()
-                        .background(DSColors.surface)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
+                    .padding()
+                    .background(DSColors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
                     
                     // 학습 설정 섹션
                     VStack(spacing: 12) {
@@ -79,20 +69,51 @@ struct ProfileView: View {
                     
                     // 알림 설정 섹션
                     VStack(spacing: 12) {
-                        NavigationLink {
-                            NotificationSettingsView(viewModel: viewModel)
-                        } label: {
-                            VStack(spacing: 12) {
-                                SettingInfoRow(
-                                    icon: "bell.fill",
-                                    title: "학습 알림",
-                                    value: viewModel.learningStartTime.formatted(date: .omitted, time: .shortened)
-                                )
-                                SettingInfoRow(
-                                    icon: "bell.fill",
-                                    title: "복습 알림",
-                                    value: viewModel.reviewStartTime.formatted(date: .omitted, time: .shortened)
-                                )
+                        SettingToggleRow(
+                            icon: "bell.fill",
+                            title: "알림",
+                            isOn: $viewModel.isNotificationEnabled
+                        )
+                        .onChange(of: viewModel.isNotificationEnabled, { oldValue, newValue in
+                            if newValue {
+                                Task {
+                                    let isAuthorized = await NotificationManager.shared.requestAuthorization()
+                                    if isAuthorized {
+                                        // 알림을 켜면 디폴트 시간으로 설정
+                                        let defaultLearningTime = Calendar.current.date(bySettingHour: 8, minute: 0, second: 0, of: Date())!
+                                        let defaultReviewTime = Calendar.current.date(bySettingHour: 19, minute: 0, second: 0, of: Date())!
+                                        NotificationManager.shared.updateLearningNotification(at: defaultLearningTime)
+                                        NotificationManager.shared.updateReviewNotification(at: defaultReviewTime)
+                                        viewModel.learningStartTime = defaultLearningTime
+                                        viewModel.reviewStartTime = defaultReviewTime
+                                    } else {
+                                        // 권한이 없으면 설정으로 이동 알림 표시
+                                        viewModel.isNotificationEnabled = false
+                                        showSettingsAlert = true
+                                    }
+                                }
+                            } else {
+                                // 알림을 끄면 모든 알림 삭제
+                                NotificationManager.shared.removeAllNotifications()
+                            }
+                        })
+                        
+                        if viewModel.isNotificationEnabled {
+                            NavigationLink {
+                                NotificationSettingsView(viewModel: viewModel)
+                            } label: {
+                                VStack(spacing: 12) {
+                                    SettingInfoRow(
+                                        icon: "bell.fill",
+                                        title: "학습 알림",
+                                        value: viewModel.learningStartTime.formatted(date: .omitted, time: .shortened)
+                                    )
+                                    SettingInfoRow(
+                                        icon: "bell.fill",
+                                        title: "복습 알림",
+                                        value: viewModel.reviewStartTime.formatted(date: .omitted, time: .shortened)
+                                    )
+                                }
                             }
                         }
                     }
@@ -164,6 +185,33 @@ struct ProfileView: View {
                 }
             } message: {
                 Text("정말 로그아웃 하시겠습니까?")
+            }
+            .alert(isPresented: $showSettingsAlert) {
+                Alert(
+                    title: Text("알림 권한 필요"),
+                    message: Text("알림을 받으려면 설정에서 권한을 허용해주세요."),
+                    primaryButton: .default(Text("설정으로 이동"), action: {
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(appSettings)
+                        }
+                    }),
+                    secondaryButton: .cancel(Text("취소"))
+                )
+            }
+            .onAppear {
+                Task {
+                    let times = await NotificationManager.shared.getNotificationTimes()
+                    if let learningTime = times.learningTime {
+                        viewModel.learningStartTime = learningTime
+                    }
+                    if let reviewTime = times.reviewTime {
+                        viewModel.reviewStartTime = reviewTime
+                    }
+                    
+                    // 알림 권한 확인
+                    let isAuthorized = await NotificationManager.shared.checkAuthorizationStatus()
+                    viewModel.isNotificationEnabled = isAuthorized
+                }
             }
         }
     }
@@ -253,5 +301,30 @@ struct SettingInfoRow: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
+    }
+}
+
+// 배지 컴포넌트
+struct BadgeView: View {
+    let text: String
+    let color: Color
+    let icon: String
+    var isDisabled: Bool = false
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: icon)
+                .foregroundColor(color)
+            Text(text)
+                .font(DSTypography.caption1)
+                .foregroundColor(color)
+        }
+        .padding(8)
+        .background(RoundedRectangle(cornerRadius: 12).fill(color.opacity(0.1)))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(color, lineWidth: 1)
+        )
+        .opacity(isDisabled ? 0.5 : 1.0)
     }
 }

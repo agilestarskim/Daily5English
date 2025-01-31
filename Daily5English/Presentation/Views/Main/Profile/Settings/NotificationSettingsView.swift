@@ -1,27 +1,36 @@
 import SwiftUI
 
-
 struct NotificationSettingsView: View {
     @ObservedObject var viewModel: ProfileViewModel
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        List {
-            Section {
-                Toggle("학습 알림", isOn: $viewModel.isNotificationEnabled)
+        VStack(spacing: 24) {
+            DatePicker("학습 알림 시간", selection: $viewModel.learningStartTime, displayedComponents: .hourAndMinute)
+            
+            DatePicker("복습 알림 시간", selection: $viewModel.reviewStartTime, displayedComponents: .hourAndMinute)
+            
+            Button(action: {
+                NotificationManager.shared.updateLearningNotification(at: viewModel.learningStartTime)
+                NotificationManager.shared.updateReviewNotification(at: viewModel.reviewStartTime)
                 
-                if viewModel.isNotificationEnabled {
-                    DatePicker("학습 시작 시간",
-                             selection: $viewModel.learningStartTime,
-                             displayedComponents: .hourAndMinute)
-                    
-                    DatePicker("복습 시작 시간",
-                             selection: $viewModel.reviewStartTime,
-                             displayedComponents: .hourAndMinute)
-                }
-            } footer: {
-                Text("매일 설정한 시간에 학습 알림을 받습니다.")
+                // 저장 후 이전 화면으로 돌아가기
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("저장")
+                    .font(DSTypography.body1Bold)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(DSColors.accent)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             }
+            .padding(.top, 20)
+            
+            Spacer()
         }
+        .padding()
+        .background(DSColors.background.ignoresSafeArea())
         .navigationTitle("알림 설정")
     }
 } 

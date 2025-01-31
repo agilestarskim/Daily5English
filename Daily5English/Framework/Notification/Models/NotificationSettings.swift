@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct NotificationSetting {
-    let isEnabled: Bool
-    let learningTime: Date
-    let reviewTime: Date
+struct NotificationSettings {
+    var learningTime: Date
+    var reviewTime: Date
+    
+    static let defaultSettings = NotificationSettings(
+        learningTime: Calendar.current.date(bySettingHour: 8, minute: 0, second: 0, of: Date())!,
+        reviewTime: Calendar.current.date(bySettingHour: 19, minute: 0, second: 0, of: Date())!
+    )
 }

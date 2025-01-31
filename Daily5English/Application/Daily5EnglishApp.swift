@@ -57,7 +57,28 @@ struct Daily5EnglishApp: App {
         let homeDataService = HomeDataService(repository: homeDataRepo)
         _homeDataService = State(wrappedValue: homeDataService)
         
-        
+        // 알림 설정
+        Task {
+            let isAuthorized = await NotificationManager.shared.requestAuthorization()
+            if isAuthorized {
+                let times = await NotificationManager.shared.getNotificationTimes()
+                if let learningTime = times.learningTime {
+                    NotificationManager.shared.updateLearningNotification(at: learningTime)
+                } else {
+                    // 기본 학습 알림 시간 설정
+                    let defaultLearningTime = Calendar.current.date(bySettingHour: 8, minute: 0, second: 0, of: Date())!
+                    NotificationManager.shared.updateLearningNotification(at: defaultLearningTime)
+                }
+                
+                if let reviewTime = times.reviewTime {
+                    NotificationManager.shared.updateReviewNotification(at: reviewTime)
+                } else {
+                    // 기본 복습 알림 시간 설정
+                    let defaultReviewTime = Calendar.current.date(bySettingHour: 19, minute: 0, second: 0, of: Date())!
+                    NotificationManager.shared.updateReviewNotification(at: defaultReviewTime)
+                }
+            }
+        }
     }
     
     var body: some Scene {
