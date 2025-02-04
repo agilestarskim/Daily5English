@@ -12,7 +12,7 @@ struct HomeView: View {
     var body: some View {
         @Bindable var bViewModel = viewModel
         NavigationStack {
-            VStack(spacing: 0) {  // 스크롤뷰와 버튼을 담을 VStack
+            VStack {  // 스크롤뷰와 버튼을 담을 VStack
                 ScrollView {
                     VStack(spacing: 20) {
                         // 1. 학습 팁 카드
@@ -37,6 +37,7 @@ struct HomeView: View {
                     }
                     .padding()
                 }
+                .scrollIndicators(.hidden)
                 
                 // 5. 학습 시작 버튼 (스크롤뷰 밖)
                 StartLearningButton(

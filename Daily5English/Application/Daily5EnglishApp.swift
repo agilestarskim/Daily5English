@@ -19,6 +19,8 @@ struct Daily5EnglishApp: App {
     
     let supabase: SupabaseClient
     
+    @AppStorage("isDarkMode") private var isDarkMode = false
+    
     init() {
         self.supabase = {
             guard let url = URL(string: Config.supabaseURL ?? ""),
@@ -84,6 +86,7 @@ struct Daily5EnglishApp: App {
     var body: some Scene {
         WindowGroup {
             AuthView()
+                .preferredColorScheme(isDarkMode ? .dark : .light)
                 .onOpenURL { url in
                     supabase.auth.handle(url)
                 }

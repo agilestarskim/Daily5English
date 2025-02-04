@@ -16,6 +16,8 @@ struct ProfileView: View {
     @State private var showSettingsAlert = false
     @StateObject private var viewModel = ProfileViewModel()
     
+    @AppStorage("isDarkMode") private var isDarkMode = false
+    
     @State private var notificationSettings = NotificationSettings.defaultSettings
     
     var body: some View {
@@ -125,8 +127,16 @@ struct ProfileView: View {
                         SettingToggleRow(
                             icon: "moon.fill",
                             title: "다크 모드",
-                            isOn: .constant(colorScheme == .dark)
+                            isOn: $isDarkMode
                         )
+                        .onChange(of: isDarkMode) { _, newValue in
+                            // 다크 모드 상태 변경
+                            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                                windowScene.windows.forEach { window in
+                                    window.overrideUserInterfaceStyle = newValue ? .dark : .light
+                                }
+                            }
+                        }
                     }
                     .background(DSColors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -175,6 +185,7 @@ struct ProfileView: View {
                 }
                 .padding()
             }
+            .scrollIndicators(.hidden)
             .background(DSColors.background.ignoresSafeArea())
             .alert("로그아웃", isPresented: $showingLogoutAlert) {
                 Button("취소", role: .cancel) { }

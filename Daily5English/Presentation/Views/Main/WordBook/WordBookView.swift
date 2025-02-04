@@ -44,7 +44,8 @@ struct WordBookView: View {
                             }
                         }
                     }
-                    .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
+//                    .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
+                    .padding()
                 }
                 .refreshable {
                     await wordBook.refresh()
@@ -55,15 +56,15 @@ struct WordBookView: View {
                     learningContainerviewModel.isPresented = true
                 }) {
                     Text("복습하기")
-                        .font(DSTypography.body1.bold())
-                        .foregroundColor(.white)
-                        .padding()
+                        .font(.headline)
                         .frame(maxWidth: .infinity)
+                        .padding()
                         .background(DSColors.accent)
+                        .foregroundColor(DSColors.Text.onColor)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-                .padding(.horizontal, DSSpacing.Screen.horizontalPadding)
-                .padding(.bottom, DSSpacing.medium)
+                .padding(.horizontal)
+                .padding(.bottom)                
             }
             .background(DSColors.background.ignoresSafeArea())
             .fullScreenCover(isPresented: $bLearningContainerviewModel.isPresented) {
